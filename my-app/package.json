@@ -1,0 +1,77 @@
+{
+  "name": "gravity-ui-example-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prepare": "bun run husky install",
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
+    "start": "bun --bun next start",
+    "lint:js": "bunx eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint:styles": "bunx stylelint '{styles,src}/**/*.scss'",
+    "lint:prettier": "bunx prettier --check '**/*.md'",
+    "lint": "bun run lint:js && bun run lint:styles && bun run lint:prettier",
+    "postinstall": "bun run prepare"
+  },
+  "dependencies": {
+    "@gravity-ui/icons": "^2.12.0",
+    "@gravity-ui/navigation": "^1.10.3",
+    "@gravity-ui/react-data-table": "^1.2.0",
+    "@svgr/webpack": "^8.1.0",
+    "axios": "^1.6.2",
+    "bem-cn-lite": "^4.1.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "firebase": "^10.7.1",
+    "framer-motion": "^12.0.6",
+    "next": "^15.1.6",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@gravity-ui/browserslist-config": "^4.3.0",
+    "@gravity-ui/chartkit": "^4.19.0",
+    "@gravity-ui/components": "^2.12.1",
+    "@gravity-ui/date-components": "^1.1.1",
+    "@gravity-ui/eslint-config": "^1.0.2",
+    "@gravity-ui/illustrations": "^1.0.0",
+    "@gravity-ui/prettier-config": "^1.1.0",
+    "@gravity-ui/stylelint-config": "^2.0.0",
+    "@gravity-ui/tsconfig": "^1.0.0",
+    "@gravity-ui/uikit": "^5.30.0",
+    "@types/node": "^20.17.9",
+    "@types/react": "^18.3.14",
+    "@types/react-dom": "^18.3.3",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "eslint": "^9.19.0",
+    "eslint-config-next": "^15.0.4",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-react": "^7.37.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.2",
+    "sass": "^1.83.4",
+    "stylelint": "^15.11.0"
+  },
+  "engines": {
+    "node": ">=18",
+    "bun": ">=1.1.4"
+  },
+  "browserslist": [
+    "extends @gravity-ui/browserslist-config"
+  ],
+  "lint-staged": {
+    "*.{scss}": [
+      "bunx stylelint --fix --quiet"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "bunx eslint --fix --quiet",
+      "bunx prettier --write"
+    ],
+    "*.md": [
+      "bunx prettier --write"
+    ]
+  }
+}
