@@ -1,5 +1,5 @@
 'use client';
-import React, {createContext, useContext, useState, useEffect, useCallback} from 'react';
+import React, {createContext, useContext, useState, useEffect, useCallback, useMemo} from 'react';
 import {useError} from './ErrorContext';
 import callApi, {getUid} from '../utilities/callApi';
 import {useRouter, useSearchParams} from 'next/navigation';
@@ -26,6 +26,7 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
         },
         [campaigns],
     );
+    const [campaignLoaded, setCampaignLoaded] = useState(false);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -36,7 +37,6 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
         },
         [searchParams],
     );
-    // console.log(campaigns);
     const [selectValue, setSelectValue] = useState([''] as string[]); // Current selected campaign
     const [campaignInfo, setCampaignInfo] = useState([{}] as any[]);
     // CampaignProvider.tsx
@@ -47,14 +47,23 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
     const [switchingCampaignsFlag, setSwitchingCampaignsFlag] = useState(false); // Flag for switching
     const [availableTags, setAvailableTags] = useState([] as string[]); // Tags related to the selected campaign
     const [availableTagsPending, setAvailableTagsPending] = useState(false); // Loading state for tags
+    // const [modulesMap, setModulesMap] = useState({} as any);
     // CampaignProvider.tsx
+    const [currentCampaign, setCurrentCampaign] = useState({} as any);
+
+    // const modules = useMemo(() => {
+    //     if (!currentCampaign)return [];
+
+    //     return currentCampaign?.isOwner
+    //         ? ['all']
+    //         : Object.keys(currentCampaign?.userModules || {});
+    // }, [currentCampaign]);
+    const [modules, setModules] = useState([] as any);
 
     useEffect(() => {
+        setCampaignLoaded(false);
         const seller_id = searchParams.get('seller_id');
-        console.log(seller_id);
         const firstCampaignId = campaigns?.[0]?.seller_id;
-
-        console.log(campaigns);
 
         if (!campaigns?.length) return;
 
@@ -73,28 +82,37 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
 
             // Directly set state without waiting for URL change
             const campaign = findCampaign(firstCampaignId);
-            setSellerId(firstCampaignId);
-            setSelectValue([campaign?.name || '']);
+            if (campaign) {
+                setSellerId(firstCampaignId);
+                setSelectValue([campaign?.name || '']);
+                console.log(campaign, 'campaign');
+                setCurrentCampaign(campaign);
+                setModules(campaign?.isOwner ? ['all'] : Object.keys(campaign?.userModules || {}));
+                setCampaignLoaded(true);
+            }
             return;
         }
-        console.log(seller_id, sellerId);
+        // console.log(JSON.stringify(currentCampaign), 'campaign', currentCampaign?.isOwner);
+        // console.log(seller_id, sellerId);
 
-        if (seller_id && seller_id !== sellerId) {
-            console.log(seller_id);
-            const campaign = findCampaign(seller_id)
+        if (seller_id) {
+            const campaign = findCampaign(seller_id);
             if (campaign) {
                 // Batch state updates
                 setSellerId(seller_id);
                 setSelectValue([campaign.name]);
                 setCampaignInfo(campaign);
-                setSwitchingCampaignsFlag(false)
+                setModules(campaign?.isOwner ? ['all'] : Object.keys(campaign?.userModules || {}));
+                setSwitchingCampaignsFlag(false);
+                setCampaignLoaded(true);
             }
         }
-    }, [searchParams, campaigns, sellerId, router]); // Add sellerId to deps
+    }, [searchParams, campaigns, sellerId, router, findCampaign]); // Add sellerId to deps
 
     useEffect(() => {
         if (!selectValue[0]) return;
         setAvailableTagsPending(true);
+        setCampaignLoaded(false);
         callApi('getAllTags', {
             uid: getUid(),
             campaignName: selectValue[0],
@@ -113,6 +131,7 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
             })
             .finally(() => {
                 setAvailableTagsPending(false);
+                setCampaignLoaded(true);
             });
     }, [selectValue]);
 
@@ -125,6 +144,10 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
                 setCampaignInfo,
                 sellerId,
                 setSellerId,
+                campaignLoaded,
+                currentCampaign,
+                setCurrentCampaign,
+                modules,
                 switchingCampaignsFlag,
                 setSwitchingCampaignsFlag,
                 availableTags,

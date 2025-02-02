@@ -14,7 +14,7 @@
 }
 
 .tabs {
-    display: flex;
+    display: flex-inline;
     flex-direction: row;
     overflow: auto;
     flex-wrap: nowrap !important;

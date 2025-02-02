@@ -4,6 +4,7 @@ import '@gravity-ui/uikit/styles/styles.css';
 
 import type {Metadata} from 'next';
 import {RootLayoutClient} from '@/components/RootLayoutClient';
+import {ModuleProvider} from '@/contexts/ModuleProvider';
 
 export const metadata: Metadata = {
     title: 'Aurum',

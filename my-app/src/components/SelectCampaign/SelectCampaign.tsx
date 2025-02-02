@@ -27,7 +27,6 @@ export const SelectCampaign = ({
     } = useCampaign();
 
     const searchParams = useSearchParams();
-    const router = useRouter();
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -91,6 +90,7 @@ export const SelectCampaign = ({
             newParams.set('seller_id', initialValue.value);
 
             // Use replace instead of push to prevent history entry
+            console.log('хуй');
             window.history.pushState(null, '', `?${newParams.toString()}`);
 
             // Directly update context state

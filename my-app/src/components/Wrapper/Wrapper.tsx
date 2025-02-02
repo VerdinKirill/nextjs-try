@@ -7,6 +7,8 @@ import {ErrorProvider} from '@/contexts/ErrorContext';
 import {CampaignProvider} from '@/contexts/CampaignContext';
 import {GlobalAlert} from '../GlobalAlert/GlobalAlert';
 import {useState, Dispatch, SetStateAction, useEffect} from 'react';
+import { ModuleProvider } from '@/contexts/ModuleProvider';
+
 
 const DARK = 'dark';
 const DEFAULT_THEME = DARK;
@@ -24,7 +26,7 @@ export const Wrapper: React.FC<AppProps> = ({children, theme}) => {
             <ErrorProvider>
                 <CampaignProvider>
                     <GlobalAlert />
-                    {children}
+                    <ModuleProvider>{children}</ModuleProvider>
                 </CampaignProvider>
             </ErrorProvider>
         </ThemeProvider>

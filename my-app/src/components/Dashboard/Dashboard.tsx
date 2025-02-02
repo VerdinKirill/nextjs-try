@@ -1,8 +1,9 @@
 'use client';
 import './Dashboard.scss';
-import {useEffect, useMemo, useState, Dispatch, SetStateAction, ReactNode} from 'react';
+import {useEffect, useMemo, useState, Dispatch, SetStateAction, ReactNode, useRef} from 'react';
 import block from 'bem-cn-lite';
-import {Text, Icon, Tabs, Link, Button, Tooltip} from '@gravity-ui/uikit';
+import {Text, Icon, Tabs, Button, Tooltip} from '@gravity-ui/uikit';
+import Link from 'next/link';
 // import '@/styles/App.scss'
 import textLogo from '@/assets/textLogo.png';
 import {
@@ -19,6 +20,9 @@ import {useMediaQuery} from '@/hooks/useMediaQuery';
 import {UserPopup} from '@/components/UserPopup';
 import {useCampaign} from '@/contexts/CampaignContext';
 import {SelectCampaign} from '@/components/SelectCampaign';
+import {useParams, useSearchParams} from 'next/navigation';
+import {useModules} from '@/contexts/ModuleProvider';
+import {CustomTabs} from '../CustomTabs';
 
 const b = block('app');
 
@@ -42,8 +46,55 @@ export interface DashboardProps {
 }
 
 export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
+    const searchParams = useSearchParams();
     const {userInfo, refetchUser} = useUser();
-    const {selectValue, seller_id} = useCampaign();
+    const {selectValue, seller_id, currentCampaign, campaignInfo, modules} = useCampaign();
+    const {currentModule, availableModules = [], setModule, modulesLoaded} = useModules();
+    const tabsRef = useRef(null);
+    const refs = useRef<Array<HTMLDivElement | null>>([]);
+    const elementsOfTabsRefs = useRef<Array<HTMLDivElement | null>>([]);
+    const [currentWidth, setCurrentHeight] = useState(0); // Add default value
+    const moduleTitles: Record<string, string> = {
+        massAdvert: 'Реклама',
+        analytics: 'Аналитика',
+        prices: 'Цены',
+        delivery: 'Поставки',
+        nomenclatures: 'Товары',
+        buyers: 'Покупатели',
+        reports: 'Отчеты',
+        seo: 'SEO',
+        api: 'Магазины',
+    };
+    const optionsPages = useMemo(() => {
+        return availableModules.map((module) => ({
+            id: module,
+            title: moduleTitles[module],
+            href: `/${module}?${searchParams.toString()}`,
+        }));
+    }, [availableModules, searchParams]);
+
+    const handleModuleChange = (moduleId: string) => {
+        console.log(optionsPages);
+        console.log(searchParams.toString());
+        setModule(moduleId);
+    };
+
+    useEffect(() => {
+        console.log(JSON.stringify(currentCampaign), 'currentCampaign');
+        const titleMap: Record<string, string> = {
+            massAdvert: 'Реклама',
+            analytics: 'Аналитика',
+            prices: 'Цены',
+            delivery: 'Поставки',
+            nomenclatures: 'Товары',
+            buyers: 'Покупатели',
+            reports: 'Отчеты',
+            seo: 'SEO',
+            api: 'Магазины',
+        };
+
+        document.title = currentModule ? `${titleMap[currentModule]} | AURUM` : 'AURUM | Магазины';
+    }, [currentModule]);
     // useEffect(() => {
     //     localStorage.setItem('theme', JSON.stringify(theme));
     //     setThemeAurum(theme);
@@ -78,28 +129,28 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     useEffect(() => {
         if (!campaigns?.length || !selectValue[0]) return;
 
-        const selectedCampaign = campaigns.find(
-            (campaign: any) => campaign.name === selectValue[0],
-        );
+        // const selectedCampaign = campaigns.find(
+        //     (campaign: any) => campaign.name === selectValue[0],
+        // );
 
-        if (selectedCampaign) {
-            setSubscriptionExpDate(selectedCampaign.subscriptionUntil);
-            setApiKeyExpDate(selectedCampaign.apiKeyExpDate);
-            setModulesMap(selectedCampaign.userModules || {});
+        if (campaignInfo) {
+            setSubscriptionExpDate(campaignInfo.subscriptionUntil);
+            setApiKeyExpDate(campaignInfo.apiKeyExpDate);
+            // setModulesMap(selectedCampaign.userModules || {});
         }
     }, [campaigns, selectValue]); // Only update when these values change
 
-    const modules = useMemo(() => {
-        if (!campaigns?.length || !selectValue[0]) return [];
+    // const modules = useMemo(() => {
+    //     if (!campaigns?.length || !selectValue[0]) return [];
 
-        const selectedCampaign = campaigns.find(
-            (campaign: any) => campaign.name === selectValue[0],
-        );
+    //     const selectedCampaign = campaigns.find(
+    //         (campaign: any) => campaign.name === selectValue[0],
+    //     );
 
-        return selectedCampaign?.isOwner
-            ? ['all']
-            : Object.keys(selectedCampaign?.userModules || {});
-    }, [campaigns, selectValue]);
+    //     return selectedCampaign?.isOwner
+    //         ? ['all']
+    //         : Object.keys(selectedCampaign?.userModules || {});
+    // }, [campaigns, selectValue]);
     // In Dashboard.tsx
     // const modules = useMemo(() => {
     //     if (!campaigns?.length || !selectValue[0]) return [];
@@ -146,49 +197,37 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
         return () => clearInterval(intervalId); // Cleanup the interval on component unmount
     }, []);
 
-    const [page, setPage] = useState('noModules' as any);
-    useEffect(() => {
-        console.log(page, modules);
-        if (!modules.length) {
-            setPage('noModules');
-            return;
-        }
-        const firstModule = modules.includes('all') ? 'massAdvert' : modules[0];
-        setPage(
-            page == 'noModules'
-                ? firstModule
-                : modules.concat('api').includes(page) || modules.includes('all')
-                  ? page
-                  : firstModule,
-        );
-    }, [modules]);
-    useEffect(() => {
-        const titleMap: any = {
-            massAdvert: 'Реклама',
-            analytics: 'Аналитика',
-            prices: 'Цены',
-            delivery: 'Поставки',
-            nomenclatures: 'Товары',
-            buyers: 'Покупатели',
-            reports: 'Отчеты',
-            seo: 'SEO',
-            api: 'Магазины',
-        };
+    // const [page, setPage] = useState('noModules' as any);
+    // useEffect(() => {
+    //     const titleMap: any = {
+    //         massAdvert: 'Реклама',
+    //         analytics: 'Аналитика',
+    //         prices: 'Цены',
+    //         delivery: 'Поставки',
+    //         nomenclatures: 'Товары',
+    //         buyers: 'Покупатели',
+    //         reports: 'Отчеты',
+    //         seo: 'SEO',
+    //         api: 'Магазины',
+    //     };
 
-        document.title =
-            page == 'noModules' ? 'AURUM | Магазины' : `${titleMap[page]}: ${selectValue[0]}`;
-    }, [page, selectValue]);
+    //     document.title =
+    //         page == 'noModules' ? 'AURUM | Магазины' : `${titleMap[page]}: ${selectValue[0]}`;
+    // }, [page, selectValue]);
 
     // const notesTextArea = useRef<HTMLTextAreaElement>(null);
 
     const renderTabItem = (item: any, node: any, index: any) => {
-        if (item === undefined || node === undefined || index === undefined) return <></>;
-        const isCurrent = (page == 'noModules' && item.id == 'api') || item.id == page;
+        if (item === undefined || node === undefined || index === undefined || !modulesLoaded)
+            return <div>Загрузка</div>;
+        console.log(currentModule, 'currentModule');
+        const isCurrent =
+            (currentModule == 'noModules' && item.id == 'api') || item.id == currentModule;
         return (
             <div
                 key={index}
                 style={{
-                    // marginBottom: item.id == page ? 1 : 0,
+                    marginBottom: item.id == currentModule ? 1 : 0,
                     height: 60,
                     display: 'flex',
                     flexDirection: 'column',
@@ -199,13 +238,18 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
             >
                 <Link
                     href={item?.href}
-                    target={item?.target}
+                    // target={item?.target}
                     className="tablink"
-                    view="primary"
+                    // view="primary"
+                    // style={{visitable : false}}
+                    // color=''
+                    // color="var(--g-color-text-primary);"
+                    style={{color: 'var(--g-color-text-primary)', textDecoration: 'none'}}
                     onClick={() => {
                         if (item.disabled || !item.id) return;
                         refetchUser();
-                        setPage(item.id);
+                        console.log(item.href, item.id);
+                        handleModuleChange(item?.href);
                     }}
                 >
                     <Text variant="body-3" color={item.disabled ? 'secondary' : undefined}>
@@ -218,17 +262,20 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
 
     const renderFooterItem = (item: any, node: any, index: any) => {
         if (item === undefined || node === undefined || index === undefined) return <></>;
-        const isCurrent = (page == 'noModules' && item.id == 'api') || item.id == page;
+        const isCurrent =
+            (currentModule == 'noModules' && item.id == 'api') || item.id == currentModule;
         return (
             <Link
                 href={item?.href}
                 target={item?.target}
                 className="tablink"
-                view="primary"
+                style={{color: 'var(--g-color-text-primary)', textDecoration: 'none'}}
                 onClick={() => {
                     if (item.disabled || !item.id) return;
                     refetchUser();
-                    setPage(item.id);
+                    console.log(item.id);
+                    handleModuleChange(item.id);
+                    // setPage(item.id);
                 }}
             >
                 <Text
@@ -251,68 +298,77 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
         );
     };
 
-    const optionsPages: any[] = [
-        {
-            icon: ChartColumnStacked,
-            id: 'massAdvert',
-            title: 'Реклама',
-            disabled: !modules.includes('all') && !modules.includes('massAdvert'),
-        },
-        {
-            id: 'prices',
-            title: 'Цены',
-            disabled: !modules.includes('all') && !modules.includes('prices'),
-        },
-        {
-            id: 'delivery',
-            title: 'Поставки',
-            disabled: !modules.includes('all') && !modules.includes('delivery'),
-        },
-        {
-            id: 'analytics',
-            title: 'Аналитика',
-            disabled: !modules.includes('all') && !modules.includes('analytics'),
-        },
-        {
-            id: 'buyers',
-            title: 'Покупатели',
-            disabled: !modules.includes('all') && !modules.includes('buyers'),
-        },
-        {
-            id: 'seo',
-            title: 'Семантика',
-            disabled: !modules.includes('all') && !modules.includes('seo'),
-        },
-        {
-            id: 'nomenclatures',
-            title: 'Товары',
-            disabled: !modules.includes('all') && !modules.includes('nomenclatures'),
-        },
-        {
-            id: 'reports',
-            title: 'Отчеты',
-            disabled:
-                (!modules.includes('all') && !modules.includes('reports')) ||
-                ![1122958293, 933839157].includes(userInfo?.user?._id),
-        },
-        {
-            icon: Key,
-            id: 'api',
-            title: 'Магазины',
-        },
-        {
-            icon: CircleQuestion,
-            title: 'Поддержка',
-            href: 'https://t.me/AurumSkyNetSupportBot',
-            target: '_blank',
-        },
-        {
-            icon: GraduationCap,
-            title: 'База знаний',
-            href: 'https://aurum-wiki.tilda.ws/tdocs/',
-            target: '_blank',
-        },
-    ].filter((page) => !page.disabled);
+    // const optionsPages: any[] = [
+    //     {
+    //         icon: ChartColumnStacked,
+    //         id: 'massAdvert',
+    //         title: 'Реклама',
+    //         href: `/massAdvert?${searchParams.toString()}`,
+    //         disabled: !modules.includes('all') && !modules.includes('massAdvert'),
+    //     },
+    //     {
+    //         id: 'prices',
+    //         title: 'Цены',
+    //         href: `/prices?${searchParams.toString()}`,
+    //         disabled: !modules.includes('all') && !modules.includes('prices'),
+    //     },
+    //     {
+    //         id: 'delivery',
+    //         title: 'Поставки',
+    //         href: `/delivery?${searchParams.toString()}`,
+    //         disabled: !modules.includes('all') && !modules.includes('delivery'),
+    //     },
+    //     {
+    //         id: 'analytics',
+    //         title: 'Аналитика',
+    //         href: `/analytics?${searchParams.toString()}`,
+    //         disabled: !modules.includes('all') && !modules.includes('analytics'),
+    //     },
+    //     {
+    //         id: 'buyers',
+    //         title: 'Покупатели',
+    //         href: `/buyers?${searchParams.toString()}`,
+    //         disabled: !modules.includes('all') && !modules.includes('buyers'),
+    //     },
+    //     {
+    //         id: 'seo',
+    //         title: 'Семантика',
+    //         href: `/seo?${searchParams.toString()}`,
+    //         disabled: !modules.includes('all') && !modules.includes('seo'),
+    //     },
+    //     {
+    //         id: 'nomenclatures',
+    //         title: 'Товары',
+    //         href: `/nomenclatures?${searchParams.toString()}`,
+    //         disabled: !modules.includes('all') && !modules.includes('nomenclatures'),
+    //     },
+    //     {
+    //         id: 'reports',
+    //         title: 'Отчеты',
+    //         href: `/reports?${searchParams.toString()}`,
+    //         disabled:
+    //             (!modules.includes('all') && !modules.includes('reports')) ||
+    //             ![1122958293, 933839157].includes(userInfo?.user?._id),
+    //     },
+    //     {
+    //         icon: Key,
+    //         id: 'api',
+    //         href: `/api?${searchParams.toString()}`,
+    //         title: 'Магазины',
+    //     },
+    //     {
+    //         icon: CircleQuestion,
+    //         title: 'Поддержка',
+    //         href: 'https://t.me/AurumSkyNetSupportBot',
+    //         target: '_blank',
+    //     },
+    //     {
+    //         icon: GraduationCap,
+    //         title: 'База знаний',
+    //         href: 'https://aurum-wiki.tilda.ws/tdocs/',
+    //         target: '_blank',
+    //     },
+    // ].filter((page) => !page.disabled);
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -343,6 +399,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     //         setTagsAddedForCurrentNote([]);
     //     }
     // };
+
     if (!campaigns.length) {
         return <div></div>;
     }
@@ -363,9 +420,10 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                     }}
                 >
                     <Tabs
+                        onSelectTab={handleModuleChange}
                         key={'mobileTab'}
                         wrapTo={renderFooterItem}
-                        activeTab={page}
+                        activeTab={currentModule}
                         items={optionsPages.filter((item) =>
                             ['Реклама', 'Магазины', 'Поддержка', 'База знаний'].includes(
                                 item.title,
@@ -472,6 +530,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                             overflow: 'hidden',
                                             flexDirection: 'row',
                                             alignItems: 'center',
+                                            flex: 1,
                                         }}
                                     >
                                         <div
@@ -493,32 +552,23 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                             <div style={{minWidth: 32}} />
                                         </div>
                                         <div style={{minWidth: 32}} />
-                                        <div
-                                            style={{
-                                                boxShadow:
-                                                    'inset 0px -9px 0px -8px ' +
-                                                    (theme == Theme.Dark ? '#2d2c33' : '#fff'),
-                                            }}
-                                        >
-                                            <Tabs
-                                                key={'CommonTab'}
-                                                className="tabs"
-                                                wrapTo={renderTabItem}
-                                                activeTab={page}
-                                                items={optionsPages.filter(
-                                                    (item) =>
-                                                        !['Поддержка', 'База знаний'].includes(
-                                                            item.title,
-                                                        ),
-                                                )}
-                                            />
-                                        </div>
+                                        <CustomTabs
+                                            items={optionsPages.filter(
+                                                (item) =>
+                                                    !['Поддержка', 'База знаний'].includes(
+                                                        item.title,
+                                                    ),
+                                            )}
+                                            activeTab={currentModule}
+                                            onSelectTab={handleModuleChange}
+                                        />
                                     </div>
 
                                     <div
                                         style={{
                                             height: 68,
                                             display: 'flex',
+                                            flexShrink: 0,
                                             flexDirection: 'row',
                                             alignItems: 'center',
                                         }}
