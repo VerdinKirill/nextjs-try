@@ -37,7 +37,7 @@ import {useModules} from '@/contexts/ModuleProvider';
 export const PricesPage = () => {
     const {modulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['NomenclaturesPage'];
+        return modulesMap['prices'];
     }, [modulesMap]);
     const {selectValue, setSwitchingCampaignsFlag, sellerId} = useCampaign();
     const {showError} = useError();

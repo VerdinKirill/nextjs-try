@@ -17,6 +17,28 @@ const modulesMap: any = {
     prices: dynamic(() => import('@/components/Pages/PricesPage').then((mod) => mod.PricesPage), {
         ssr: false,
     }),
+    delivery: dynamic(
+        () => import('@/components/Pages/DeliveryPage').then((mod) => mod.DeliveryPage),
+        {
+            ssr: false,
+        },
+    ),
+    detailedReports: dynamic(
+        () =>
+            import('@/components/Pages/DetailedReportsPage').then((mod) => mod.DetailedReportsPage),
+        {
+            ssr: false,
+        },
+    ),
+    seo: dynamic(() => import('@/components/Pages/SEOPage').then((mod) => mod.SEOPage), {
+        ssr: false,
+    }),
+    buyers: dynamic(() => import('@/components/Pages/BuyersPage').then((mod) => mod.BuyersPage), {
+        ssr: false,
+    }),
+    api: dynamic(() => import('@/components/Pages/ApiPage').then((mod) => mod.ApiPage), {
+        ssr: false,
+    }),
     // analytics: dynamic(() => import('@/components/AnalyticsPage')),
     // ... other modules
 };
@@ -47,11 +69,8 @@ export default function ModulePage() {
     if (!availableModules.includes(module)) {
         return null;
     }
-    console.log(module, 'module in page.tsx');
-    console.log(modulesMap[module]);
     if (modulesMap[module]) {
         const ModuleComponent = modulesMap[module];
-        console.log(ModuleComponent);
 
         return (
             <div>

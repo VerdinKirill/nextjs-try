@@ -23,7 +23,7 @@ import {useModules} from '@/contexts/ModuleProvider';
 export const NomenclaturesPage = () => {
     const {modulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['NomenclaturesPage'];
+        return modulesMap['nomenclatures'];
     }, [modulesMap]);
     const {
         selectValue,
