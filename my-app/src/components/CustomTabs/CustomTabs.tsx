@@ -147,21 +147,18 @@ export const CustomTabs = ({items, activeTab, onSelectTab}: CustomTabsProps) => 
             {notShowingOptions.length !== 0 && (
                 <div style={{marginLeft: 'auto', flexShrink: 0}}>
                     <Select
-                        open={true}
+                        // open={true}
                         options={notShowingOptions}
                         onUpdate={(value) => {
-                            console.log(items, value);
                             setSelectValueFromTab(value);
                             const currentItem: any = items?.filter(
                                 (item) => item.id == value[0],
                             )[0];
-                            console.log(currentItem);
                             router.replace(currentItem.href); // Navigate programmatically
                             setSelectObjectFromTab(currentItem);
                             // onSelectTab(currentItem?.id as string);
                         }}
                         renderOption={(option, index) => {
-                            console.log(option);
                             const currentItem: any = items?.filter(
                                 (item) => item.id == option.value,
                             )[0];

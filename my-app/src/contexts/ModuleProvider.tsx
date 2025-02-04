@@ -10,6 +10,7 @@ type ModuleContextType = {
     availableModules: string[];
     setModule: (module: string) => void;
     modulesLoaded: boolean;
+    modulesMap: any;
 };
 
 const ModuleContext = createContext<ModuleContextType>({
@@ -17,6 +18,7 @@ const ModuleContext = createContext<ModuleContextType>({
     availableModules: [],
     setModule: () => {},
     modulesLoaded: false,
+    modulesMap: {},
 });
 
 export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
@@ -106,6 +108,7 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
                 availableModules: availableModules || [], // Ensure array
                 setModule: handleSetModule,
                 modulesLoaded: modulesLoaded,
+                modulesMap: availableModulesMap,
             }}
         >
             {children}

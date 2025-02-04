@@ -3,9 +3,23 @@
 
 import {useModules} from '@/contexts/ModuleProvider';
 import {useCampaign} from '@/contexts/CampaignContext';
+
 // import { DeliveryPage } from '@/components/DeliveryPage';
 import {useEffect, useState} from 'react';
 import {useParams, useRouter} from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const modulesMap: any = {
+    // massAdvert: dynamic(() => import('@/components/MassAdvertPage')),
+    nomenclatures: dynamic(() =>
+        import('@/components/Pages/NomenclaturesPage').then((mod) => mod.NomenclaturesPage),
+    ),
+    prices: dynamic(() => import('@/components/Pages/PricesPage').then((mod) => mod.PricesPage), {
+        ssr: false,
+    }),
+    // analytics: dynamic(() => import('@/components/AnalyticsPage')),
+    // ... other modules
+};
 
 export default function ModulePage() {
     const router = useRouter();
@@ -32,6 +46,18 @@ export default function ModulePage() {
 
     if (!availableModules.includes(module)) {
         return null;
+    }
+    console.log(module, 'module in page.tsx');
+    console.log(modulesMap[module]);
+    if (modulesMap[module]) {
+        const ModuleComponent = modulesMap[module];
+        console.log(ModuleComponent);
+
+        return (
+            <div>
+                <ModuleComponent />
+            </div>
+        );
     }
     return <div>{module}</div>;
 }
