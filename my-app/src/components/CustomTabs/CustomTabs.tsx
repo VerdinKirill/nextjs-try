@@ -12,7 +12,7 @@ import {
 import Link from 'next/link';
 import {ChevronDown} from '@gravity-ui/icons';
 import {useUser} from '../RequireAuth/RequireAuth';
-import {ReactElement, useEffect, useMemo, useRef, useState} from 'react';
+import {CSSProperties, ReactElement, useEffect, useMemo, useRef, useState} from 'react';
 import {useRouter} from 'next/navigation';
 // import {useRouter} from 'next/router';
 
@@ -75,7 +75,9 @@ export const CustomTabs = ({items, activeTab, onSelectTab}: CustomTabsProps) => 
                             flexDirection: 'column',
                             justifyContent: 'center',
                             height: 60,
-                            borderBottom: item.id === activeTab ? '5px solid #ffbe5c' : undefined,
+                            // top: item.id === activeTab ? '-5px' : undefined,
+                            borderBottom:
+                                item.id === activeTab ? '5px solid #ffbe5c' : '5px solid #0000',
                         }}
                     >
                         <Link
@@ -141,11 +143,7 @@ export const CustomTabs = ({items, activeTab, onSelectTab}: CustomTabsProps) => 
                 >
                     {visibleTabs}
                 </Tabs>
-            </div>
-
-            {/* Dropdown (Extra Tabs) */}
-            {notShowingOptions.length !== 0 && (
-                <div style={{marginLeft: 'auto', flexShrink: 0}}>
+                {notShowingOptions.length !== 0 && (
                     <Select
                         // open={true}
                         options={notShowingOptions}
@@ -175,17 +173,26 @@ export const CustomTabs = ({items, activeTab, onSelectTab}: CustomTabsProps) => 
                             <Button
                                 view={'flat'}
                                 pin="brick-brick"
-                                style={{
-                                    height: 66,
-                                    background: 'transparent',
-                                    borderBottom: notShowingOptions.some(
-                                        (opt) => opt.value === activeTab,
-                                    )
-                                        ? '5px solid #ffbe5c'
-                                        : undefined,
-                                    flexShrink: 0,
-                                    alignItems: 'center',
-                                }}
+                                style={
+                                    {
+                                        '--yc-button-background-color-hover': 'none',
+                                        height: 66,
+                                        width: 96,
+                                        marginInline: '8px',
+                                        textOverflow: 'ellipsis',
+                                        background: 'transparent',
+                                        borderBottom: notShowingOptions.some(
+                                            (opt) => opt.value === activeTab,
+                                        )
+                                            ? '5px solid #ffbe5c'
+                                            : '5px solid #00000000',
+                                        scrollbarColor:
+                                            'var(--g-color-scroll-handle) var(--g-color-scroll-track)',
+                                        scrollbarWidth: 'auto',
+                                        flexShrink: 0,
+                                        alignItems: 'center',
+                                    } as CSSProperties
+                                }
                                 ref={ref}
                                 onClick={onClick}
                                 extraProps={{onKeyDown}}
@@ -206,8 +213,12 @@ export const CustomTabs = ({items, activeTab, onSelectTab}: CustomTabsProps) => 
                             </Button>
                         )}
                     />
-                </div>
-            )}
+                    // <div style={{marginLeft: 'auto', flexShrink: 0}}>
+                    // </div>
+                )}
+            </div>
+
+            {/* Dropdown (Extra Tabs) */}
         </div>
     );
 };

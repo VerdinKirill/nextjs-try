@@ -4,7 +4,6 @@ import '../styles/App.scss';
 
 import type {Metadata} from 'next';
 import {RootLayoutClient} from '@/components/RootLayoutClient';
-import {ModuleProvider} from '@/contexts/ModuleProvider';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
