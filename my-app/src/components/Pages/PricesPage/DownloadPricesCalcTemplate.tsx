@@ -1,6 +1,7 @@
+'use client';
+
 import {Button, Icon, Text} from '@gravity-ui/uikit';
 import {FileArrowDown} from '@gravity-ui/icons';
-import React from 'react';
 import {useError} from '@/contexts/ErrorContext';
 import ApiClient from '@/utilities/ApiClient';
 import {useCampaign} from '@/contexts/CampaignContext';

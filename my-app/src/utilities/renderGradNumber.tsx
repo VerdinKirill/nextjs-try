@@ -1,7 +1,6 @@
 'use client';
 
 import {Text} from '@gravity-ui/uikit';
-import React from 'react';
 
 export const renderGradNumber = (args: any, footerValue: any, renderer: any, mode = 'asc') => {
     const {value, footer} = args;

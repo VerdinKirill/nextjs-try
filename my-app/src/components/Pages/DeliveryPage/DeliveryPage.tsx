@@ -38,39 +38,39 @@ import {useCampaign} from '@/contexts/CampaignContext';
 import {TagsFilterModal} from '@/components/TagsFilterModal';
 import {useModules} from '@/contexts/ModuleProvider';
 
-const getUserDoc = (dateRange: any, docum = undefined, mode = false, selectValue = '') => {
-    const {userInfo} = useUser();
-    const {campaigns} = userInfo ?? {};
-    const [doc, setDocument] = useState<any>();
+// const getUserDoc = (dateRange: any, docum = undefined, mode = false, selectValue = '') => {
+//     const {userInfo} = useUser();
+//     const {campaigns} = userInfo ?? {};
+//     const [doc, setDocument] = useState<any>();
 
-    if (docum) {
-        console.log(docum, mode, selectValue);
+//     if (docum) {
+//         console.log(docum, mode, selectValue);
 
-        if (mode) {
-            doc['deliveryData'][selectValue] = docum['deliveryData'][selectValue];
-            doc['tariffs'][selectValue] = docum['tariffs'][selectValue];
-        }
-        setDocument(docum);
-    }
+//         if (mode) {
+//             doc['deliveryData'][selectValue] = docum['deliveryData'][selectValue];
+//             doc['tariffs'][selectValue] = docum['tariffs'][selectValue];
+//         }
+//         setDocument(docum);
+//     }
 
-    useEffect(() => {
-        callApi(
-            'getDeliveryOrders',
-            {
-                uid: getUid(),
-                dateRange: getNormalDateRange(dateRange),
-                campaignName: selectValue != '' ? selectValue : campaigns[0]?.name,
-            },
-            true,
-        )
-            .then((response) => setDocument(response ? response['data'] : undefined))
-            .catch((error) => console.error(error));
-    }, []);
-    return doc;
-};
+//     useEffect(() => {
+//         callApi(
+//             'getDeliveryOrders',
+//             {
+//                 uid: getUid(),
+//                 dateRange: getNormalDateRange(dateRange),
+//                 campaignName: selectValue != '' ? selectValue : campaigns[0]?.name,
+//             },
+//             true,
+//         )
+//             .then((response) => setDocument(response ? response['data'] : undefined))
+//             .catch((error) => console.error(error));
+//     }, []);
+//     return doc;
+// };
 
 export const DeliveryPage = () => {
-    const {selectValue, setSwitchingCampaignsFlag, sellerId} = useCampaign();
+    const {selectValue, setSwitchingCampaignsFlag, sellerId, campaigns} = useCampaign();
     const {modulesMap} = useModules();
     const permission: string = useMemo(() => {
         return modulesMap['delivery'];
@@ -109,6 +109,8 @@ export const DeliveryPage = () => {
 
     const [uploadProgress, setUploadProgress] = useState(0);
     const uploadId = useId();
+    const [doc, setDocument] = useState<any>();
+
     function handleChange(event: any) {
         const file = event.target.files[0];
         if (!file || !file.name.includes('.xlsx')) {
@@ -198,6 +200,35 @@ export const DeliveryPage = () => {
         );
     };
 
+    const [changedDoc, setChangedDoc] = useState<any>(undefined);
+    const [changedDocUpdateType, setChangedDocUpdateType] = useState(false);
+
+    useEffect(() => {
+        if (changedDoc) {
+            console.log(changedDoc, changedDocUpdateType, selectValue);
+
+            if (changedDocUpdateType) {
+                doc['deliveryData'][selectValue] = changedDoc['deliveryData'][selectValue];
+                doc['tariffs'][selectValue] = changedDoc['tariffs'][selectValue];
+            }
+            setDocument(changedDoc);
+        }
+        callApi(
+            'getDeliveryOrders',
+            {
+                uid: getUid(),
+                dateRange: getNormalDateRange(dateRange),
+                campaignName: selectValue != '' ? selectValue : campaigns[0]?.name,
+            },
+            true,
+        )
+            .then((response) => {
+                console.log('response?[data]', response?.data);
+                setDocument(response ? response?.data : undefined);
+            })
+            .catch((error) => console.error(error));
+    }, [dateRange, changedDoc, changedDocUpdateType, selectValue]);
+
     useEffect(() => {
         if (!selectValue) return;
         if (!doc) return;
@@ -229,17 +260,12 @@ export const DeliveryPage = () => {
         }
         recalc(selectValue[0], filters);
         setPagesCurrent(1);
-    }, [selectValue]);
+    }, [selectValue, doc]);
 
     const [updatingFlag, setUpdatingFlag] = useState(false);
 
-    const [changedDoc, setChangedDoc] = useState<any>(undefined);
-    const [changedDocUpdateType, setChangedDocUpdateType] = useState(false);
-
     const [warehouseNames, setWarehouseNames] = useState([] as any[]);
     const [sortingType, setSortingType] = useState('');
-
-    const doc = getUserDoc(dateRange, changedDoc, changedDocUpdateType, selectValue[0]);
 
     const rebalanceToCount = (val: number) => {
         const currentNumber = changeToOrderCountValue;
@@ -318,35 +344,36 @@ export const DeliveryPage = () => {
             </Button>
         );
     };
-
-    if (dateChangeRecalc) {
-        setUpdatingFlag(true);
-        setDateChangeRecalc(false);
-
-        callApi(
-            'getDeliveryOrders',
-            {
-                uid: getUid(),
-                campaignName: selectValue[0],
-                dateRange: getNormalDateRange(dateRange),
-                data: {primeCostType: primeCostType[0], useMyStocks},
-            },
-            true,
-        ).then((res) => {
-            if (!res) return;
-            const resData = res['data'];
-            doc['deliveryData'][selectValue[0]] = resData['deliveryData'][selectValue[0]];
-            doc['tariffs'][selectValue[0]] = resData['tariffs'][selectValue[0]];
-
-            setChangedDoc({...doc});
-
+    useEffect(() => {
+        if (dateChangeRecalc) {
+            setUpdatingFlag(true);
             setDateChangeRecalc(false);
-            setUpdatingFlag(false);
-            console.log(doc);
-        });
 
-        setPagesCurrent(1);
-    }
+            callApi(
+                'getDeliveryOrders',
+                {
+                    uid: getUid(),
+                    campaignName: selectValue[0],
+                    dateRange: getNormalDateRange(dateRange),
+                    data: {primeCostType: primeCostType[0], useMyStocks},
+                },
+                true,
+            ).then((res) => {
+                if (!res) return;
+                const resData = res['data'];
+                doc['deliveryData'][selectValue[0]] = resData['deliveryData'][selectValue[0]];
+                doc['tariffs'][selectValue[0]] = resData['tariffs'][selectValue[0]];
+
+                setChangedDoc({...doc});
+
+                setDateChangeRecalc(false);
+                setUpdatingFlag(false);
+                console.log(doc);
+            });
+
+            setPagesCurrent(1);
+        }
+    }, [dateChangeRecalc]);
 
     const recalc = (selected = '', withfFilters = {}) => {
         const campaignData = doc
@@ -537,13 +564,14 @@ export const DeliveryPage = () => {
     };
 
     const [firstRecalc, setFirstRecalc] = useState(false);
-
-    if (changedDoc) {
-        setChangedDoc(undefined);
-        setChangedDocUpdateType(false);
-        recalc();
-        setSwitchingCampaignsFlag(false);
-    }
+    useEffect(() => {
+        if (changedDoc) {
+            setChangedDoc(undefined);
+            setChangedDocUpdateType(false);
+            recalc();
+            setSwitchingCampaignsFlag(false);
+        }
+    }, [changedDoc]);
 
     if (!doc) return <Spin />;
 
@@ -912,10 +940,12 @@ export const DeliveryPage = () => {
         })(),
     ];
 
-    if (!firstRecalc) {
-        recalc(selectValue[0]);
-        setFirstRecalc(true);
-    }
+    // useEffect(() => {
+    //     if (!firstRecalc) {
+    //         recalc(selectValue[0]);
+    //         setFirstRecalc(true);
+    //     }
+    // }, [firstRecalc]);
 
     return (
         <div style={{width: '100%', flexWrap: 'wrap'}}>

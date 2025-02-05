@@ -1,5 +1,5 @@
 'use client';
-import React, {createContext, useContext, useState, useEffect, useCallback, useMemo} from 'react';
+import {createContext, useContext, useState, useEffect, useCallback, useMemo} from 'react';
 import {useError} from './ErrorContext';
 import callApi, {getUid} from '../utilities/callApi';
 import {useRouter, useSearchParams} from 'next/navigation';
@@ -19,7 +19,9 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
     const {showError} = useError();
     const searchParams = useSearchParams();
     const {userInfo} = useUser();
-    const {campaigns} = userInfo ?? [];
+    const campaigns = useMemo(() => {
+        return userInfo.campaigns;
+    }, [userInfo]);
     const findCampaign = useCallback(
         (seller_id: string) => {
             return campaigns?.find((c: any) => c.seller_id === seller_id) || {};
@@ -144,6 +146,7 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
                 setCampaignInfo,
                 sellerId,
                 setSellerId,
+                campaigns,
                 campaignLoaded,
                 currentCampaign,
                 setCurrentCampaign,

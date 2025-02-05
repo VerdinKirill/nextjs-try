@@ -1,6 +1,8 @@
+'use client';
+
 import {Button, Icon, Text} from '@gravity-ui/uikit';
 import {FileArrowUp} from '@gravity-ui/icons';
-import React, {useId, useState} from 'react';
+import {useId, useState} from 'react';
 import {useError} from '@/contexts/ErrorContext';
 import {uploadFile} from '@/utilities/uploadFile';
 import {getNormalDateRange} from '@/utilities/getRoundValue';

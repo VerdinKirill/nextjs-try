@@ -88,7 +88,7 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
 
             router.push(`/${defaultModule}?${searchParams.toString()}`);
         }
-    }, [pathname, availableModules, router, searchParams, campaignLoaded]);
+    }, [pathname, availableModules, searchParams, campaignLoaded]);
 
     const handleSetModule = useCallback(
         (module: string) => {
@@ -111,6 +111,7 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
                 modulesMap: availableModulesMap,
             }}
         >
+            
             {children}
         </ModuleContext.Provider>
     );

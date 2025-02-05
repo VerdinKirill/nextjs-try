@@ -1,7 +1,9 @@
+'use client';
+
 import {Button, Card, Icon, Modal, Text} from '@gravity-ui/uikit';
 import {Calculator} from '@gravity-ui/icons';
 import {motion} from 'framer-motion';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {generateTextInputWithNoteOnTop, getRoundValue} from '@/utilities/getRoundValue';
 
 export const CalcUnitEconomyModal = () => {

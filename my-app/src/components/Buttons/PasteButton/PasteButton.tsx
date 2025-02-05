@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Button,
     ButtonPin,
@@ -8,7 +10,7 @@ import {
     Tooltip,
 } from '@gravity-ui/uikit';
 import {FileCheck, Files} from '@gravity-ui/icons';
-import React, {ReactNode, useState} from 'react';
+import {ReactNode, useState} from 'react';
 
 interface PasteButtonInterface {
     children?: ReactNode | ReactNode[];

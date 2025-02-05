@@ -6,9 +6,7 @@ import './Wrapper.scss';
 import {ErrorProvider} from '@/contexts/ErrorContext';
 import {CampaignProvider} from '@/contexts/CampaignContext';
 import {GlobalAlert} from '../GlobalAlert/GlobalAlert';
-import {useState, Dispatch, SetStateAction, useEffect} from 'react';
-import { ModuleProvider } from '@/contexts/ModuleProvider';
-
+import {ModuleProvider} from '@/contexts/ModuleProvider';
 
 const DARK = 'dark';
 const DEFAULT_THEME = DARK;

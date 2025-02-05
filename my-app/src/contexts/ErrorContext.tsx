@@ -1,6 +1,6 @@
 // ErrorContext.tsx
 'use client';
-import React, {createContext, useState, useContext, ReactNode} from 'react';
+import {createContext, useState, useContext, ReactNode} from 'react';
 
 // Define the context shape
 interface ErrorContextType {

@@ -90,7 +90,6 @@ export const SelectCampaign = ({
             newParams.set('seller_id', initialValue.value);
 
             // Use replace instead of push to prevent history entry
-            console.log('хуй');
             window.history.pushState(null, '', `?${newParams.toString()}`);
 
             // Directly update context state

@@ -1,6 +1,8 @@
+'use client';
+
 import {Button, Card, Icon, List, Modal, Text, TextInput} from '@gravity-ui/uikit';
 import {Tag} from '@gravity-ui/icons';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useCampaign} from '@/contexts/CampaignContext';
 import {motion} from 'framer-motion';
 

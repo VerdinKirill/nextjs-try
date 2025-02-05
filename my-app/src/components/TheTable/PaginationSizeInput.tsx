@@ -1,7 +1,9 @@
+'use client';
+
 import {Button, Icon, TextInput, Tooltip} from '@gravity-ui/uikit';
 import {ArrowRotateLeft} from '@gravity-ui/icons';
 import {motion} from 'framer-motion';
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import callApi from '@/utilities/callApi';
 import {useError} from '@/contexts/ErrorContext';
 
@@ -11,7 +13,7 @@ export const PaginationSizeInput = ({
     setPage,
     user,
     tableId,
-} : any) => {
+}: any) => {
     const {showError} = useError();
     const [tempPaginationSize, setTempPaginationSize] = useState(paginationSize);
     useEffect(() => {

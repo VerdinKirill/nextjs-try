@@ -1,7 +1,9 @@
+'use client';
+
 import {Button, Icon} from '@gravity-ui/uikit';
 import {FunnelXmark} from '@gravity-ui/icons';
 import {motion} from 'framer-motion';
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 
 export const ClearFiltersButton = ({filters, setFilters, filterData}: any) => {
     const filtersUsed = useMemo(() => {

@@ -5,9 +5,12 @@ import {useModules} from '@/contexts/ModuleProvider';
 import {useCampaign} from '@/contexts/CampaignContext';
 
 // import { DeliveryPage } from '@/components/DeliveryPage';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useParams, useRouter} from 'next/navigation';
 import dynamic from 'next/dynamic';
+import {useUser} from '@/components/RequireAuth';
+import {NoSubscriptionPage} from '@/components/Pages/NoSubscriptionPage';
+import {LogoLoader} from '@/components/LogoLoader';
 
 const modulesMap: any = {
     // massAdvert: dynamic(() => import('@/components/MassAdvertPage')),
@@ -39,6 +42,18 @@ const modulesMap: any = {
     api: dynamic(() => import('@/components/Pages/ApiPage').then((mod) => mod.ApiPage), {
         ssr: false,
     }),
+    analytics: dynamic(
+        () => import('@/components/Pages/AnalyticsPage').then((mod) => mod.AnalyticsPage),
+        {
+            ssr: false,
+        },
+    ),
+    massAdvert: dynamic(
+        () => import('@/components/Pages/MassAdvertPage').then((mod) => mod.MassAdvertPage),
+        {
+            ssr: false,
+        },
+    ),
     // analytics: dynamic(() => import('@/components/AnalyticsPage')),
     // ... other modules
 };
@@ -46,9 +61,11 @@ const modulesMap: any = {
 export default function ModulePage() {
     const router = useRouter();
     const params = useParams();
+    const {userInfo} = useUser();
     const {currentModule, availableModules, modulesLoaded} = useModules();
-    const {sellerId} = useCampaign();
+    const {sellerId, campaign} = useCampaign();
     const [module, setModule] = useState<string | null>(null);
+    const currentTime = new Date();
     useEffect(() => {
         if (params?.module) {
             setModule(Array.isArray(params.module) ? params.module[0] : params.module);
@@ -62,12 +79,28 @@ export default function ModulePage() {
         }
     }, [modulesLoaded, module, availableModules, router, sellerId]);
 
+    const subscriptionUntil = useMemo(() => {
+        console.log(campaign);
+        return campaign?.subscriptionUntil;
+    }, [campaign]);
+
     if (!modulesLoaded || !module) {
-        return <div>Loading application...</div>;
+        return (
+            <div>
+                <LogoLoader />
+            </div>
+        );
     }
 
     if (!availableModules.includes(module)) {
         return null;
+    }
+    if (
+        currentTime >= new Date(subscriptionUntil) &&
+        ![1122958293, 933839157].includes(userInfo?.user?._id) &&
+        !['noModules', 'api'].includes(module)
+    ) {
+        return <NoSubscriptionPage />;
     }
     if (modulesMap[module]) {
         const ModuleComponent = modulesMap[module];

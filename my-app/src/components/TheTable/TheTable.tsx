@@ -1,4 +1,6 @@
-import React, {useEffect, useMemo, useState} from 'react';
+'use client';
+
+import {useEffect, useMemo, useState} from 'react';
 import DataTable, {Column} from '@gravity-ui/react-data-table';
 import {MOVING} from '@gravity-ui/react-data-table/build/esm/lib/constants';
 import block from 'bem-cn-lite';
@@ -68,7 +70,7 @@ export default function TheTable({
         let sortedDataTemp = [...data];
         for (let i = 0; i < sortState?.length; i++) {
             const {columnId, order} = sortState[i];
-            const sortFunc:any = (sortFuncs as any)[columnId];
+            const sortFunc: any = (sortFuncs as any)[columnId];
             sortedDataTemp = sortedDataTemp.sort((a, b) => {
                 const av = a[columnId] ?? 0;
                 const bv = b[columnId] ?? 0;
@@ -280,7 +282,7 @@ export default function TheTable({
     );
 }
 
-export const generateFilterTextInput = (args : any) => {
+export const generateFilterTextInput = (args: any) => {
     const {
         filters,
         setFilters,
@@ -320,7 +322,7 @@ export const generateFilterTextInput = (args : any) => {
                 flexDirection: 'row',
                 height: 'max-content',
                 alignItems: 'end',
-                minWidth: constWidth ?? width ? (minWidth < width ? minWidth : width) : minWidth,
+                minWidth: (constWidth ?? width) ? (minWidth < width ? minWidth : width) : minWidth,
                 maxWidth: constWidth,
                 width: constWidth,
             }}
@@ -556,7 +558,7 @@ export const generateFilterTextInput = (args : any) => {
     );
 };
 
-export const compare = (a : any, filterData: any) => {
+export const compare = (a: any, filterData: any) => {
     const {val, compMode} = filterData;
     if (typeof a == 'string' && a.length == 24 && a.includes('T') && a.at(-1) == 'Z') {
         return new Date(a as string).toLocaleDateString('ru-RU').includes(String(val));

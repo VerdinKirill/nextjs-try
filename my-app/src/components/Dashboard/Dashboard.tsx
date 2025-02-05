@@ -48,7 +48,8 @@ export interface DashboardProps {
 export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     const searchParams = useSearchParams();
     const {userInfo, refetchUser} = useUser();
-    const {selectValue, seller_id, currentCampaign, campaignInfo, modules} = useCampaign();
+    const {selectValue, seller_id, currentCampaign, campaignInfo, modules, campaigns} =
+        useCampaign();
     const {currentModule, availableModules = [], setModule, modulesLoaded} = useModules();
     const tabsRef = useRef(null);
     const refs = useRef<Array<HTMLDivElement | null>>([]);
@@ -103,7 +104,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     // const [refetchAutoSales, setRefetchAutoSales] = useState(false);
     // const [dzhemRefetch, setDzhemRefetch] = useState(false);
     // Add null check before accessing campaigns
-    const {campaigns = []} = userInfo ?? {}; // Default to empty array
+    // const {campaigns = []} = userInfo ?? {}; // Default to empty array
 
     // Update selectOptions memo
     const selectOptions = useMemo(() => {

@@ -1,7 +1,6 @@
 'use client';
 
 import {Text, TextInput} from '@gravity-ui/uikit';
-import React from 'react';
 
 export const getRoundValue = (a: number, b: number, isPercentage = false, def = 0) => {
     let result = b ? a / b : def;
