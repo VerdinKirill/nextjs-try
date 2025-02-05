@@ -1,7 +1,5 @@
 'use client';
 
-import {Dispatch, SetStateAction, useEffect} from 'react';
-
 import {Wrapper} from '../Wrapper';
 
 interface AppProps {
@@ -10,7 +8,7 @@ interface AppProps {
 
 interface AppProps {
     children: React.ReactNode;
-    theme: string,
+    theme: string;
 }
 
 export const App: React.FC<AppProps> = ({children, theme}) => {

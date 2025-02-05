@@ -79,8 +79,6 @@ export const AnalyticsPage = () => {
         return modulesMap['buyers'];
     }, [modulesMap]);
 
-    const [selectedButton, setSelectedButton] = useState('');
-
     const [planModalOpen, setPlanModalOpen] = useState(false);
     const [planModalOpenFromEntity, setPlanModalOpenFromEntity] = useState('');
     const [planModalKey, setPlanModalKey] = useState('');
@@ -760,7 +758,6 @@ export const AnalyticsPage = () => {
                             setGraphModalTitle(title);
                             setPlanModalOpen(true);
                             setPlanModalPlanValue('');
-                            setSelectedButton('');
                             setPlanModalKey(key);
                             setPlanModalOpenFromEntity(entity);
                             setPlanModalPlanValueValid(false);

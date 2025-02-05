@@ -1,14 +1,5 @@
 'use client';
-import {
-    ArrowToggle,
-    Button,
-    Icon,
-    Select,
-    Tabs,
-    TabsItemProps,
-    Text,
-    useTheme,
-} from '@gravity-ui/uikit';
+import {Button, Icon, Select, Tabs, TabsItemProps, Text, useTheme} from '@gravity-ui/uikit';
 import Link from 'next/link';
 import {ChevronDown} from '@gravity-ui/icons';
 import {useUser} from '../RequireAuth/RequireAuth';
@@ -30,7 +21,7 @@ export const CustomTabs = ({items, activeTab, onSelectTab}: CustomTabsProps) => 
     const tabsRef = useRef<HTMLDivElement | null>(null);
     const [visibleTabs, setVisibleTabs] = useState<ReactElement[]>([]);
     const [hiddenTabs, setHiddenTabs] = useState<TabsItemProps[]>([]);
-    const [selectValueFromTab, setSelectValueFromTab] = useState([''] as string[]);
+    const [_selectValueFromTab, setSelectValueFromTab] = useState([''] as string[]);
     const [selectObjectFromTab, setSelectObjectFromTab] = useState({} as any);
 
     useEffect(() => {
@@ -156,7 +147,7 @@ export const CustomTabs = ({items, activeTab, onSelectTab}: CustomTabsProps) => 
                             setSelectObjectFromTab(currentItem);
                             // onSelectTab(currentItem?.id as string);
                         }}
-                        renderOption={(option, index) => {
+                        renderOption={(option) => {
                             const currentItem: any = items?.filter(
                                 (item) => item.id == option.value,
                             )[0];

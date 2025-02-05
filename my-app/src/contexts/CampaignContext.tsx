@@ -30,15 +30,6 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
     );
     const [campaignLoaded, setCampaignLoaded] = useState(false);
 
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString());
-            params.set(name, value);
-
-            return params.toString();
-        },
-        [searchParams],
-    );
     const [selectValue, setSelectValue] = useState([''] as string[]); // Current selected campaign
     const [campaignInfo, setCampaignInfo] = useState([{}] as any[]);
     // CampaignProvider.tsx

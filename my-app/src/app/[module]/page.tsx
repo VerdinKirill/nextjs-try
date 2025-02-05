@@ -62,7 +62,7 @@ export default function ModulePage() {
     const router = useRouter();
     const params = useParams();
     const {userInfo} = useUser();
-    const {currentModule, availableModules, modulesLoaded} = useModules();
+    const {availableModules, modulesLoaded} = useModules();
     const {sellerId, campaign} = useCampaign();
     const [module, setModule] = useState<string | null>(null);
     const currentTime = new Date();

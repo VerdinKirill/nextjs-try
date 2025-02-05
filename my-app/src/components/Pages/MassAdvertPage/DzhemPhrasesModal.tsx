@@ -2,18 +2,7 @@
 
 import {CSSProperties, useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
-import {
-    Modal,
-    Text,
-    Loader,
-    Button,
-    Card,
-    ThemeContext,
-    ThemeProvider,
-    ThemeSettingsContext,
-    getThemeType,
-    useTheme,
-} from '@gravity-ui/uikit';
+import {Modal, Text, Loader, Button, Card, useTheme} from '@gravity-ui/uikit';
 import TheTable, {compare} from '@/components/TheTable';
 import ApiClient from '@/utilities/ApiClient';
 // import ApiClient from 'src/utilities/ApiClient';

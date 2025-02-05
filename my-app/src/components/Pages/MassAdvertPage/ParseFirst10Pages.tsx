@@ -3,16 +3,6 @@
 import {getRoundValue} from '@/utilities/getRoundValue';
 import axios from 'axios';
 
-interface parseFirst10PagesProps {
-    searchPhrase: any;
-    setFetchedPlacements: (arg?: any) => any;
-    setCurrentParsingProgress: (arg?: any) => any;
-    pagesCount: number;
-    startPage: number;
-    startValuesList: any;
-    startValuesProg: any;
-}
-
 export const parseFirst10Pages = async (
     searchPhrase: any,
     setFetchedPlacements: (arg?: any) => any,

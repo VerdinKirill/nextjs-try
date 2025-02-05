@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useEffect, createContext} from 'react';
+import {useState, useEffect} from 'react';
 import {App} from '@/components/App/App';
 
 import {RequireAuth} from '@/components/RequireAuth/RequireAuth';
@@ -8,7 +8,6 @@ import {Dashboard} from '@/components/Dashboard';
 import {usePathname} from 'next/navigation';
 
 const DARK = 'dark';
-const Light = 'light';
 const DEFAULT_THEME = DARK;
 
 const THEMES = {

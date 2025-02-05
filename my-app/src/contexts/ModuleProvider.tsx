@@ -90,16 +90,7 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
         }
     }, [pathname, availableModules, searchParams, campaignLoaded]);
 
-    const handleSetModule = useCallback(
-        (module: string) => {
-            const basePath = pathname.split('/').slice(0, -1).join('/') || '/';
-            const newPath = `${basePath}${module}?${searchParams.toString()}`;
-
-            // router.push(newPath, {scroll: false});
-            // setCurrentModule(module);
-        },
-        [router, pathname, searchParams],
-    );
+    const handleSetModule = useCallback(() => {}, [router, pathname, searchParams]);
 
     return (
         <ModuleContext.Provider
@@ -111,7 +102,6 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
                 modulesMap: availableModulesMap,
             }}
         >
-            
             {children}
         </ModuleContext.Provider>
     );

@@ -30,7 +30,6 @@ export const ManageDeletionOfOldPlansModal = ({
     const [open, setOpen] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
     const [currenrPlanModalMetrics, setCurrenrPlanModalMetrics] = useState([] as any[]);
-    const [selectedButton, setSelectedButton] = useState('');
 
     const [selectedMonth, setSelectedMonth] = useState([] as any[]);
     useEffect(() => {

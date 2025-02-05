@@ -13,7 +13,15 @@ import {
 } from '@gravity-ui/uikit';
 import {CloudArrowUpIn, TrashBin, Calendar as CalendarIcon} from '@gravity-ui/icons';
 import {motion} from 'framer-motion';
-import {useState, Children, isValidElement, ReactElement, useMemo, useEffect, cloneElement} from 'react';
+import {
+    useState,
+    Children,
+    isValidElement,
+    ReactElement,
+    useMemo,
+    useEffect,
+    cloneElement,
+} from 'react';
 import {TextTitleWrapper} from '@/components/TextTitleWrapper';
 import callApi, {getUid} from '@/utilities/callApi';
 import {Calendar} from '@gravity-ui/date-components';
@@ -40,7 +48,6 @@ export const AdvertsBidsModal = ({
     advertId: number | undefined;
 }) => {
     const {showError} = useError();
-    const [selectedButton, setSelectedButton] = useState('');
     const [open, setOpen] = useState(false);
     const modalOptions = [
         {value: 'Автоставки', content: 'Автоставки'},

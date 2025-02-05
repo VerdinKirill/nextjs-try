@@ -67,7 +67,6 @@ import {
     defaultRender,
     getLocaleDateString,
     getNormalDateRange,
-    getRoundValue,
     renderAsPercent,
     renderSlashPercent,
 } from '@/utilities/getRoundValue';
@@ -208,7 +207,7 @@ export const MassAdvertPage = () => {
 
     const [filters, setFilters] = useState<any>({undef: false});
 
-    const [availableAutoSalesNmIds, setAvailableAutoSalesNmIds] = useState([] as any[]);
+    const [availableAutoSalesNmIds] = useState([] as any[]);
     const [autoSalesProfits, setAutoSalesProfits] = useState<any>({});
     const [filterAutoSales, setFilterAutoSales] = useState(false);
 

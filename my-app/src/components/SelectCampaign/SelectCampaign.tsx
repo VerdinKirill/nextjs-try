@@ -5,7 +5,7 @@ import {Button, Icon, Select, Text} from '@gravity-ui/uikit';
 import {Key, ChevronDown} from '@gravity-ui/icons';
 import {useCampaign} from '@/contexts/CampaignContext';
 import {useUser} from '@/components/RequireAuth/RequireAuth';
-import {useSearchParams, useRouter} from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
 
 export const SelectCampaign = ({
     subscriptionExpDate,
@@ -22,8 +22,6 @@ export const SelectCampaign = ({
         switchingCampaignsFlag,
         setSwitchingCampaignsFlag,
         setSellerId,
-        sellerId,
-        setCampaignInfo,
     } = useCampaign();
 
     const searchParams = useSearchParams();

@@ -62,7 +62,6 @@ export const PricesPage = () => {
 
     const [groupingFetching, setGroupingFetching] = useState(false);
 
-    const [selectedButton, setSelectedButton] = useState('');
     const [currentPricesCalculatedBasedOn, setCurrentPricesCalculatedBasedOn] = useState('');
 
     const filterByClick = (val: any, key = 'art', compMode = 'include') => {
@@ -937,7 +936,6 @@ export const PricesPage = () => {
                             view="action"
                             onClick={() => {
                                 setUpdatePricesModalOpen(true);
-                                setSelectedButton('');
                             }}
                         >
                             <Icon data={CloudArrowUpIn} />

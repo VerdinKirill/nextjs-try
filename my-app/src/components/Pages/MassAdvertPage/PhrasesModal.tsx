@@ -23,7 +23,6 @@ export const PhrasesModal = ({
 }: PhrasesModalProps) => {
     const {selectValue} = useCampaign();
     const [open, setOpen] = useState(false);
-    const [selectedButton, setSelectedButton] = useState('');
     const [filterText, setFilterText] = useState('');
     const [plusPhrasesTemplatesLabels, setPlusPhrasesTemplatesLabels] = useState([] as any[]);
 

@@ -33,41 +33,9 @@ import {RangePicker} from '@/components/RangePicker';
 import TheTable, {compare, generateFilterTextInput} from '@/components/TheTable';
 import axios from 'axios';
 import {WarehousesEdit} from './WarehousesEdit';
-import {useUser} from '@/components/RequireAuth/RequireAuth';
 import {useCampaign} from '@/contexts/CampaignContext';
 import {TagsFilterModal} from '@/components/TagsFilterModal';
 import {useModules} from '@/contexts/ModuleProvider';
-
-// const getUserDoc = (dateRange: any, docum = undefined, mode = false, selectValue = '') => {
-//     const {userInfo} = useUser();
-//     const {campaigns} = userInfo ?? {};
-//     const [doc, setDocument] = useState<any>();
-
-//     if (docum) {
-//         console.log(docum, mode, selectValue);
-
-//         if (mode) {
-//             doc['deliveryData'][selectValue] = docum['deliveryData'][selectValue];
-//             doc['tariffs'][selectValue] = docum['tariffs'][selectValue];
-//         }
-//         setDocument(docum);
-//     }
-
-//     useEffect(() => {
-//         callApi(
-//             'getDeliveryOrders',
-//             {
-//                 uid: getUid(),
-//                 dateRange: getNormalDateRange(dateRange),
-//                 campaignName: selectValue != '' ? selectValue : campaigns[0]?.name,
-//             },
-//             true,
-//         )
-//             .then((response) => setDocument(response ? response['data'] : undefined))
-//             .catch((error) => console.error(error));
-//     }, []);
-//     return doc;
-// };
 
 export const DeliveryPage = () => {
     const {selectValue, setSwitchingCampaignsFlag, sellerId, campaigns} = useCampaign();
@@ -562,8 +530,7 @@ export const DeliveryPage = () => {
         setFilteredSummary(filteredSummaryTemp);
         setFilteredData(temp);
     };
-
-    const [firstRecalc, setFirstRecalc] = useState(false);
+    
     useEffect(() => {
         if (changedDoc) {
             setChangedDoc(undefined);
