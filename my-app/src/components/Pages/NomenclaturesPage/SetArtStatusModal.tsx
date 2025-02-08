@@ -108,9 +108,10 @@ export const SetArtStatusModal = ({
                             value={status}
                             options={statusOptions}
                             onUpdate={(status) => setStatus(status)}
-                            renderControl={({onClick, onKeyDown, ref}) => {
+                            renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                                 return (
                                     <Button
+                                        // ref={ref as Ref<HTMLButtonElement>}
                                         width="max"
                                         view={
                                             status[0] == 'active'
@@ -118,13 +119,14 @@ export const SetArtStatusModal = ({
                                                 : 'outlined-danger'
                                         }
                                         pin={'circle-circle'}
-                                        ref={ref}
+                                        // ref={ref}
                                         size="l"
                                         selected
                                         onClick={onClick}
-                                        extraProps={{
-                                            onKeyDown,
-                                        }}
+                                        onKeyDown={onKeyDown}
+                                        // extraProps={{
+                                        //     onKeyDown,
+                                        // }}
                                     >
                                         <div
                                             style={{

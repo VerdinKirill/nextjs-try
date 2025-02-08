@@ -1,11 +1,12 @@
 'use client';
 
 import {useEffect, useMemo, useState} from 'react';
-import {RadioButton} from '@gravity-ui/uikit';
+// import {RadioButton} from '@gravity-ui/uikit';
 import {BuyersFeedbacksPage} from './BuyersFeedbacksPage';
 import {AutoFeedbackAnsweringPage} from './AutoFeedbackAnsweringPage';
 import {useCampaign} from '@/contexts/CampaignContext';
 import {useModules} from '@/contexts/ModuleProvider';
+import { SegmentedRadioGroup } from '@gravity-ui/uikit';
 
 export const BuyersPage = () => {
     const {selectValue, setSwitchingCampaignsFlag, sellerId} = useCampaign();
@@ -75,10 +76,10 @@ export const BuyersPage = () => {
                 }}
             >
                 {pagesMap[selectedPage]?.additionalNodes}
-                <RadioButton
+                <SegmentedRadioGroup
                     style={{marginBottom: 8}}
                     value={selectedPage}
-                    onUpdate={(val) => setSelectedPage(val)}
+                    onUpdate={(val: any) => setSelectedPage(val)}
                     options={sectionOptions}
                     size="l"
                 />

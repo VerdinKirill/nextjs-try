@@ -3,7 +3,7 @@
 import {
     Button,
     Icon,
-    Link,
+    // Link,
     List,
     Modal,
     Select,
@@ -149,14 +149,24 @@ export const AutoFeedbackTemplateCreationModal = ({
             const word = nodes[i];
             if (word[0] == '{')
                 nodes[i] = (
-                    <Link
+                    <Text
+                        color="primary"
+                        className="g-link g-link_view_primary"
                         onClick={() => {
                             setTemplateText((val) => (val.trim() + ' ' + word).trim());
                             textAreaRef?.current?.focus();
                         }}
                     >
                         {word}
-                    </Link>
+                    </Text>
+                    // <Link
+                    //     onClick={() => {
+                    //         setTemplateText((val) => (val.trim() + ' ' + word).trim());
+                    //         textAreaRef?.current?.focus();
+                    //     }}
+                    // >
+                    //     {word}
+                    // </Link>
                 );
         }
         const temp = [] as any[];
@@ -569,7 +579,7 @@ export const AutoFeedbackTemplateCreationModal = ({
                                     value={selectValue}
                                     placeholder="Values"
                                     options={bindingOptions}
-                                    renderControl={({onClick, onKeyDown, ref}) => {
+                                    renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                                         const map: any = {
                                             none: 'Задать параметры',
                                             brand: 'Бренд',
@@ -585,13 +595,15 @@ export const AutoFeedbackTemplateCreationModal = ({
                                                 selected={
                                                     binding[0] != 'none' && bindingKeys.length > 0
                                                 }
+                                                // ref={ref as Ref<HTMLButtonElement>}
                                                 view={'outlined-info'}
                                                 pin={'circle-circle'}
-                                                ref={ref}
+                                                // ref={ref}
                                                 onClick={onClick}
-                                                extraProps={{
-                                                    onKeyDown,
-                                                }}
+                                                onKeyDown={onKeyDown}
+                                                // extraProps={{
+                                                //     onKeyDown,
+                                                // }}
                                             >
                                                 {map[binding[0]]}
                                             </Button>

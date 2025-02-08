@@ -2,7 +2,7 @@
 
 import {Button, Icon, List, Popup, Text} from '@gravity-ui/uikit';
 import {Box, Xmark} from '@gravity-ui/icons';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {motion} from 'framer-motion';
 
 export const StocksByWarehousesPopup = ({stocksByWarehousesArt}: any) => {
@@ -20,11 +20,10 @@ export const StocksByWarehousesPopup = ({stocksByWarehousesArt}: any) => {
                 temp.push(`${warehousesName}: ${quantity}`);
         return temp;
     }, [stocksByWarehousesArt]);
-
-    const ref = useRef(null);
+    const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     return (
         <>
-            <Popup open={open} anchorRef={ref} hasArrow={false}>
+            <Popup open={open} anchorElement={anchorElement} hasArrow={false}>
                 <div
                     style={{
                         width: 0,
@@ -116,7 +115,7 @@ export const StocksByWarehousesPopup = ({stocksByWarehousesArt}: any) => {
                 size="xs"
                 pin="clear-clear"
                 view="flat"
-                ref={ref}
+                ref={setAnchorElement}
                 onClick={() => stocksByWarehousesArt && setOpen(!open)}
             >
                 <div

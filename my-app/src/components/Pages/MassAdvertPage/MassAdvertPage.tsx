@@ -10,7 +10,6 @@ import {
     Link,
     Icon,
     Popover,
-    PopoverBehavior,
     Modal,
     Skeleton,
     List,
@@ -19,8 +18,8 @@ import {
     ButtonSize,
     ButtonView,
     IconData,
+    HelpMark,
 } from '@gravity-ui/uikit';
-import {HelpPopover} from '@gravity-ui/components';
 import '@gravity-ui/react-data-table/build/esm/lib/DataTable.scss';
 import block from 'bem-cn-lite';
 const b = block('app');
@@ -549,7 +548,7 @@ export const MassAdvertPage = () => {
         return temp;
     };
 
-    const columnData = [
+    const columnData: any = [
         {
             name: 'art',
             placeholder: 'Артикул',
@@ -569,11 +568,8 @@ export const MassAdvertPage = () => {
             ],
             render: ({value, row, footer, index}: any) => {
                 const {title, brand, object, nmId, photos, imtId, art, tags} = row;
-
                 if (title === undefined) return <div style={{height: 28}}>{value}</div>;
-
                 const imgUrl = photos ? (photos[0] ? photos[0].big : undefined) : undefined;
-
                 let titleWrapped = title;
                 if (title.length > 30) {
                     let wrapped = false;
@@ -589,7 +585,6 @@ export const MassAdvertPage = () => {
                         }
                     }
                 }
-
                 /// tags
                 const tagsNodes = [] as ReactNode[];
                 const autoSalesInfo = doc?.['autoSales']?.[selectValue[0]]?.[nmId];
@@ -621,12 +616,9 @@ export const MassAdvertPage = () => {
                                             campaignName: selectValue[0],
                                             nmIds: [nmId],
                                         };
-
                                         console.log(params);
-
                                         delete doc.autoSales[selectValue[0]][nmId];
                                         setChangedDoc({...doc});
-
                                         callApi('deleteAutoSaleFromNmIds', params);
                                     }}
                                 >
@@ -636,8 +628,9 @@ export const MassAdvertPage = () => {
                                 <></>
                             )}
                             <Popover
-                                openOnHover={fixedPrices?.dateRange}
-                                delayOpening={1000}
+                                // open={fixedPrices?.dateRange}
+                                disabled={!fixedPrices?.dateRange}
+                                openDelay={1000}
                                 placement={'bottom'}
                                 content={
                                     <Text variant="subheader-1">
@@ -662,6 +655,7 @@ export const MassAdvertPage = () => {
                                 }
                             >
                                 <Button
+                                    content={'div'}
                                     size="xs"
                                     pin={'clear-circle'}
                                     view={inActionNow ? 'outlined-action' : 'outlined'}
@@ -686,14 +680,13 @@ export const MassAdvertPage = () => {
                     );
                     tagsNodes.push(<div style={{minWidth: 8}} />);
                 }
-
                 if (tags) {
                     for (let i = 0; i < tags.length; i++) {
                         const tag = tags[i];
                         if (!tag) continue;
-
                         tagsNodes.push(
                             <Button
+                                content={'div'}
                                 size="xs"
                                 pin="circle-circle"
                                 selected
@@ -707,7 +700,6 @@ export const MassAdvertPage = () => {
                     }
                     tagsNodes.pop();
                 }
-
                 return footer ? (
                     <div style={{height: 28}}>{value}</div>
                 ) : (
@@ -756,7 +748,9 @@ export const MassAdvertPage = () => {
                                     }}
                                 >
                                     <Popover
-                                        behavior={'delayed' as PopoverBehavior}
+                                        openDelay={1000}
+                                        closeDelay={1000}
+                                        // behavior={'delayed' as PopoverBehavior}
                                         disabled={value === undefined}
                                         content={
                                             <div style={{width: 200}}>
@@ -883,7 +877,6 @@ export const MassAdvertPage = () => {
                                                         value,
                                                         doc.dzhemData[selectValue[0]][value],
                                                     );
-
                                                     const temp = [] as any[];
                                                     if (dzhem)
                                                         for (const [
@@ -895,7 +888,6 @@ export const MassAdvertPage = () => {
                                                             phrasesStats['phrase'] = phrase;
                                                             temp.push(phrasesStats);
                                                         }
-
                                                     temp.sort((a, b) => {
                                                         return b?.openCardCount - a?.openCardCount;
                                                     });
@@ -1038,7 +1030,6 @@ export const MassAdvertPage = () => {
                           <Icon data={Magnifier} size={14} />
                       </Button>,
                       <PopupFilterArts setFilters={setFiltersRK} filters={filtersRK} />,
-
                       <div
                           style={{
                               display: 'flex',
@@ -1047,84 +1038,79 @@ export const MassAdvertPage = () => {
                               marginLeft: 4,
                           }}
                       >
-                          <HelpPopover
-                              size="l"
-                              content={
-                                  <div style={{display: 'flex', flexDirection: 'column'}}>
-                                      <Text variant="subheader-1">
-                                          Для поиска введите
-                                          <Text
-                                              style={{margin: '0 3px'}}
-                                              color="brand"
-                                              variant="subheader-1"
-                                          >
-                                              Id РК
-                                          </Text>
+                          <HelpMark>
+                              <div style={{display: 'flex', flexDirection: 'column'}}>
+                                  <Text variant="subheader-1">
+                                      Для поиска введите
+                                      <Text
+                                          style={{margin: '0 3px'}}
+                                          color="brand"
+                                          variant="subheader-1"
+                                      >
+                                          Id РК
                                       </Text>
-                                      <div style={{height: 4}} />
-                                      <Text variant="subheader-1">
-                                          Введите
-                                          <Button
-                                              size="s"
-                                              style={{margin: '0 3px'}}
-                                              view="outlined-action"
-                                              onClick={() => filterByButton('+', 'adverts')}
-                                          >
-                                              <Icon data={Plus} size={14} />
-                                          </Button>
-                                          чтобы показать артикулы с РК
-                                      </Text>
-                                      <div style={{height: 4}} />
-                                      <Text variant="subheader-1">
-                                          Введите
-                                          <Button
-                                              size="s"
-                                              style={{margin: '0 3px'}}
-                                              view="outlined-action"
-                                              onClick={() => filterByButton('-', 'adverts')}
-                                          >
-                                              <Icon data={Minus} size={14} />
-                                          </Button>
-                                          чтобы показать артикулы без РК
-                                      </Text>
-                                      <div style={{height: 4}} />
-                                      <Text variant="subheader-1">
-                                          Введите
-                                          <Button
-                                              size="s"
-                                              style={{margin: '0 3px'}}
-                                              view="outlined-action"
-                                              onClick={() => filterByButton('авто', 'adverts')}
-                                          >
-                                              авто
-                                          </Button>
-                                          чтобы показать артикулы с авто РК
-                                      </Text>
-                                      <div style={{height: 4}} />
-                                      <Text variant="subheader-1">
-                                          Введите
-                                          <Button
-                                              size="s"
-                                              style={{margin: '0 3px'}}
-                                              view="outlined-action"
-                                              onClick={() => filterByButton('поиск', 'adverts')}
-                                          >
-                                              поиск
-                                          </Button>
-                                          чтобы показать артикулы с поисковыми РК
-                                      </Text>
-                                  </div>
-                              }
-                          />
+                                  </Text>
+                                  <div style={{height: 4}} />
+                                  <Text variant="subheader-1">
+                                      Введите
+                                      <Button
+                                          size="s"
+                                          style={{margin: '0 3px'}}
+                                          view="outlined-action"
+                                          onClick={() => filterByButton('+', 'adverts')}
+                                      >
+                                          <Icon data={Plus} size={14} />
+                                      </Button>
+                                      чтобы показать артикулы с РК
+                                  </Text>
+                                  <div style={{height: 4}} />
+                                  <Text variant="subheader-1">
+                                      Введите
+                                      <Button
+                                          size="s"
+                                          style={{margin: '0 3px'}}
+                                          view="outlined-action"
+                                          onClick={() => filterByButton('-', 'adverts')}
+                                      >
+                                          <Icon data={Minus} size={14} />
+                                      </Button>
+                                      чтобы показать артикулы без РК
+                                  </Text>
+                                  <div style={{height: 4}} />
+                                  <Text variant="subheader-1">
+                                      Введите
+                                      <Button
+                                          size="s"
+                                          style={{margin: '0 3px'}}
+                                          view="outlined-action"
+                                          onClick={() => filterByButton('авто', 'adverts')}
+                                      >
+                                          авто
+                                      </Button>
+                                      чтобы показать артикулы с авто РК
+                                  </Text>
+                                  <div style={{height: 4}} />
+                                  <Text variant="subheader-1">
+                                      Введите
+                                      <Button
+                                          size="s"
+                                          style={{margin: '0 3px'}}
+                                          view="outlined-action"
+                                          onClick={() => filterByButton('поиск', 'adverts')}
+                                      >
+                                          поиск
+                                      </Button>
+                                      чтобы показать артикулы с поисковыми РК
+                                  </Text>
+                              </div>
+                          </HelpMark>
                       </div>,
                   ],
                   render: ({value, row, index}: any) => {
                       if (typeof value === 'number') {
                           return <Text>{`Уникальных РК ID: ${value}`}</Text>;
                       }
-
                       const {art} = row;
-
                       const switches: any[] = [];
                       if (value)
                           for (const [advertId, _] of Object.entries(value)) {
@@ -1256,7 +1242,6 @@ export const MassAdvertPage = () => {
                                   );
                               }
                           }
-
                       return (
                           <div
                               style={{
@@ -1279,13 +1264,11 @@ export const MassAdvertPage = () => {
                   sortFunction: (a: any, b: any, order: any) => {
                       const profitsDataA = autoSalesProfits[a?.art]?.rentabelnost;
                       const profitsDataB = autoSalesProfits[b?.art]?.rentabelnost;
-
                       const isNaNa = isNaN(profitsDataA);
                       const isNaNb = isNaN(profitsDataB);
                       if (isNaNa && isNaNb) return 1;
                       else if (isNaNa) return 1;
                       else if (isNaNb) return -1;
-
                       return (profitsDataA - profitsDataB) * order;
                   },
                   additionalNodes: [
@@ -1319,15 +1302,12 @@ export const MassAdvertPage = () => {
                                       oldDiscount,
                                   };
                                   delete tempAutoSales[art];
-
                                   newDocAutoSales[selectValue[0]][nmId] = {
                                       autoSaleName: '',
                                       fixedPrices: {dateRange, autoSaleName},
                                   };
                               }
-
                               console.log(params);
-
                               callApi('setAutoSales', params, false, true)
                                   .then(() => {
                                       setAutoSalesProfits(tempAutoSales);
@@ -1366,7 +1346,6 @@ export const MassAdvertPage = () => {
                       if (footer) return undefined;
                       const profitsData = autoSalesProfits[art];
                       const switches = [] as any[];
-
                       if (profitsData) {
                           switches.push(
                               <Card
@@ -1419,7 +1398,6 @@ export const MassAdvertPage = () => {
                                           <Text>{`${profitsData.oldRozPrices} ₽`}</Text>
                                       </div>
                                   </Button>
-
                                   <Text
                                       style={{
                                           width: '100%',
@@ -1466,7 +1444,7 @@ export const MassAdvertPage = () => {
                                           minHeight: 0.5,
                                           marginTop: 10,
                                           width: '100%',
-                                          background: 'var(--yc-color-base-generic-hover)',
+                                          background: 'var(--g-color-base-generic-hover)',
                                       }}
                                   />
                                   <div
@@ -1499,17 +1477,13 @@ export const MassAdvertPage = () => {
                                                   oldRozPrices,
                                                   oldDiscount,
                                               };
-
                                               console.log(params);
-
                                               doc.autoSales[selectValue[0]][nmId] = {
                                                   autoSaleName: '',
                                                   fixedPrices: {dateRange, autoSaleName},
                                               };
                                               setChangedDoc({...doc});
-
                                               callApi('setAutoSales', params);
-
                                               const temp = {...autoSalesProfits};
                                               delete temp[art];
                                               setAutoSalesProfits(temp);
@@ -1537,9 +1511,7 @@ export const MassAdvertPage = () => {
                           );
                           switches.push(<div style={{minWidth: 8}} />);
                       }
-
                       switches.pop();
-
                       return (
                           <div
                               style={{
@@ -1591,7 +1563,8 @@ export const MassAdvertPage = () => {
                             }
                         }
                         return (
-                            <span style={{pointerEvents: 'auto'}}>
+                            // <span style={{pointerEvents: 'auto'}}>
+                            <div style={{pointerEvents: 'auto'}}>
                                 <Tooltip
                                     style={{maxWidth: '400px'}}
                                     content={
@@ -1603,22 +1576,17 @@ export const MassAdvertPage = () => {
                                     }
                                     disabled={false}
                                 >
-                                    <Button
-                                        view="flat"
-                                        style={{color: 'rgb(255, 190, 92)'}}
-                                        size="xs"
-                                    >
+                                    <Text content={'div'} style={{color: 'rgb(255, 190, 92)'}}>
                                         <Icon data={TriangleExclamation} size={11} />
-                                    </Button>
+                                    </Text>
                                 </Tooltip>
-                            </span>
+                            </div>
                         );
                     }
                     return <div />;
                 };
                 const {placementsValue, stocksBySizes, nmId} = row ?? {};
                 const stocksByWarehousesArt = stocksByWarehouses?.[nmId];
-
                 // if (!placementsValue) return undefined;
                 const {reviewRating, sizes, feedbacks} = placementsValue ?? {};
                 // if (!reviewRating) return undefined;
@@ -1626,7 +1594,6 @@ export const MassAdvertPage = () => {
                 const {total} = price ?? {total: 0};
                 const priceRub = Math.round(total / 100);
                 // console.log(placementsValue);
-
                 const {phrase} = placementsValue ?? {};
                 const pricesData: any[] = [];
                 const pricesDataCur: any[] = [];
@@ -1634,25 +1601,21 @@ export const MassAdvertPage = () => {
                 const reviewRatingsDataCur: any[] = [];
                 const feedbacksData: any[] = [];
                 const feedbacksDataCur: any[] = [];
-                let yagrPricesData = {} as any;
+                // let yagrPricesData = {} as any;
                 let yagrReviewRatingsData = {} as any;
                 let yagrFeedbacksData = {} as any;
-
                 const {firstPage} = doc?.placementsAuctions?.[selectValue[0]]?.[phrase] ?? {};
-
                 if (placementsValue && reviewRating) {
                     if (firstPage) {
                         for (let i = 0; i < firstPage.length; i++) {
                             const card = firstPage[i];
                             // console.log(card);
-
                             const {reviewRating, sizes, feedbacks} = card;
                             const {price} = sizes
                                 ? (sizes[0] ?? {price: undefined})
                                 : {price: undefined};
                             const {total} = price ?? {total: 0};
                             const priceRub = Math.round(total / 100);
-
                             if (!pricesData.includes(priceRub)) pricesData.push(priceRub);
                             if (!reviewRatingsData.includes(reviewRating))
                                 reviewRatingsData.push(reviewRating);
@@ -1686,7 +1649,6 @@ export const MassAdvertPage = () => {
                             feedbacksDataCur.push(null);
                         }
                     }
-
                     const genYagrData = (
                         all: any,
                         cur: any,
@@ -1718,7 +1680,6 @@ export const MassAdvertPage = () => {
                                     },
                                 ],
                             },
-
                             libraryConfig: {
                                 chart: {
                                     series: {
@@ -1747,15 +1708,14 @@ export const MassAdvertPage = () => {
                             },
                         } as YagrWidgetData;
                     };
-
-                    yagrPricesData = genYagrData(
-                        pricesData,
-                        pricesDataCur,
-                        '#5fb8a5',
-                        'Цены топ 100 артикулов по запросу',
-                        'Цены',
-                        'Цена',
-                    );
+                    // yagrPricesData = genYagrData(
+                    //     pricesData,
+                    //     pricesDataCur,
+                    //     '#5fb8a5',
+                    //     'Цены топ 100 артикулов по запросу',
+                    //     'Цены',
+                    //     'Цена',
+                    // );
                     yagrReviewRatingsData = genYagrData(
                         reviewRatingsData,
                         reviewRatingsDataCur,
@@ -1774,7 +1734,6 @@ export const MassAdvertPage = () => {
                         0,
                     );
                 }
-
                 return (
                     <Card
                         style={{
@@ -1787,46 +1746,11 @@ export const MassAdvertPage = () => {
                     >
                         {priceRub ? (
                             <Popover
-                                openOnHover={reviewRating}
-                                content={
-                                    <div
-                                        style={{
-                                            height: 'calc(30em - 60px)',
-                                            width: '60em',
-                                            overflow: 'auto',
-                                            display: 'flex',
-                                        }}
-                                    >
-                                        <Card
-                                            view="outlined"
-                                            theme="warning"
-                                            style={{
-                                                position: 'absolute',
-                                                height: '30em',
-                                                width: '60em',
-                                                overflow: 'auto',
-                                                top: -10,
-                                                left: -10,
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                            }}
-                                        >
-                                            <ChartKit type="yagr" data={yagrPricesData} />
-                                            <div
-                                                style={{
-                                                    // background: 'var(--g-color-base-background)',
-                                                    background: '#2d2c33',
-                                                    position: 'absolute',
-                                                    height: 20,
-                                                    width: '100%',
-                                                    bottom: 0,
-                                                }}
-                                            ></div>
-                                        </Card>
-                                    </div>
-                                }
+                                disabled={reviewRating}
+                                // openOnHover={reviewRating}
                             >
                                 <Button
+                                    content={'div'}
                                     view="flat"
                                     width="max"
                                     size="xs"
@@ -1852,7 +1776,7 @@ export const MassAdvertPage = () => {
                                 <div
                                     style={{
                                         width: '100%',
-                                        background: 'var(--yc-color-base-generic-hover)',
+                                        background: 'var(--g-color-base-generic-hover)',
                                         height: 0.5,
                                     }}
                                 />
@@ -1902,6 +1826,7 @@ export const MassAdvertPage = () => {
                                         }
                                     >
                                         <Button
+                                            content={'div'}
                                             width="max"
                                             size="xs"
                                             view="flat"
@@ -1933,7 +1858,7 @@ export const MassAdvertPage = () => {
                                     </Popover>
                                     <div
                                         style={{
-                                            background: 'var(--yc-color-base-generic-hover)',
+                                            background: 'var(--g-color-base-generic-hover)',
                                             height: 24,
                                             minWidth: 0.5,
                                         }}
@@ -1980,6 +1905,7 @@ export const MassAdvertPage = () => {
                                         }
                                     >
                                         <Button
+                                            content={'div'}
                                             style={{
                                                 width: 80,
                                                 height: 20,
@@ -2042,7 +1968,7 @@ export const MassAdvertPage = () => {
                             <div
                                 style={{
                                     width: '100%',
-                                    background: 'var(--yc-color-base-generic-hover)',
+                                    background: 'var(--g-color-base-generic-hover)',
                                     height: 0.5,
                                 }}
                             />
@@ -2054,7 +1980,7 @@ export const MassAdvertPage = () => {
                             <div
                                 style={{
                                     width: '100%',
-                                    background: 'var(--yc-color-base-generic-hover)',
+                                    background: 'var(--g-color-base-generic-hover)',
                                     height: 0.5,
                                 }}
                             />
@@ -2068,7 +1994,7 @@ export const MassAdvertPage = () => {
                                 <Button
                                     disabled={!Math.round(profit)}
                                     style={{
-                                        width: 'au',
+                                        width: 'auto',
                                         overflow: 'hidden',
                                     }}
                                     width="max"
@@ -2101,13 +2027,11 @@ export const MassAdvertPage = () => {
             sortFunction: (a: any, b: any, order: any) => {
                 const profitsDataA = a?.profit;
                 const profitsDataB = b?.profit;
-
                 const isNaNa = isNaN(profitsDataA);
                 const isNaNb = isNaN(profitsDataB);
                 if (isNaNa && isNaNb) return 1;
                 else if (isNaNa) return 1;
                 else if (isNaNb) return -1;
-
                 return (profitsDataA - profitsDataB) * order;
             },
         },
@@ -2124,15 +2048,12 @@ export const MassAdvertPage = () => {
             sortFunction: (a: any, b: any, order: any) => {
                 const dataA = a?.placements;
                 const dataB = b?.placements;
-
                 // console.log(dataA, dataB);
-
                 const isNaNa = isNaN(dataA);
                 const isNaNb = isNaN(dataB);
                 if (isNaNa && isNaNb) return 1;
                 else if (isNaNa) return 1;
                 else if (isNaNb) return -1;
-
                 return (dataA - dataB) * order;
             },
             additionalNodes: [
@@ -2167,13 +2088,11 @@ export const MassAdvertPage = () => {
                                 const {advertId} = advertData as any;
                                 params.data.advertsIds[advertId] = {};
                                 params.data.advertsIds[advertId].phrase = placementsDisplayPhrase;
-
                                 setSelectedSearchPhrase(
                                     selectedSearchPhrase == placementsDisplayPhrase
                                         ? ''
                                         : placementsDisplayPhrase,
                                 );
-
                                 if (selectedSearchPhrase == placementsDisplayPhrase) {
                                     delete doc.advertsSelectedPhrases[selectValue[0]][advertId];
                                 } else {
@@ -2203,7 +2122,6 @@ export const MassAdvertPage = () => {
                             event.stopPropagation();
                             delete doc.fetchedPlacements[placementsDisplayPhrase];
                             delete currentParsingProgress[placementsDisplayPhrase];
-
                             parseFirst10Pages(
                                 placementsDisplayPhrase,
                                 setFetchedPlacements,
@@ -2214,7 +2132,6 @@ export const MassAdvertPage = () => {
                                     ? currentParsingProgress[placementsDisplayPhrase].progress / 100
                                     : 0,
                             );
-
                             for (let i = 0; i < 9; i++) {
                                 parseFirst10Pages(
                                     'тестовая фраза',
@@ -2223,7 +2140,6 @@ export const MassAdvertPage = () => {
                                     100,
                                 );
                             }
-
                             setChangedDoc({...doc});
                         }}
                     >
@@ -2253,7 +2169,6 @@ export const MassAdvertPage = () => {
                                 doc.fetchedPlacements[placementsDisplayPhrase],
                                 currentParsingProgress[placementsDisplayPhrase],
                             );
-
                             for (let i = 0; i < 5; i++) {
                                 parseFirst10Pages(
                                     'тестовая фраза',
@@ -2287,10 +2202,8 @@ export const MassAdvertPage = () => {
                     const {updateTime} = doc.fetchedPlacements[phrase] ?? ({} as any);
                     const updateTimeObj = new Date(updateTime);
                     // console.log(phrase, doc.fetchedPlacements[phrase], doc.fetchedPlacements, doc);
-
                     if (!index || index == -1) return undefined;
                     const {position} = log ?? {};
-
                     return (
                         <Card
                             view="clear"
@@ -2318,7 +2231,6 @@ export const MassAdvertPage = () => {
                                 ) : (
                                     <></>
                                 )}
-
                                 <Text>{`${!index || index == -1 ? 'Нет в выдаче' : index} `}</Text>
                                 <div style={{width: 4}} />
                             </div>
@@ -2326,17 +2238,13 @@ export const MassAdvertPage = () => {
                         </Card>
                     );
                 }
-
                 if (!value) return undefined;
                 const {drrAI, placementsValue, adverts} = row;
-
                 if (!placementsValue) return undefined;
                 const {updateTime, index, phrase, log, cpmIndex} = placementsValue;
                 const {placementsRange} = drrAI ?? {};
                 if (phrase == '') return undefined;
-
                 const {position, advertsType} = log ?? {};
-
                 const findFirstActive = (adverts: any[]) => {
                     for (const [id, _] of Object.entries(adverts ?? {})) {
                         const advert = doc?.adverts?.[selectValue[0]]?.[id];
@@ -2346,13 +2254,10 @@ export const MassAdvertPage = () => {
                     return undefined;
                 };
                 const fistActiveAdvert = findFirstActive(adverts);
-
                 const updateTimeObj = new Date(updateTime);
                 const moreThatHour =
                     new Date().getTime() / 1000 / 3600 - updateTimeObj.getTime() / 1000 / 3600 > 1;
-
                 const {advertId} = fistActiveAdvert ?? {};
-
                 // console.log(
                 //     advertId,
                 //     doc.advertsSelectedPhrases[selectValue[0]][advertId]
@@ -2360,10 +2265,8 @@ export const MassAdvertPage = () => {
                 //         : false,
                 //     phrase,
                 // );
-
                 const isSelectedPhrase =
                     doc?.advertsSelectedPhrases?.[selectValue[0]]?.[advertId]?.phrase == phrase;
-
                 return (
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                         <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -2401,7 +2304,6 @@ export const MassAdvertPage = () => {
                             ) : (
                                 <></>
                             )}
-
                             <Text
                                 color={
                                     index != -1
@@ -2434,7 +2336,7 @@ export const MassAdvertPage = () => {
                                 gap: 8,
                             }}
                         >
-                            <Auction sellerId={sellerId} phrase={phrase} />
+                            {phrase ? <Auction sellerId={sellerId} phrase={phrase} /> : <></>}
                             <div style={{display: 'flex', flexDirection: 'row', gap: 4}}>
                                 <Button
                                     size="xs"
@@ -2457,7 +2359,6 @@ export const MassAdvertPage = () => {
                                             ] = {
                                                 phrase: '',
                                             };
-
                                         if (isSelectedPhrase) {
                                             doc['advertsSelectedPhrases'][selectValue[0]][
                                                 advertId
@@ -2467,9 +2368,7 @@ export const MassAdvertPage = () => {
                                                 advertId
                                             ].phrase = phrase;
                                         }
-
                                         setChangedDoc({...doc});
-
                                         const params: any = {
                                             uid: getUid(),
                                             campaignName: selectValue[0],
@@ -2481,7 +2380,6 @@ export const MassAdvertPage = () => {
                                         params.data.advertsIds[advertId] = {};
                                         params.data.advertsIds[advertId].phrase = phrase;
                                         console.log(params);
-
                                         callApi('updateAdvertsSelectedPhrases', params);
                                     }}
                                 >
@@ -2510,10 +2408,8 @@ export const MassAdvertPage = () => {
             group: true,
             render: ({value}: any) => {
                 // const {advertsStocksThreshold} = row;
-
                 // if (!advertsStocksThreshold) return value;
                 // const {stocksThreshold} = advertsStocksThreshold ?? {};
-
                 // if (!stocksThreshold) return value;
                 return (
                     <div>
@@ -2533,10 +2429,7 @@ export const MassAdvertPage = () => {
                     }}
                 >
                     <Text variant="subheader-1">Обор.</Text>
-                    <HelpPopover
-                        size="l"
-                        content="Показывает через сколько дней закончится текущий остаток с учетом средней скорости заказов в день за выбранные период в календаре"
-                    />
+                    <HelpMark content="Показывает через сколько дней закончится текущий остаток с учетом средней скорости заказов в день за выбранные период в календаре" />
                 </div>
             ),
         },
@@ -2552,15 +2445,12 @@ export const MassAdvertPage = () => {
             sortFunction: (a: any, b: any, order: any) => {
                 const dataA = getRoundValue(a?.sum_orders, a?.orders);
                 const dataB = getRoundValue(b?.sum_orders, b?.orders);
-
                 // console.log(dataA, dataB);
-
                 const isNaNa = isNaN(dataA);
                 const isNaNb = isNaN(dataB);
                 if (isNaNa && isNaNb) return 1;
                 else if (isNaNa) return 1;
                 else if (isNaNb) return -1;
-
                 return (dataA - dataB) * order;
             },
         },
@@ -2576,7 +2466,6 @@ export const MassAdvertPage = () => {
                         if (![9, 11].includes(advert?.status)) continue;
                         const drrAI = doc?.advertsAutoBidsRules[selectValue[0]]?.[advert?.advertId];
                         const {desiredDRR, useManualMaxCpm, autoBidsMode} = drrAI ?? {};
-
                         if (useManualMaxCpm && !['drr'].includes(autoBidsMode)) continue;
                         if (desiredDRR > minDrr) minDrr = desiredDRR;
                     }
@@ -2584,7 +2473,6 @@ export const MassAdvertPage = () => {
                 };
                 const {adverts} = row;
                 const minDrr = findMinDrr(adverts);
-
                 return (
                     <Text
                         color={
@@ -2619,11 +2507,9 @@ export const MassAdvertPage = () => {
                 };
                 const {adverts} = row;
                 const fistActiveAdvert = findFirstActive(adverts);
-
                 const drrAI =
                     doc?.advertsAutoBidsRules?.[selectValue[0]]?.[fistActiveAdvert?.advertId];
                 const {desiredDRR, autoBidsMode} = drrAI ?? {};
-
                 return (
                     <Text
                         color={
@@ -4556,19 +4442,22 @@ export const MassAdvertPage = () => {
                                         value={artsStatsByDayModeSwitchValue}
                                         placeholder="Values"
                                         options={artsStatsByDayModeSwitchValues}
-                                        renderControl={({onClick, onKeyDown, ref}) => {
+                                        renderControl={({
+                                            triggerProps: {onClick, onKeyDown},
+                                        }) => {
                                             return (
                                                 <Button
                                                     style={{
                                                         marginTop: 12,
                                                     }}
-                                                    ref={ref}
+                                                    // ref={ref as Ref<HTMLButtonElement>}
                                                     size="xl"
                                                     view="outlined"
                                                     onClick={onClick}
-                                                    extraProps={{
-                                                        onKeyDown,
-                                                    }}
+                                                    onKeyDown={onKeyDown}
+                                                    // extraProps={{
+                                                    //     onKeyDown,
+                                                    // }}
                                                 >
                                                     <div
                                                         style={{
@@ -4602,6 +4491,7 @@ export const MassAdvertPage = () => {
                                         height: '100%',
                                     }}
                                 >
+                                    {/* <div></div> */}
                                     <TheTable
                                         columnData={columnDataArtByDayStats}
                                         data={artsStatsByDayFilteredData}

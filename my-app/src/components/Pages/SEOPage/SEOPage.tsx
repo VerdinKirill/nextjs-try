@@ -275,9 +275,9 @@ export const SEOPage = () => {
                 style={{display: 'flex', flexDirection: 'row', width: '60vw', alignItems: 'center'}}
             >
                 <TextInput
-                    leftContent={
+                    endContent={
                         <Popover
-                            delayOpening={1000}
+                            openDelay={1000}
                             hasArrow={false}
                             placement={'bottom'}
                             content={

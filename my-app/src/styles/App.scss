@@ -1,3 +1,5 @@
+// @import "tailwindcss";
+
 // #root {
 //     background: linear-gradient(
 //         180deg,
@@ -256,7 +258,7 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.yc-root {
+.g-root {
     &_theme_light {
         background-color: #fff;
     }
@@ -266,8 +268,8 @@ code {
     }
 }
 
-.yc-card {
-    border: '1px solid var(--yc-color-base-generic-hover)';
+.g-card {
+    border: '1px solid var(--gc-color-base-generic-hover)';
     border-radius: 30;
     backdrop-filter: 'blur(20px)';
     box-shadow: 'var(--g-color-base-background) 0px 2px 8px';

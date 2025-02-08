@@ -1,9 +1,16 @@
 'use client';
 
-import {HelpPopover} from '@gravity-ui/components';
-import {Button, Card, Modal, Select, TextInput, Text, Checkbox} from '@gravity-ui/uikit';
+import {Button, Card, Modal, Select, TextInput, Text, Checkbox, HelpMark} from '@gravity-ui/uikit';
 import {motion} from 'framer-motion';
-import {useState, Children, isValidElement, ReactElement, useMemo, useEffect, cloneElement} from 'react';
+import {
+    useState,
+    Children,
+    isValidElement,
+    ReactElement,
+    useMemo,
+    useEffect,
+    cloneElement,
+} from 'react';
 import {useError} from '@/contexts/ErrorContext';
 import ApiClient from '@/utilities/ApiClient';
 import callApi, {getUid} from '@/utilities/callApi';
@@ -267,10 +274,7 @@ export const AdvertsBudgetsModal = ({
                                             }}
                                         >
                                             <Text>Бюджет на день</Text>
-                                            <HelpPopover
-                                                size="l"
-                                                content="Пополнит баланс РК до заданной суммы 1 раз в 00:00 по GMT+3, Москва"
-                                            />
+                                            <HelpMark content="Пополнит баланс РК до заданной суммы 1 раз в 00:00 по GMT+3, Москва" />
                                         </div>
                                     ) : (
                                         'Пополнять баланс РК на'
@@ -440,8 +444,7 @@ export const AdvertsBudgetsModal = ({
                                             </Text>
                                         }
                                     />
-                                    <HelpPopover
-                                        size="l"
+                                    <HelpMark
                                         content={`Пополнять на ${new Intl.NumberFormat(
                                             'ru-RU',
                                         ).format(
@@ -483,8 +486,7 @@ export const AdvertsBudgetsModal = ({
                                             </Text>
                                         }
                                     />
-                                    <HelpPopover
-                                        size="l"
+                                    <HelpMark
                                         content={
                                             'Сумма пополнения в день не будет ограничена, будьте внимательны, выбирая данный вариант.'
                                         }

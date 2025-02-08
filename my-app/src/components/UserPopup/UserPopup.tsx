@@ -1,7 +1,7 @@
 'use client';
-import {ArrowToggle, Button, Card, Icon, Popup, RadioButton, Text} from '@gravity-ui/uikit';
+import {ArrowToggle, Button, Card, Icon, Popup, SegmentedRadioGroup, Text} from '@gravity-ui/uikit';
 import {Sun, Moon} from '@gravity-ui/icons';
-import {useMemo, useRef, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useUser} from '@/components/RequireAuth/RequireAuth';
 import {CopyButton} from '@/components/Buttons/CopyButton';
 import {RNPSwitch} from '@/components/UserPopup/RNPSwitch';
@@ -25,7 +25,7 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
     const {userInfo} = useUser();
     const {user} = userInfo ?? {};
 
-    const ref = useRef(null);
+    const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
 
     const name = useMemo(() => {
         return [user?.first_name, user?.last_name].filter((item) => item !== undefined).join(' ');
@@ -33,7 +33,12 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
 
     return (
         <div>
-            <Popup offset={[-4, 4]} anchorRef={ref} open={open} placement={'bottom-end'}>
+            <Popup
+                offset={{mainAxis: -4, crossAxis: 4}}
+                anchorElement={anchorElement}
+                open={open}
+                placement={'bottom-end'}
+            >
                 <div
                     style={{
                         width: 0,
@@ -65,7 +70,7 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
                                 alignItems: 'center',
                                 margin: 20,
                                 width: '100%',
-                                boxShadow: '0px 0px 0px 0px var(--yc-color-base-generic-hover)',
+                                boxShadow: '0px 0px 0px 0px var(--gc-color-base-generic-hover)',
                             }}
                         >
                             <img
@@ -130,12 +135,12 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
                                 <RNPSwitch />
                             </Card>
                             <div style={{minHeight: 16}} />
-                            <RadioButton
+                            <SegmentedRadioGroup
                                 size="l"
                                 name="themeRadioButton"
                                 defaultValue={theme}
                                 options={optionsTheme}
-                                onUpdate={async (val) => {
+                                onUpdate={async (val: any) => {
                                     console.log(theme);
                                     toggleTheme(val);
                                 }}
@@ -145,7 +150,7 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
                 </div>
             </Popup>
             <Button
-                ref={ref}
+                ref={setAnchorElement}
                 view="flat"
                 pin="brick-brick"
                 style={{display: 'flex', flexDirection: 'row', alignItems: 'center', height: 68}}

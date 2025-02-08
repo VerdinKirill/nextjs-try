@@ -10,7 +10,7 @@ import {ManageUserModal} from './ManageUserModal';
 import {ChangeApiModal} from './ChangeApiModal';
 import {motion} from 'framer-motion';
 import {AddApiModal} from './AddApiModal';
-import {useCampaign} from '@/contexts/CampaignContext';
+// import {useCampaign} from '@/contexts/CampaignContext';
 import {SetSubscriptionExpDateModal} from './SetSubscriptionExpDateModal';
 import ApiClient from '@/utilities/ApiClient';
 import {useError} from '@/contexts/ErrorContext';
@@ -93,7 +93,7 @@ const CampaignInfo = ({
 }: any) => {
     const {userInfo} = useUser();
     const {user} = userInfo;
-    const {setSelectValue} = useCampaign();
+    // const {setSelectValue} = useCampaign();
     const membersInfo = [] as any[];
     for (const member of members) {
         if (member?.member_id?._id === ownerDetails?._id) continue;
@@ -119,25 +119,34 @@ const CampaignInfo = ({
         return (
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                 <Tooltip content="База">
-                    <Link view="primary">{defaultRender({value: base})}</Link>
+                    <Text color="primary" className="g-link g-link_view_primary">
+                        {defaultRender({value: base})}
+                    </Text>
+                    {/* <Link view="primary">{defaultRender({value: base})}</Link> */}
                 </Tooltip>
                 <div style={{margin: '0px 8px'}}>+</div>
                 <Tooltip content="Стоимость 1 артикула">
-                    <Link view="primary">{defaultRender({value: art})}</Link>
+                    <Text color="primary" className="g-link g-link_view_primary">
+                        {defaultRender({value: art})}
+                    </Text>
                 </Tooltip>
                 <div style={{margin: '0px 8px'}}>*</div>
                 <Tooltip content="Количество артикулов с 1 и более заказами за последние 30 дней">
-                    <Link view="primary">{defaultRender({value: artCount})}</Link>
+                    <Text color="primary" className="g-link g-link_view_primary">
+                        {defaultRender({value: artCount})}
+                    </Text>
                 </Tooltip>
                 <div style={{margin: '0px 8px'}}>=</div>
                 <Tooltip content="Итог. Нажмите, чтобы скопировать">
-                    <Link
+                    <Text
+                        color="primary"
+                        className="g-link g-link_view_primary"
                         onClick={() => {
                             navigator.clipboard.writeText(tariff);
                         }}
                     >
-                        {defaultRender({value: tariff})}
-                    </Link>
+                        {defaultRender({value: art})}
+                    </Text>
                 </Tooltip>
                 <div style={{margin: '0px 8px'}}>₽</div>
             </div>
@@ -193,14 +202,15 @@ const CampaignInfo = ({
                             }}
                         >
                             <Text style={{marginRight: 16}} variant="header-2">
-                                <Link
+                                {/* <Link
                                     view="primary"
                                     onClick={() => {
                                         setSelectValue([name]);
+                                        
                                     }}
                                 >
                                     {name}
-                                </Link>
+                                </Link> */}
                             </Text>
                             <ChangeApiModal sellerId={sellerId}>
                                 <Button
@@ -461,7 +471,7 @@ export const ManageUserCampaigns = () => {
                         }}
                     >
                         <TextInput
-                            leftContent={
+                            startContent={
                                 <div
                                     style={{
                                         marginRight: 8,
@@ -507,7 +517,7 @@ export const ManageUserCampaigns = () => {
                             view="flat"
                             style={{
                                 marginBottom: 30,
-                                border: '1px solid var(--yc-color-base-generic-hover)',
+                                border: '1px solid var(--g-color-base-generic-hover)',
                                 borderRadius: 30,
                                 overflow: 'hidden',
                                 backdropFilter: 'blur(20px)',

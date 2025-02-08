@@ -33,6 +33,7 @@ interface TheTableProps {
     width?: string | number;
     height?: string | number;
     onRowClick?: (row: any, index: number, event: React.MouseEvent<HTMLTableRowElement>) => void;
+    // rowKey?: ((row: any, index: number) => string | number) | undefined;
 }
 
 export default function TheTable({
@@ -51,6 +52,7 @@ export default function TheTable({
     height,
     width,
     onRowClick,
+    // rowKey = (row, index) => index,
 }: TheTableProps) {
     const viewportSize = useWindowDimensions();
 
@@ -219,6 +221,7 @@ export default function TheTable({
                         displayIndices: false,
                         highlightRows: true,
                     }}
+                    // rowKey={rowKey}
                     theme="yandex-cloud"
                     onRowClick={(row, index, event) => {
                         if (onRowClick) onRowClick(row, index, event);
@@ -360,7 +363,7 @@ export const generateFilterTextInput = (args: any) => {
                         });
                     }}
                     // placeholder={'Фильтр'}
-                    rightContent={
+                    startContent={
                         <DropdownMenu
                             renderSwitcher={(props) => (
                                 <Button

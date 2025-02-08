@@ -2,13 +2,13 @@
 import './Dashboard.scss';
 import {useEffect, useMemo, useState, ReactNode} from 'react';
 import block from 'bem-cn-lite';
-import {Text, Icon, Tabs, Button, Tooltip} from '@gravity-ui/uikit';
-import Link from 'next/link';
+import {Icon, Button, Tooltip} from '@gravity-ui/uikit';
+// import Link from 'next/link';
 // import '@/styles/App.scss'
 import textLogo from '@/assets/textLogo.png';
 import {CircleQuestion, LogoTelegram, GraduationCap} from '@gravity-ui/icons';
 
-import {useUser} from '@/components/RequireAuth/RequireAuth';
+// import {useUser} from '@/components/RequireAuth/RequireAuth';
 // import {ApiPage} from './ApiPage';
 import {useMediaQuery} from '@/hooks/useMediaQuery';
 import {UserPopup} from '@/components/UserPopup';
@@ -36,9 +36,9 @@ export interface DashboardProps {
 
 export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     const searchParams = useSearchParams();
-    const {refetchUser} = useUser();
+    // const {refetchUser} = useUser();
     const {selectValue, currentCampaign, campaignInfo, campaigns} = useCampaign();
-    const {currentModule, availableModules = [], setModule} = useModules();
+    const {currentModule, availableModules = []} = useModules();
 
     const moduleTitles: Record<string, string> = {
         massAdvert: 'Реклама',
@@ -59,11 +59,11 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
         }));
     }, [availableModules, searchParams]);
 
-    const handleModuleChange = (moduleId: string) => {
-        console.log(optionsPages);
-        console.log(searchParams.toString());
-        setModule(moduleId);
-    };
+    // const handleModuleChange = (moduleId: string) => {
+    //     console.log(optionsPages);
+    //     console.log(searchParams.toString());
+    //     setModule(moduleId);
+    // };
 
     useEffect(() => {
         console.log(JSON.stringify(currentCampaign), 'currentCampaign');
@@ -125,43 +125,43 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
         }
     }, [campaigns, selectValue]); // Only update when these values change
 
-    const renderFooterItem = (item: any, node: any, index: any) => {
-        if (item === undefined || node === undefined || index === undefined) return <></>;
-        const isCurrent =
-            (currentModule == 'noModules' && item.id == 'api') || item.id == currentModule;
-        return (
-            <Link
-                href={item?.href}
-                target={item?.target}
-                className="tablink"
-                style={{color: 'var(--g-color-text-primary)', textDecoration: 'none'}}
-                onClick={() => {
-                    if (item.disabled || !item.id) return;
-                    refetchUser();
-                    console.log(item.id);
-                    handleModuleChange(item.id);
-                    // setPage(item.id);
-                }}
-            >
-                <Text
-                    variant="caption-2"
-                    color={isCurrent ? 'brand' : 'primary'}
-                    style={{
-                        height: 70,
-                        paddingBottom: 10,
-                        width: 70,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Icon data={item?.icon} size={24} />
-                    {item.title}
-                </Text>
-            </Link>
-        );
-    };
+    // const renderFooterItem = (item: any, node: any, index: any) => {
+    //     if (item === undefined || node === undefined || index === undefined) return <></>;
+    //     const isCurrent =
+    //         (currentModule == 'noModules' && item.id == 'api') || item.id == currentModule;
+    //     return (
+    //         <Link
+    //             href={item?.href}
+    //             target={item?.target}
+    //             className="tablink"
+    //             style={{color: 'var(--g-color-text-primary)', textDecoration: 'none'}}
+    //             onClick={() => {
+    //                 if (item.disabled || !item.id) return;
+    //                 refetchUser();
+    //                 console.log(item.id);
+    //                 handleModuleChange(item.id);
+    //                 // setPage(item.id);
+    //             }}
+    //         >
+    //             <Text
+    //                 variant="caption-2"
+    //                 color={isCurrent ? 'brand' : 'primary'}
+    //                 style={{
+    //                     height: 70,
+    //                     paddingBottom: 10,
+    //                     width: 70,
+    //                     display: 'flex',
+    //                     flexDirection: 'column',
+    //                     alignItems: 'center',
+    //                     justifyContent: 'center',
+    //                 }}
+    //             >
+    //                 <Icon data={item?.icon} size={24} />
+    //                 {item.title}
+    //             </Text>
+    //         </Link>
+    //     );
+    // };
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -184,7 +184,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                         backdropFilter: 'blur(20px)',
                     }}
                 >
-                    <Tabs
+                    {/* <Tabs
                         onSelectTab={handleModuleChange}
                         key={'mobileTab'}
                         wrapTo={renderFooterItem}
@@ -194,7 +194,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                 item.title,
                             ),
                         )}
-                    />
+                    /> */}
                 </div>
             ) : (
                 <></>
@@ -213,7 +213,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                     <div
                         style={{
                             width: '100%',
-                            boxShadow: 'inset 0px -9px 0px -8px var(--yc-color-base-generic-hover)',
+                            boxShadow: 'inset 0px -9px 0px -8px var(--g-color-base-generic-hover)',
                             background: '#0000',
                             display: 'flex',
                             flexDirection: 'row',
@@ -276,7 +276,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                 style={{
                                     width: '100%',
                                     boxShadow:
-                                        'inset 0px -9px 0px -8px var(--yc-color-base-generic-hover)',
+                                        'inset 0px -9px 0px -8px var(--g-color-base-generic-hover)',
                                 }}
                             >
                                 <div
@@ -305,7 +305,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                                 display: 'flex',
                                                 flexDirection: 'row',
                                                 boxShadow:
-                                                    '1px 0px 0px 0px var(--yc-color-base-generic-hover)',
+                                                    '1px 0px 0px 0px var(--g-color-base-generic-hover)',
                                             }}
                                         >
                                             <div style={{minWidth: 12}} />
@@ -325,7 +325,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                                     ),
                                             )}
                                             activeTab={currentModule}
-                                            onSelectTab={handleModuleChange}
+                                            // onSelectTab={handleModuleChange}
                                         />
                                     </div>
 
@@ -392,7 +392,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                                         alignItems: 'center',
                                                         height: 68,
                                                         boxShadow:
-                                                            '-1px 0px 0px 0px var(--yc-color-base-generic-hover)',
+                                                            '-1px 0px 0px 0px var(--g-color-base-generic-hover)',
                                                     }}
                                                 >
                                                     <div style={{minWidth: 12}} />
@@ -411,7 +411,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                                 display: 'flex',
                                                 flexDirection: 'row',
                                                 boxShadow:
-                                                    '-1px 0px 0px 0px var(--yc-color-base-generic-hover)',
+                                                    '-1px 0px 0px 0px var(--g-color-base-generic-hover)',
                                             }}
                                         >
                                             <SelectCampaign

@@ -1,6 +1,16 @@
 'use client';
 
-import {Button, Card, Modal, TextInput, Text, Icon, Select, ArrowToggle} from '@gravity-ui/uikit';
+import {
+    Button,
+    Card,
+    Modal,
+    TextInput,
+    Text,
+    Icon,
+    Select,
+    ArrowToggle,
+    // SelectRenderControl,
+} from '@gravity-ui/uikit';
 import {TrashBin} from '@gravity-ui/icons';
 import {motion} from 'framer-motion';
 import {Children, isValidElement, ReactElement, useMemo, useState, cloneElement} from 'react';
@@ -84,7 +94,7 @@ export const AddMemberModal = ({
                     <Text variant="subheader-1">{mapModules[key]}</Text>
                     <div style={{minWidth: 16}} />
                     <Select
-                        renderControl={({onClick, onKeyDown, ref}) => {
+                        renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                             return (
                                 <Button
                                     view={
@@ -95,11 +105,12 @@ export const AddMemberModal = ({
                                               : 'outlined-action'
                                     }
                                     pin={'circle-circle'}
-                                    ref={ref}
+                                    // ref={ref as Ref<HTMLButtonElement>}
                                     onClick={onClick}
-                                    extraProps={{
-                                        onKeyDown,
-                                    }}
+                                    onKeyDown={onKeyDown}
+                                    // extraProps={{
+                                    //     onKeyDown,
+                                    // }}
                                 >
                                     <div
                                         style={{

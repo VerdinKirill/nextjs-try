@@ -413,18 +413,22 @@ export const PricesPage = () => {
         {
             name: 'rozPrice',
             placeholder: (
-                <Link
+                // <Link
+                //     onClick={() => {
+                //         if (currentPricesCalculatedBasedOn == 'rozPrice') setUpdatingFlag(true);
+                //     }}
+                // >
+                <Text
+                    className="g-link g-link_view_primary"
+                    variant="subheader-1"
+                    color={currentPricesCalculatedBasedOn == 'rozPrice' ? undefined : 'primary'}
                     onClick={() => {
                         if (currentPricesCalculatedBasedOn == 'rozPrice') setUpdatingFlag(true);
                     }}
                 >
-                    <Text
-                        variant="subheader-1"
-                        color={currentPricesCalculatedBasedOn == 'rozPrice' ? undefined : 'primary'}
-                    >
-                        Цена после скидки, ₽
-                    </Text>
-                </Link>
+                    Цена после скидки, ₽
+                </Text>
+                // </Link>
             ),
             render: (args: any) =>
                 fixedPriceRender(
@@ -450,18 +454,22 @@ export const PricesPage = () => {
         {
             name: 'sppPrice',
             placeholder: (
-                <Link
+                // <Link
+                //     onClick={() => {
+                //         if (currentPricesCalculatedBasedOn == 'sppPrice') setUpdatingFlag(true);
+                //     }}
+                // >
+                <Text
+                    className="g-link g-link_view_primary"
                     onClick={() => {
                         if (currentPricesCalculatedBasedOn == 'sppPrice') setUpdatingFlag(true);
                     }}
+                    variant="subheader-1"
+                    color={currentPricesCalculatedBasedOn == 'sppPrice' ? undefined : 'primary'}
                 >
-                    <Text
-                        variant="subheader-1"
-                        color={currentPricesCalculatedBasedOn == 'sppPrice' ? undefined : 'primary'}
-                    >
-                        Цена с СПП, ₽
-                    </Text>
-                </Link>
+                    Цена с СПП, ₽
+                </Text>
+                // </Link>
             ),
             render: (args: any) => fixedPriceRender(args, ['sppPrice'], defaultRender(args)),
         },
@@ -1037,7 +1045,7 @@ export const PricesPage = () => {
                                     console.log(e);
                                 });
                         }}
-                        renderControl={({onClick, onKeyDown, ref}) => {
+                        renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                             const mapp: any = {
                                 campaignName: 'Магазин',
                                 brand: 'Бренд',
@@ -1048,15 +1056,16 @@ export const PricesPage = () => {
                             };
                             return (
                                 <Button
+                                    // ref={ref as Ref<HTMLButtonElement>}
                                     disabled={permission != 'Управление'}
                                     loading={groupingFetching}
-                                    ref={ref}
                                     size="l"
                                     view="outlined-action"
                                     onClick={onClick}
-                                    extraProps={{
-                                        onKeyDown,
-                                    }}
+                                    onKeyDown={onKeyDown}
+                                    // extraProps={{
+                                    //     onKeyDown,
+                                    // }}
                                 >
                                     <Text variant="subheader-1">
                                         Группировка: {mapp[groupingValue[0]]}

@@ -381,7 +381,7 @@ export const CalcPricesModal = ({
                                                     ) : (
                                                         <TextInput
                                                             placeholder={obor}
-                                                            rightContent={
+                                                            startContent={
                                                                 <motion.div
                                                                     style={{opacity: 0}}
                                                                     animate={{

@@ -1,4 +1,4 @@
-import {Button, Card, Icon, Link, Popover, RadioButton, Text} from '@gravity-ui/uikit';
+import {Button, Card, Icon, Link, Popover, SegmentedRadioGroup, Text} from '@gravity-ui/uikit';
 import {Rocket, Magnifier, ArrowRight} from '@gravity-ui/icons';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import DataTable, {Column} from '@gravity-ui/react-data-table';
@@ -181,7 +181,7 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                             >
                                 <Card
                                     style={{
-                                        background: 'var(--yc-color-base-background)',
+                                        background: 'var(--gc-color-base-background)',
                                         overflow: 'auto',
                                         display: 'flex',
                                         flexDirection: 'column',
@@ -189,7 +189,7 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                                         padding: 5,
                                     }}
                                 >
-                                    <RadioButton
+                                    <SegmentedRadioGroup
                                         value={auctionSelectedOption}
                                         options={auctionOptions}
                                         onUpdate={(value) => {
@@ -202,7 +202,7 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                             <div style={{display: 'flex', flexDirection: 'row'}}>
                                 <Card
                                     style={{
-                                        background: 'var(--yc-color-base-background)',
+                                        background: 'var(--gc-color-base-background)',
                                         maxWidth: '80em',
                                         maxHeight: '30em',
                                         height: 'fit-content',
@@ -241,7 +241,7 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                 </Card>
             }
         >
-            {phrase}
+            <Text>{phrase}</Text>
         </Popover>
     );
 };

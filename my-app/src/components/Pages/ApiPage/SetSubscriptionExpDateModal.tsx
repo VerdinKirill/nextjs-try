@@ -114,7 +114,7 @@ export const SetSubscriptionExpDateModal = ({
                             <TextInput
                                 size="l"
                                 value={subExpDate ? subExpDate.toLocaleDateString(0, 10) : ''}
-                                rightContent={
+                                startContent={
                                     <Button
                                         size="m"
                                         view="outlined"

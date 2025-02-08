@@ -304,7 +304,9 @@ export const BuyersFeedbacksPage = ({
                                     }}
                                 >
                                     <Popover
-                                        behavior={'delayed' as any}
+                                        // behavior={'delayed' as any}
+                                        openDelay={1000}
+                                        closeDelay={500}
                                         disabled={value === undefined}
                                         content={
                                             <div style={{width: 200}}>

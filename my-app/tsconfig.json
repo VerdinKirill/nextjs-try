@@ -7,8 +7,9 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler", // Updated to node16
     "resolveJsonModule": true,
+    // "types": ["tailwindcss"], // Added to resolve Tailwind types
     "plugins": [
       {
         "name": "next"
@@ -32,7 +33,7 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"

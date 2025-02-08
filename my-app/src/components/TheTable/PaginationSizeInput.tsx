@@ -34,7 +34,7 @@ export const PaginationSizeInput = ({
             <Tooltip openDelay={1500} content={'Кол-во строк На странице SKU.'}>
                 <TextInput
                     placeholder={paginationSize}
-                    rightContent={
+                    startContent={
                         tempPaginationSize != paginationSize ? (
                             <Button
                                 size="xs"

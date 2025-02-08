@@ -8,10 +8,10 @@ import {
     Checkbox,
     Popover,
     Text,
-    PopoverInstanceProps,
+    // PopoverInstanceProps,
 } from '@gravity-ui/uikit';
 import {LayoutColumns3} from '@gravity-ui/icons';
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 import {arrayMove} from '@/utilities/arrayMove';
 
 interface ColumnsEditProps {
@@ -27,12 +27,13 @@ export const ColumnsEdit = ({
     columnDataObj,
     saveColumnsData,
 }: ColumnsEditProps) => {
-    const popoverRef = useRef<PopoverInstanceProps>(null);
+    // const popoverRef = useRef<PopoverInstanceProps>(null);
     const [rerenderList, setRerenderList] = useState(true);
+    const [openPopover, setOpenPopover] = useState(false);
 
-    const close = () => {
-        popoverRef.current?.closeTooltip();
-    };
+    // const close = () => {
+    //     popoverRef.current?.closeTooltip();
+    // };
     const toggleColumnVisibility = (key: string, value: boolean) => {
         setColumns((prevColumns: any[]) =>
             prevColumns.map((col) => (col.key === key ? {...col, visibility: value} : col)),
@@ -42,7 +43,7 @@ export const ColumnsEdit = ({
     // const [tempColumns, setTempColumns] = useState(Object.keys(columnDataObj));
     return (
         <Popover
-            ref={popoverRef}
+            open={openPopover}
             content={
                 <div
                     style={{
@@ -109,7 +110,7 @@ export const ColumnsEdit = ({
                             style={{marginTop: '8px'}}
                             onClick={() => {
                                 saveColumnsData();
-                                close();
+                                setOpenPopover(false);
                             }}
                         >
                             <Text>Сохранить положение столбцов</Text>

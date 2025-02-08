@@ -1469,7 +1469,7 @@ export const AdvertsWordsModal = ({
                                     }
                                     style={{
                                         width: '100%',
-                                        border: '1px solid var(--yc-color-base-generic-hover)',
+                                        border: '1px solid var(--g-color-base-generic-hover)',
                                         borderRadius: 8,
                                         whiteSpace: 'pre-wrap',
                                     }}
@@ -1477,7 +1477,7 @@ export const AdvertsWordsModal = ({
                                     <>
                                         <div
                                             style={{
-                                                background: 'var(--yc-color-base-generic-hover)',
+                                                background: 'var(--g-color-base-generic-hover)',
                                                 height: 0.5,
                                                 width: '100%',
                                             }}
@@ -1504,7 +1504,7 @@ export const AdvertsWordsModal = ({
                                     }
                                     style={{
                                         width: '100%',
-                                        border: '1px solid var(--yc-color-base-generic-hover)',
+                                        border: '1px solid var(--g-color-base-generic-hover)',
                                         borderRadius: 8,
                                         whiteSpace: 'pre-wrap',
                                     }}
@@ -1512,7 +1512,7 @@ export const AdvertsWordsModal = ({
                                     <>
                                         <div
                                             style={{
-                                                background: 'var(--yc-color-base-generic-hover)',
+                                                background: 'var(--g-color-base-generic-hover)',
                                                 height: 0.5,
                                                 width: '100%',
                                             }}
@@ -1523,7 +1523,7 @@ export const AdvertsWordsModal = ({
                                             style={{width: '90%', margin: '0 5%'}}
                                             view="clear"
                                             value={semanticsModalSemanticsCTRThresholdValue}
-                                            rightContent={<Text>%</Text>}
+                                            startContent={<Text>%</Text>}
                                             onUpdate={(val) => {
                                                 val = val.replace(',', '.');
 
@@ -1550,7 +1550,7 @@ export const AdvertsWordsModal = ({
                                     }
                                     style={{
                                         width: '100%',
-                                        border: '1px solid var(--yc-color-base-generic-hover)',
+                                        border: '1px solid var(--g-color-base-generic-hover)',
                                         borderRadius: 8,
                                         whiteSpace: 'pre-wrap',
                                     }}
@@ -1558,7 +1558,7 @@ export const AdvertsWordsModal = ({
                                     <>
                                         <div
                                             style={{
-                                                background: 'var(--yc-color-base-generic-hover)',
+                                                background: 'var(--g-color-base-generic-hover)',
                                                 height: 0.5,
                                                 width: '100%',
                                             }}
@@ -1587,7 +1587,7 @@ export const AdvertsWordsModal = ({
                                     }
                                     style={{
                                         width: '100%',
-                                        border: '1px solid var(--yc-color-base-generic-hover)',
+                                        border: '1px solid var(--g-color-base-generic-hover)',
                                         borderRadius: 8,
                                         whiteSpace: 'pre-wrap',
                                     }}
@@ -1595,13 +1595,13 @@ export const AdvertsWordsModal = ({
                                     <>
                                         <div
                                             style={{
-                                                background: 'var(--yc-color-base-generic-hover)',
+                                                background: 'var(--g-color-base-generic-hover)',
                                                 height: 0.5,
                                                 width: '100%',
                                             }}
                                         />
                                         <TextInput
-                                            rightContent="%"
+                                            startContent="%"
                                             disabled={disabled}
                                             hasClear
                                             style={{width: '90%', margin: '0 5%'}}
@@ -2208,7 +2208,7 @@ export const AdvertsWordsModal = ({
                                         usePagination={true}
                                         defaultPaginationSize={100}
                                         onPaginationUpdate={({paginatedData}: any) => {
-                                            setSemanticsFilteredSummary((row:any) => {
+                                            setSemanticsFilteredSummary((row: any) => {
                                                 const temp = row;
                                                 temp.minus['cluster'] =
                                                     `Кластеров на странице: ${paginatedData.length} Всего кластеров: ${semanticsModalSemanticsMinusItemsFiltratedValue.length}`;

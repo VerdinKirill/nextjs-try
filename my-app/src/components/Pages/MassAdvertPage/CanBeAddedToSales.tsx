@@ -13,7 +13,7 @@ import {
     ButtonView,
 } from '@gravity-ui/uikit';
 import {ArrowRight, TagRuble, Xmark} from '@gravity-ui/icons';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
 import {useError} from '@/contexts/ErrorContext';
 import ApiClient from '@/utilities/ApiClient';
@@ -69,11 +69,10 @@ export const CanBeAddedToSales = ({
         setTimeout(() => setOpen(false), 10000);
         getAvailableSales();
     }, [open]);
-
-    const ref = useRef(null);
+    const [anchorElement, setAnchorElement] = useState<HTMLButtonElement|null>(null);
     return (
         <>
-            <Popup open={open} anchorRef={ref} hasArrow={false}>
+            <Popup open={open} anchorElement={anchorElement} hasArrow={false}>
                 <div
                     style={{
                         width: 0,
@@ -225,7 +224,7 @@ export const CanBeAddedToSales = ({
                 </div>
             </Popup>
             <Button
-                ref={ref}
+                ref={setAnchorElement}
                 size="xs"
                 pin={pin as ButtonPin}
                 view={view as ButtonView}

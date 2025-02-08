@@ -83,9 +83,10 @@ export const ManageUserModal = ({
                     <Text variant="subheader-1">{mapModules[key]}</Text>
                     <div style={{minWidth: 16}} />
                     <Select
-                        renderControl={({onClick, onKeyDown, ref}) => {
+                        renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                             return (
                                 <Button
+                                    // ref={ref as Ref<HTMLButtonElement>}
                                     view={
                                         enabled[0] == 'Доступ закрыт'
                                             ? 'outlined'
@@ -94,11 +95,11 @@ export const ManageUserModal = ({
                                               : 'outlined-action'
                                     }
                                     pin={'circle-circle'}
-                                    ref={ref}
                                     onClick={onClick}
-                                    extraProps={{
-                                        onKeyDown,
-                                    }}
+                                    onKeyDown={onKeyDown}
+                                    // extraProps={{
+                                    //     onKeyDown,
+                                    // }}
                                 >
                                     <div
                                         style={{

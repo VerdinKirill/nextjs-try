@@ -3,7 +3,7 @@ import {RangeCalendar} from '@gravity-ui/date-components';
 import {Button, Popup, Text} from '@gravity-ui/uikit';
 import {motion} from 'framer-motion';
 import {dateTimeParse} from '@gravity-ui/date-utils';
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 
 export const RangePicker = ({args}: any) => {
     const {recalc, dateRange, setDateRange, align, translate, rangeToChoose} = args;
@@ -15,13 +15,14 @@ export const RangePicker = ({args}: any) => {
     const [minDate, maxDate] = rangeToChoose ?? [undefined, undefined];
 
     const [startDate, endDate] = dateRange;
+    const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
 
-    const anchorRef = useRef(null);
+    // const anchorRef = useRef<HTMLDivElement>(null);
 
     return (
         <div>
             <Button
-                ref={anchorRef}
+                ref={setAnchorElement}
                 view="outlined-warning"
                 size="l"
                 onClick={() => {
@@ -35,10 +36,12 @@ export const RangePicker = ({args}: any) => {
                 </Text>
             </Button>
             <Popup
-                offset={[-4, 4]}
+                offset={{mainAxis: -4, crossAxis: 4}}
                 open={rangePickerOpen}
-                anchorRef={anchorRef}
-                onClose={() => recalc(dateRange)}
+                anchorElement={anchorElement}
+                // anchorRef={anchorRef}
+                onTransitionOut={() => recalc(dateRange)}
+                // onClose={() => recalc(dateRange)}
                 placement={'bottom-end'}
                 // placement="bottom-end"
             >

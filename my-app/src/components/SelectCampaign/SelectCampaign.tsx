@@ -127,19 +127,28 @@ export const SelectCampaign = ({
     };
 
     return (
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'row',
+                // alignItems: 'center',
+                // justifyContent: 'center',
+            }}
+        >
             <Select
                 value={selectValue}
                 placeholder="Values"
                 options={selectOptions}
-                renderControl={({onClick, onKeyDown, ref}) => {
+                filterable={true}
+                renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                     return (
                         <Button
+                            // ref={ref as Ref<HTMLButtonElement>}
                             view={isWeekOrLessUntillExp ? 'flat-danger' : 'flat'}
                             pin="brick-brick"
-                            style={{height: 68}}
+                            style={{height: 68, alignItems: 'center'}}
                             loading={switchingCampaignsFlag}
-                            ref={ref}
+                            // ref={ref}
                             onClick={onClick}
                             extraProps={{
                                 onKeyDown,

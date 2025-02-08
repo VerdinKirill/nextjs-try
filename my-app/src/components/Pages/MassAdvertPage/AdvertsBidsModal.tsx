@@ -6,10 +6,11 @@ import {
     Checkbox,
     Icon,
     Modal,
-    RadioButton,
     Select,
     TextInput,
     Text,
+    HelpMark,
+    SegmentedRadioGroup,
 } from '@gravity-ui/uikit';
 import {CloudArrowUpIn, TrashBin, Calendar as CalendarIcon} from '@gravity-ui/icons';
 import {motion} from 'framer-motion';
@@ -27,7 +28,6 @@ import callApi, {getUid} from '@/utilities/callApi';
 import {Calendar} from '@gravity-ui/date-components';
 import {dateTimeParse} from '@gravity-ui/date-utils';
 import {getLocaleDateString} from '@/utilities/getRoundValue';
-import {HelpPopover} from '@gravity-ui/components';
 import {useError} from '@/contexts/ErrorContext';
 
 export const AdvertsBidsModal = ({
@@ -285,7 +285,7 @@ export const AdvertsBidsModal = ({
                     <Text variant="subheader-1" style={{marginRight: 8}}>
                         Удерживать ДРР к заказам
                     </Text>
-                    <HelpPopover
+                    <HelpMark
                         content={
                             'ДРР задаётся к заказам. Фактическая ДРР к продажам будет выше при выкупе <100%. Учитывайте это.'
                         }
@@ -376,7 +376,7 @@ export const AdvertsBidsModal = ({
                         <TextInput
                             size="l"
                             value={sellByDate ? sellByDate.toLocaleDateString(0, 10) : ''}
-                            rightContent={
+                            startContent={
                                 <Button
                                     size="m"
                                     view="outlined"
@@ -631,7 +631,7 @@ export const AdvertsBidsModal = ({
                             border: '1px solid #eee2',
                         }}
                     >
-                        <RadioButton
+                        <SegmentedRadioGroup
                             size="l"
                             value={modalOption}
                             options={modalOptions}
@@ -778,8 +778,7 @@ export const AdvertsBidsModal = ({
                                         >
                                             Учитывать место в выдаче
                                         </Checkbox>
-                                        <HelpPopover
-                                            size="l"
+                                        <HelpMark
                                             content="При достижении данной позиции алгоритм будет учитывать место в выдаче при изменении ставки."
                                         />
                                     </div>

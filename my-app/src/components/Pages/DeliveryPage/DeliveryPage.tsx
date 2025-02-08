@@ -530,7 +530,7 @@ export const DeliveryPage = () => {
         setFilteredSummary(filteredSummaryTemp);
         setFilteredData(temp);
     };
-    
+
     useEffect(() => {
         if (changedDoc) {
             setChangedDoc(undefined);
@@ -973,20 +973,18 @@ export const DeliveryPage = () => {
                                 setDateChangeRecalc(true);
                             }}
                             options={primeCostTypeOptions}
-                            renderControl={({onClick, onKeyDown, ref}) => {
+                            renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                                 return (
                                     <Button
+                                    // ref={ref as Ref<HTMLButtonElement>}
                                         disabled={permission != 'Управление'}
                                         size="l"
                                         style={{
                                             width: '100%',
                                         }}
-                                        ref={ref}
                                         view="outlined-warning"
                                         onClick={onClick}
-                                        extraProps={{
-                                            onKeyDown,
-                                        }}
+                                        onKeyDown={onKeyDown}
                                     >
                                         <Text variant="subheader-1">{primeCostType[0]}</Text>
                                         <Icon data={ChevronDown} />

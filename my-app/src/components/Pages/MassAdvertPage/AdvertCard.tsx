@@ -852,7 +852,7 @@ export const AdvertCard = ({
                             minHeight: 0.5,
                             marginTop: 5,
                             width: '100%',
-                            background: 'var(--yc-color-base-generic-hover)',
+                            background: 'var(--g-color-base-generic-hover)',
                         }}
                     />
                     <div

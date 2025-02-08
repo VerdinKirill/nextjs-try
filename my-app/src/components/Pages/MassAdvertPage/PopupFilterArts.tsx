@@ -1,7 +1,7 @@
 'use client';
 
 import {Button, Checkbox, Icon, Popup, Text} from '@gravity-ui/uikit';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {ListCheck, FunnelXmark} from '@gravity-ui/icons';
 import {motion} from 'framer-motion';
 
@@ -27,9 +27,9 @@ interface PopupFilterArtsProps {
 }
 
 export const PopupFilterArts = ({filters, setFilters}: PopupFilterArtsProps) => {
-    const ref = useRef(null);
     const [showPopup, setShowPopup] = useState(false);
     const [filtersRK, setFiltersRK] = useState({} as any);
+    const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
 
     const checkEqualObjects = (a: any, b: any) => JSON.stringify(a) === JSON.stringify(b);
     const defaultObj = useMemo(
@@ -90,7 +90,12 @@ export const PopupFilterArts = ({filters, setFilters}: PopupFilterArtsProps) => 
     };
     return (
         <>
-            <Popup offset={[-4, 9]} anchorRef={ref} open={showPopup} placement={'bottom-end'}>
+            <Popup
+                offset={{mainAxis: -4, crossAxis: 9}}
+                anchorElement={anchorElement}
+                open={showPopup}
+                placement={'bottom-end'}
+            >
                 <div
                     style={{
                         width: 0,
@@ -172,7 +177,7 @@ export const PopupFilterArts = ({filters, setFilters}: PopupFilterArtsProps) => 
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}
-                ref={ref}
+                ref={setAnchorElement}
                 view={checkFilters() ? 'outlined-warning' : 'outlined'}
                 onClick={() => {
                     setShowPopup(!showPopup);

@@ -11,7 +11,7 @@ export const PasteTextField = ({onPaste}: any) => {
             placeholder="Нажмите кнопку, чтобы вставить"
             size="l"
             value={pastedText}
-            rightContent={
+            endContent={
                 <PasteButton
                     setPastedText={(value: string) => {
                         setPastedText(value);

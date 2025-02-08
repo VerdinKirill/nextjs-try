@@ -1,12 +1,12 @@
 // contexts/ModuleProvider.tsx
 'use client';
 
-import {createContext, useContext, useState, useEffect, useCallback, useMemo} from 'react';
+import {createContext, useContext, useState, useEffect, useMemo} from 'react';
 import {useRouter, usePathname, useSearchParams} from 'next/navigation';
 import {useCampaign} from '@/contexts/CampaignContext';
 
 type ModuleContextType = {
-    currentModule: string;
+    currentModule: string | null;
     availableModules: string[];
     setModule: (module: string) => void;
     modulesLoaded: boolean;
@@ -33,7 +33,7 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
 
     const [availableModules, setAvailableModules] = useState<string[]>([]);
     const [availableModulesMap, setAvailableModulesMap] = useState({});
-    const [currentModule, setCurrentModule] = useState('');
+    const [currentModule, setCurrentModule] = useState<string | null>(null);
     const [modulesLoaded, setModulesLoaded] = useState(false);
 
     useEffect(() => {
@@ -76,28 +76,47 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
     useEffect(() => {
         console.log(campaignLoaded);
         if (!campaignLoaded) return;
-        const pathModule = pathname.split('/').pop() || '';
-        console.log(availableModules, 'availableModules');
-
-        if (availableModules.includes(pathModule)) {
-            setCurrentModule(pathModule);
-        } else if (availableModules.length > 0) {
-            const defaultModule = availableModules.includes('massAdvert')
-                ? 'massAdvert'
-                : availableModules[0];
-
-            router.push(`/${defaultModule}?${searchParams.toString()}`);
+        if (currentModule == null) {
+            const pathModule = pathname.split('/').pop() || '';
+            if (availableModules.includes(pathModule)) {
+                setCurrentModule(pathModule);
+            } else if (availableModules.length > 0) {
+                const defaultModule = availableModules.includes('massAdvert')
+                    ? 'massAdvert'
+                    : availableModules[0];
+                setCurrentModule(defaultModule);
+            }
+            // router.replace(`/${module}?${searchParams.toString()}`);
         }
-    }, [pathname, availableModules, searchParams, campaignLoaded]);
+        // const pathModule = pathname.split('/').pop() || '';
 
-    const handleSetModule = useCallback(() => {}, [router, pathname, searchParams]);
+        // console.log(availableModules, 'availableModules');
+
+        // if (availableModules.includes(pathModule)) {
+        //     setCurrentModule(pathModule);
+        // } else if (availableModules.length > 0) {
+        //     const defaultModule = availableModules.includes('massAdvert')
+        //         ? 'massAdvert'
+        //         : availableModules[0];
+        //     router.push(`/${defaultModule}?${searchParams.toString()}`);
+        // }
+    }, [availableModules, campaignLoaded]);
+
+    useEffect(() => {
+        const basePath = pathname.split('/').slice(0, 1);
+        console.log('basePath', basePath);
+        if (!currentModule) return;
+        router.replace(`${basePath}/${currentModule}?${searchParams.toString()}`);
+    }, [currentModule, searchParams]);
+
+    // const handleSetModule = useCallback(() => {}, [router, pathname, searchParams]);
 
     return (
         <ModuleContext.Provider
             value={{
                 currentModule,
                 availableModules: availableModules || [], // Ensure array
-                setModule: handleSetModule,
+                setModule: setCurrentModule,
                 modulesLoaded: modulesLoaded,
                 modulesMap: availableModulesMap,
             }}

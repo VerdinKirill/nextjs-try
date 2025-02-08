@@ -1,6 +1,6 @@
 'use client';
 
-import {Button, Card, Icon, Modal, Text} from '@gravity-ui/uikit';
+import {ActionTooltip, Button, Card, Icon, Modal, Text} from '@gravity-ui/uikit';
 import {Calculator, TagRuble} from '@gravity-ui/icons';
 import {useEffect, useMemo, useState} from 'react';
 import {RangeCalendar} from '@gravity-ui/date-components';
@@ -11,7 +11,8 @@ import {motion} from 'framer-motion';
 import {TextTitleWrapper} from '@/components/TextTitleWrapper';
 import {AutoSalesUploadModal} from './AutoSalesUploadModal';
 import {useError} from '@/contexts/ErrorContext';
-import {CategoryBar} from '@/components/CategoryBar';
+import {CategoryBar} from '@/lib/CategoryBar/CategoryBar';
+// import {getColorClassName} from '@/lib/chartUtils';
 
 interface ButtonListProps {
     availableAutoSales: any;
@@ -38,26 +39,28 @@ const ButtonList = ({
                 <motion.div
                     exit={{opacity: 0}}
                     style={{
-                        width: name == autoSaleName[0] ? '250' : undefined,
                         display: 'flex',
                         flexDirection: 'row',
                         gap: 8,
                         alignItems: 'center',
                     }}
+                    animate={{maxWidth: name === autoSaleName[0] ? '250px' : '100%'}}
                 >
-                    <Button
-                        style={{width: '100%'}}
-                        width="max"
-                        view="outlined"
-                        size="l"
-                        onClick={() => {
-                            setAutoSaleName(name == autoSaleName[0] ? ['none'] : [name]);
-                            setCurrentStep(name == autoSaleName[0] ? 0 : 1);
-                            setDateRange([]);
-                        }}
-                    >
-                        {name}
-                    </Button>
+                    <ActionTooltip title={name}>
+                        <Button
+                            style={{minWidth: '250px'}}
+                            width="max"
+                            view="outlined"
+                            size="l"
+                            onClick={() => {
+                                setAutoSaleName(name == autoSaleName[0] ? ['none'] : [name]);
+                                setCurrentStep(name == autoSaleName[0] ? 0 : 1);
+                                setDateRange([]);
+                            }}
+                        >
+                            {name}
+                        </Button>
+                    </ActionTooltip>
                     {name == autoSaleName[0] ? (
                         <></>
                     ) : (
@@ -150,7 +153,7 @@ export const AutoSalesModal = ({
                 console.log(sellerId, res);
 
                 const sales = res['data'] ?? {};
-                console.log(sales);
+                console.log('sales', sales);
                 setAvailableAutoSales(sales ?? {});
             })
             .catch((error) => {
@@ -210,6 +213,38 @@ export const AutoSalesModal = ({
             !availableAutoSales[autoSaleName[0]]?.fileUploaded,
         [availableAutoSales, autoSaleName],
     );
+
+    const currentAutoSale = useMemo(() => {
+        console.log(availableAutoSales[autoSaleName[0]], autoSaleName[0]);
+        return availableAutoSales[autoSaleName[0]];
+    }, [availableAutoSales, autoSaleName[0]]);
+
+    const [currentBoost, setCurrentBoost] = useState<number>(0);
+
+    const rangeValuesOfGoods = useMemo(() => {
+        if (!currentAutoSale) return [];
+        if (!currentAutoSale?.ranging?.length) return [];
+        const sales = currentAutoSale.ranging.map((range: any) => {
+            if (currentAutoSale.participationPercentage > range.participationRate)
+                setCurrentBoost(range.boost);
+            return Math.ceil(
+                ((currentAutoSale.inPromoActionLeftovers +
+                    currentAutoSale.notInPromoActionLeftovers) *
+                    range.participationRate) /
+                    100,
+            );
+        });
+
+        // const marker: any = {value: currentAutoSale.inPromoActionLeftovers};
+        // const colors: any = [];
+        // const arr = sales.map((value: any, index: any) => {
+        //     const barColor =
+        //         colors[index] ??
+        //         ((marker?.value ?? 0 < value) ? 'gravityUiCommonOrange' : 'gravityUiLightOrange');
+        // });
+        // console.log('arr', arr);
+        return sales;
+    }, [currentAutoSale]);
 
     return (
         <>
@@ -309,8 +344,8 @@ export const AutoSalesModal = ({
                                 }}
                             >
                                 <Button
+                                    style={{width: '100%'}}
                                     disabled={disabled}
-                                    width="max"
                                     size="l"
                                     href={
                                         fileRequiredButNotUploaded
@@ -572,28 +607,110 @@ export const AutoSalesModal = ({
                                 </Text>
                             </TextTitleWrapper>
                             <div style={{minHeight: 16}} />
+                            {/* <Text variant='subheader-1'>{`Уже участвующие в акции товары: ${currentAutoSale?.participationPercentage}%`}</Text> */}
                             <TextTitleWrapper
-                                padding={12}
-                                title={'Процент участия в акции:'}
+                                // padding={12}
+                                title={`Уже участвующие в акции товары: ${currentAutoSale?.participationPercentage}%`}
                                 style={{
                                     width: '100%',
                                 }}
                             >
-                                <div style={{width: '100%', marginLeft: 4}}>
-                                    <CategoryBar
-                                        values={[10, 10, 20]}
-                                        marker={{value: 17, tooltip: '68', showAnimation: true}}
-                                        colors={['pink', 'amber', 'emerald']}
-                                        className="mx-auto max-w-sm"
-                                    />
-                                    {/* <ProgressBar
-                                        value={
-                                            availableAutoSales[autoSaleName[0]]
-                                                ?.participationPercentage ?? 0
-                                        }
-                                    /> */}
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        margin: '8px',
+                                    }}
+                                >
+                                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                                        <Text variant="subheader-1">
+                                            {currentAutoSale?.inPromoActionTotal} товаров участвуют
+                                        </Text>
+                                        <Text variant="body-1">
+                                            {currentAutoSale?.inPromoActionLeftovers} из них с
+                                            остатками
+                                        </Text>
+                                        <Text></Text>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'end',
+                                            }}
+                                        >
+                                            <Text variant="subheader-1">
+                                                {currentAutoSale?.notInPromoActionTotal} товаров не
+                                                участвуют
+                                            </Text>
+                                            <Text variant="body-1">
+                                                {currentAutoSale?.notInPromoActionLeftovers} из них
+                                                с остатками
+                                            </Text>
+                                            <Text></Text>
+                                        </div>
+                                    </div>
                                 </div>
                             </TextTitleWrapper>
+                            {currentAutoSale?.ranging?.length ? (
+                                <Card
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        margin: '8px',
+                                        width: '100%',
+                                        padding: '8px',
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            margin: '8px',
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            // alignItems: 'end',
+                                            justifyContent: 'space-between',
+                                        }}
+                                    >
+                                        <Text variant="subheader-1" color="positive">
+                                            Продвижение в поиске и каталоге
+                                        </Text>
+                                        <Text variant="subheader-1" color="positive">
+                                            +{currentBoost}% к выдаче
+                                        </Text>
+                                    </div>
+                                    <div
+                                        style={{
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            margin: '8px',
+                                        }}
+                                    >
+                                        {!rangeValuesOfGoods || !rangeValuesOfGoods[0] ? (
+                                            <div>
+                                                <Text variant="subheader-1">
+                                                    У вас нет товаров в остатках, которые могли бы
+                                                    участвовать в акции
+                                                </Text>
+                                            </div>
+                                        ) : (
+                                            <CategoryBar
+                                                isSameParts={true}
+                                                values={rangeValuesOfGoods}
+                                                footerValues={currentAutoSale.ranging.map(
+                                                    (range: any) => range.boost,
+                                                )}
+                                                marker={{
+                                                    value: currentAutoSale?.inPromoActionLeftovers,
+                                                    showAnimation: true,
+                                                }}
+                                                className="mx-auto max-w-sm"
+                                            />
+                                        )}
+                                    </div>
+                                </Card>
+                            ) : undefined}
                             <div style={{minHeight: 16}} />
                             <TextTitleWrapper padding={12} title={'Преимущества:'}>
                                 <div
