@@ -39,11 +39,11 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
 
             if (response?.data?.valid) {
                 setIsAuthenticated(true);
-                console.log(response.data.campaigns);
+                console.log(response?.data?.campaigns);
                 if (JSON.stringify(userInfo) !== JSON.stringify(response.data)) {
                     setUserInfo({
                         ...response.data,
-                        campaigns: response.data.campaigns || [], // Ensure campaigns array exists
+                        campaigns: response?.data?.campaigns || [], // Ensure campaigns array exists
                     });
                 }
             } else {

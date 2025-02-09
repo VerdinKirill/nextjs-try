@@ -20,7 +20,7 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
     const searchParams = useSearchParams();
     const {userInfo} = useUser();
     const campaigns = useMemo(() => {
-        return userInfo.campaigns;
+        return userInfo?.campaigns || [];
     }, [userInfo]);
     const findCampaign = useCallback(
         (seller_id: string) => {

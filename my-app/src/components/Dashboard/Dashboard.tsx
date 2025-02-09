@@ -52,6 +52,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
         api: 'Магазины',
     };
     const optionsPages = useMemo(() => {
+        if (!availableModules) return [];
         return availableModules.map((module) => ({
             id: module,
             title: moduleTitles[module],
@@ -93,6 +94,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
 
     // Update selectOptions memo
     const selectOptions = useMemo(() => {
+        if (!campaigns) return [];
         return campaigns.map((campaign: any) => ({
             value: campaign.seller_id,
             content: campaign.name,
