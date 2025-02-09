@@ -213,13 +213,14 @@ export const AutoSalesModal = ({
             !availableAutoSales[autoSaleName[0]]?.fileUploaded,
         [availableAutoSales, autoSaleName],
     );
+    const [currentBoost, setCurrentBoost] = useState<number>(0);
 
     const currentAutoSale = useMemo(() => {
         console.log(availableAutoSales[autoSaleName[0]], autoSaleName[0]);
+        setCurrentBoost(0);
         return availableAutoSales[autoSaleName[0]];
     }, [availableAutoSales, autoSaleName[0]]);
 
-    const [currentBoost, setCurrentBoost] = useState<number>(0);
 
     const rangeValuesOfGoods = useMemo(() => {
         if (!currentAutoSale) return [];

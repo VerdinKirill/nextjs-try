@@ -2,7 +2,7 @@
 
 'use client';
 
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {AvailableChartColorsKeys, getColorClassName} from '@/lib/chartUtils';
 import {cx} from '@/lib/utils';
@@ -219,6 +219,17 @@ const CategoryBar = React.forwardRef<HTMLDivElement, CategoryBarProps>(
                     : getPositionLeft(adjustedMarkerValue, maxValue),
             [adjustedMarkerValue, maxValue],
         );
+        // const [lastWidth, setLastWidth] = useState(0);
+        const lastWidth = useMemo(() => {
+            let width = 0;
+            values.map((value) => {
+                if (!((marker?.value ? marker?.value : 0) < value)) {
+                    const percentage = isSameParts ? 100 / values.length : (value / maxValue) * 100;
+                    width += percentage;
+                }
+            });
+            return width;
+        }, [values]);
 
         return (
             <div
@@ -232,13 +243,14 @@ const CategoryBar = React.forwardRef<HTMLDivElement, CategoryBarProps>(
             >
                 {showLabels ? <BarLabels values={values} /> : null}
                 <div className="relative flex h-2 w-full items-center">
-                    <div className="flex h-full flex-1 items-center gap-0.5 overflow-hidden rounded-full">
+                    <div className="flex h-full flex-1 items-center gap-0.5 overflow-hidden rounded-full transform-gpu transition-all duration-300 ease-in-out">
                         {values.map((value, index) => {
                             const barColor: AvailableChartColorsKeys =
                                 colors[index] ??
                                 ((marker?.value ? marker?.value : 0) < value
                                     ? 'lightWhite'
                                     : 'green');
+                            // if (!((marker?.value ? marker?.value : 0) < value)) setLastWidth(value);
                             const percentage = isSameParts
                                 ? 100 / values.length
                                 : (value / maxValue) * 100;
@@ -263,6 +275,16 @@ const CategoryBar = React.forwardRef<HTMLDivElement, CategoryBarProps>(
                                 />
                             );
                         })}
+                        <div
+                            key={`item-${values.length}`}
+                            className={cx('h-full')}
+                            style={{
+                                position: 'absolute',
+                                left: `${lastWidth}%`,
+                                width: `${markerPositionLeft - lastWidth}%`,
+                                background: 'rgba(92, 211, 186, 0.433)',
+                            }}
+                        />
                     </div>
 
                     {marker !== undefined ? (
