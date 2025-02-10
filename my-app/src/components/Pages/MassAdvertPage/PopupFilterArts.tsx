@@ -91,7 +91,7 @@ export const PopupFilterArts = ({filters, setFilters}: PopupFilterArtsProps) => 
     return (
         <>
             <Popup
-                offset={{mainAxis: -4, crossAxis: 9}}
+                offset={{crossAxis: -4, mainAxis: 9}}
                 anchorElement={anchorElement}
                 open={showPopup}
                 placement={'bottom-end'}

@@ -150,11 +150,15 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                 setOpen(val);
             }}
             placement={'bottom-start'}
+            closeDelay={1000}
+            style={{width: 200, height: 200}}
             content={
                 <Card
                     view="clear"
                     style={{
-                        height: 20,
+                        // width: 200,
+                        // height: 200,
+                        
                         overflow: 'auto',
                         display: 'flex',
                     }}
@@ -181,7 +185,7 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                             >
                                 <Card
                                     style={{
-                                        background: 'var(--gc-color-base-background)',
+                                        background: 'var(--g-color-base-background)',
                                         overflow: 'auto',
                                         display: 'flex',
                                         flexDirection: 'column',

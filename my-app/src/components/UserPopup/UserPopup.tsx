@@ -34,7 +34,7 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
     return (
         <div>
             <Popup
-                offset={{mainAxis: -4, crossAxis: 4}}
+                offset={{mainAxis: 4, crossAxis: -4}}
                 anchorElement={anchorElement}
                 open={open}
                 placement={'bottom-end'}
