@@ -116,23 +116,24 @@ const CampaignInfo = ({
         const base = 5990;
         const art = 59;
         const artCount = (tariff - base) / art;
+        const summary = base + art*artCount;
         return (
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                 <Tooltip content="База">
-                    <Text color="primary" className="g-link g-link_view_primary">
+                    <Text color="primary" variant='header-1'className="g-link g-link_view_primary">
                         {defaultRender({value: base})}
                     </Text>
                     {/* <Link view="primary">{defaultRender({value: base})}</Link> */}
                 </Tooltip>
                 <div style={{margin: '0px 8px'}}>+</div>
                 <Tooltip content="Стоимость 1 артикула">
-                    <Text color="primary" className="g-link g-link_view_primary">
+                    <Text color="primary"  variant='header-1' className="g-link g-link_view_primary">
                         {defaultRender({value: art})}
                     </Text>
                 </Tooltip>
                 <div style={{margin: '0px 8px'}}>*</div>
                 <Tooltip content="Количество артикулов с 1 и более заказами за последние 30 дней">
-                    <Text color="primary" className="g-link g-link_view_primary">
+                    <Text color="primary"  variant='header-1' className="g-link g-link_view_primary">
                         {defaultRender({value: artCount})}
                     </Text>
                 </Tooltip>
@@ -140,12 +141,13 @@ const CampaignInfo = ({
                 <Tooltip content="Итог. Нажмите, чтобы скопировать">
                     <Text
                         color="primary"
+                         variant='header-1'
                         className="g-link g-link_view_primary"
                         onClick={() => {
                             navigator.clipboard.writeText(tariff);
                         }}
                     >
-                        {defaultRender({value: art})}
+                        {defaultRender({value: summary})}
                     </Text>
                 </Tooltip>
                 <div style={{margin: '0px 8px'}}>₽</div>
@@ -201,16 +203,8 @@ const CampaignInfo = ({
                                 rowGap: 8,
                             }}
                         >
-                            <Text style={{marginRight: 16}} variant="header-2">
-                                {/* <Link
-                                    view="primary"
-                                    onClick={() => {
-                                        setSelectValue([name]);
-                                        
-                                    }}
-                                >
-                                    {name}
-                                </Link> */}
+                            <Text style={{marginRight: 16}} className="g-link g-link_view_primary" variant="header-2">
+                                {name}
                             </Text>
                             <ChangeApiModal sellerId={sellerId}>
                                 <Button

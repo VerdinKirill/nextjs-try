@@ -20,6 +20,8 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
     const [auction, setAuction] = useState([]);
     const [open, setOpen] = useState(false);
 
+    // const [anchorElement, setAnchorElement] = useState<HTMLDivElement | null>(null);
+
     useEffect(() => {
         getAuction();
     }, [auctionSelectedOption]);
@@ -145,33 +147,56 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
     );
 
     return (
+        <div>
         <Popover
+            enableSafePolygon={true}
             onOpenChange={(val) => {
                 setOpen(val);
             }}
             placement={'bottom-start'}
-            closeDelay={1000}
-            style={{width: 200, height: 200}}
+            // disablePortal={true}
+            // disableOutsideClickClose
+            closeDelay={100000}
+            // content={
+            //     <div>
+            //     <Card style={{width: 400, height: 500}}>
+            //         <Text>Попа</Text>
+            //     </Card>
+            //     </div>
+            // }
+            // style={{width: 200, height: 200}}
             content={
-                <Card
-                    view="clear"
-                    style={{
-                        // width: 200,
-                        // height: 200,
+                // <Card
+                //     style={{
+                //         // backdropFilter: 'blur(20px)',
+                //         // borderRadius: 30,
+                //         // boxShadow: 'var(--g-color-base-background) 0px 2px 8px',
+                //         // width: 'max-content',
+                //         // height: 'max-content',
                         
-                        overflow: 'auto',
-                        display: 'flex',
-                    }}
-                >
+                //         overflow: 'auto',
+                //         display: 'flex',
+                //     }}
+                // >
                     <Card
-                        view="clear"
+                        // view="clear"
                         style={{
+                        // width: 'max-content',
+                        // height: 'max-content',
                             position: 'absolute',
-                            maxHeight: '30em',
+                            maxHeight: '42em',
                             display: 'flex',
+                            padding: 16,
+                            backdropFilter: 'blur(8px)',
+                            WebkitBackdropFilter: 'blur(8px)',
+                            boxShadow: '#0002 0px 2px 8px 0px',
+                            // padding: 30,
+                            borderRadius: 16,
+                            border: '1px solid #eee2',
                             flexDirection: 'row',
                             top: -10,
                             left: -10,
+
                         }}
                     >
                         <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -180,16 +205,21 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                                 style={{
                                     height: 'fit-content',
                                     width: 'fit-content',
-                                    boxShadow: 'var(--g-color-base-background) 0px 2px 8px',
+                                    
+                                    // boxShadow: 'var(--g-color-base-background) 0px 2px 8px',
                                 }}
                             >
                                 <Card
                                     style={{
-                                        background: 'var(--g-color-base-background)',
+                                        background: 'none',
+                                        // background: 'var(--g-color-base-background)',
                                         overflow: 'auto',
                                         display: 'flex',
                                         flexDirection: 'column',
                                         justifyContent: 'space-between',
+                                        backdropFilter: 'blur(16px)',
+                                        WebkitBackdropFilter: 'blur(16px)',
+                                        boxShadow: '#0002 0px 2px 8px 0px',
                                         padding: 5,
                                     }}
                                 >
@@ -214,11 +244,11 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                                         boxShadow: 'var(--g-color-base-background) 0px 2px 8px',
                                     }}
                                 >
-                                    <Card
+                                    {/* <Card
                                         style={{
                                             background: 'var(--g-color-base-background)',
                                         }}
-                                    >
+                                    > */}
                                         <DataTable
                                             settings={{
                                                 displayIndices: false,
@@ -238,14 +268,16 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                                             data={auction}
                                         />
                                     </Card>
-                                </Card>
+                                {/* </Card> */}
                             </div>
                         </div>
                     </Card>
-                </Card>
+                // </Card>
             }
-        >
+        ><div>
             <Text>{phrase}</Text>
+            </div>
         </Popover>
+        </div>
     );
 };

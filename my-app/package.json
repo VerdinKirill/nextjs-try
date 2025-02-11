@@ -47,7 +47,7 @@
     "@gravity-ui/prettier-config": "^1.1.0",
     "@gravity-ui/stylelint-config": "^4.0.1",
     "@gravity-ui/tsconfig": "^1.0.0",
-    "@gravity-ui/uikit": "^7.0.0",
+    "@gravity-ui/uikit": "^7.1.0",
     "@tailwindcss/forms": "^0.5.10",
     "@types/node": "^22.13.1",
     "@types/react": "^19.0.8",

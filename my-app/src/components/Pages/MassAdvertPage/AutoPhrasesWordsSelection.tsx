@@ -85,6 +85,8 @@ export const AutoPhrasesWordsSelection = ({
     };
     return (
         <Popover
+        enableSafePolygon={true}
+
             placement={'bottom'}
             content={
                 <div

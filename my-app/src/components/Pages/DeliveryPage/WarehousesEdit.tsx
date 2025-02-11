@@ -80,6 +80,8 @@ export const WarehousesEdit = ({
 
     return (
         <Popover
+        enableSafePolygon={true}
+
             content={
                 <div
                     style={{
