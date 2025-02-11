@@ -18,7 +18,6 @@ import {
     ButtonSize,
     ButtonView,
     IconData,
-    HelpMark,
 } from '@gravity-ui/uikit';
 import '@gravity-ui/react-data-table/build/esm/lib/DataTable.scss';
 import block from 'bem-cn-lite';
@@ -91,6 +90,7 @@ import {PopupFilterArts} from './PopupFilterArts';
 import {Auction} from './Auction';
 import {parseFirst10Pages} from './ParseFirst10Pages';
 import {useModules} from '@/contexts/ModuleProvider';
+import { HelpMark } from '@/components/Popups/HelpMark';
 
 const getUserDoc = (docum = undefined, mode = false, selectValue = '') => {
     const [doc, setDocument] = useState<any>();
@@ -1036,8 +1036,7 @@ export const MassAdvertPage = () => {
                               marginLeft: 4,
                           }}
                       >
-                          <HelpMark>
-                              <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <HelpMark position={'start'} content={<div style={{display: 'flex', flexDirection: 'column'}}>
                                   <Text variant="subheader-1">
                                       Для поиска введите
                                       <Text
@@ -1100,8 +1099,7 @@ export const MassAdvertPage = () => {
                                       </Button>
                                       чтобы показать артикулы с поисковыми РК
                                   </Text>
-                              </div>
-                          </HelpMark>
+                              </div>}/>
                       </div>,
                   ],
                   render: ({value, row, index}: any) => {

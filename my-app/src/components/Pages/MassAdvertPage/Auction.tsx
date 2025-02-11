@@ -156,7 +156,7 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
             placement={'bottom-start'}
             // disablePortal={true}
             // disableOutsideClickClose
-            closeDelay={100000}
+            closeDelay={1000}
             // content={
             //     <div>
             //     <Card style={{width: 400, height: 500}}>

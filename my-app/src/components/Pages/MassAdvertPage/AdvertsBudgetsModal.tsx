@@ -1,6 +1,6 @@
 'use client';
 
-import {Button, Card, Modal, Select, TextInput, Text, Checkbox, HelpMark} from '@gravity-ui/uikit';
+import {Button, Card, Modal, Select, TextInput, Text, Checkbox} from '@gravity-ui/uikit';
 import {motion} from 'framer-motion';
 import {
     useState,
@@ -14,6 +14,7 @@ import {
 import {useError} from '@/contexts/ErrorContext';
 import ApiClient from '@/utilities/ApiClient';
 import callApi, {getUid} from '@/utilities/callApi';
+import { HelpMark } from '@/components/Popups/HelpMark';
 
 export const AdvertsBudgetsModal = ({
     sellerId,

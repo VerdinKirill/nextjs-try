@@ -9,7 +9,6 @@ import {
     Select,
     TextInput,
     Text,
-    HelpMark,
     SegmentedRadioGroup,
 } from '@gravity-ui/uikit';
 import {CloudArrowUpIn, TrashBin, Calendar as CalendarIcon} from '@gravity-ui/icons';
@@ -29,6 +28,7 @@ import {Calendar} from '@gravity-ui/date-components';
 import {dateTimeParse} from '@gravity-ui/date-utils';
 import {getLocaleDateString} from '@/utilities/getRoundValue';
 import {useError} from '@/contexts/ErrorContext';
+import { HelpMark } from '@/components/Popups/HelpMark';
 
 export const AdvertsBidsModal = ({
     disabled,
