@@ -7,6 +7,7 @@ import {Icon, Button, Tooltip} from '@gravity-ui/uikit';
 // import '@/styles/App.scss'
 import Image from 'next/image';
 // import textLogo from '../../assets/brlogo.svg';
+
 import TextLogo from '@/assets/brlogo.svg';
 import {CircleQuestion, LogoTelegram, GraduationCap} from '@gravity-ui/icons';
 
@@ -249,7 +250,8 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                             >
                                 <div style={{minWidth: 24}} />
                                 <TextLogo />
-                                <Image style={{height: 30, width: '100px'}} alt="Aurum logo" src={TextLogo} />
+                                <img style={{height: 30}} src={TextLogo} />
+                                {/* <Image style={{height: 30, width: '100px'}} alt="Aurum logo" src={TextLogo} /> */}
                                 {/* <img style={{height: 30}} src={textLogo} /> */}
                             </div>
                             <SelectCampaign
@@ -314,10 +316,10 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                             }}
                                         >
                                             <div style={{minWidth: 12}} />
-                                            <Image
+                                            <img
                                                 style={{height: 30}}
-                                                alt="Aurum logo"
                                                 src={TextLogo}
+                                                alt="Aurum logo"
                                             />
                                             {/* <TextLogo /> */}
 
