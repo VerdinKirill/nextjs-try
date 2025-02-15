@@ -90,7 +90,7 @@ import {PopupFilterArts} from './PopupFilterArts';
 import {Auction} from './Auction';
 import {parseFirst10Pages} from './ParseFirst10Pages';
 import {useModules} from '@/contexts/ModuleProvider';
-import { HelpMark } from '@/components/Popups/HelpMark';
+import {HelpMark} from '@/components/Popups/HelpMark';
 
 const getUserDoc = (docum = undefined, mode = false, selectValue = '') => {
     const [doc, setDocument] = useState<any>();
@@ -1036,70 +1036,75 @@ export const MassAdvertPage = () => {
                               marginLeft: 4,
                           }}
                       >
-                        <HelpMark position={'start'} content={<div style={{display: 'flex', flexDirection: 'column'}}>
-                                  <Text variant="subheader-1">
-                                      Для поиска введите
-                                      <Text
-                                          style={{margin: '0 3px'}}
-                                          color="brand"
-                                          variant="subheader-1"
-                                      >
-                                          Id РК
+                          <HelpMark
+                              position={'start'}
+                              content={
+                                  <div style={{display: 'flex', flexDirection: 'column'}}>
+                                      <Text variant="subheader-1">
+                                          Для поиска введите
+                                          <Text
+                                              style={{margin: '0 3px'}}
+                                              color="brand"
+                                              variant="subheader-1"
+                                          >
+                                              Id РК
+                                          </Text>
                                       </Text>
-                                  </Text>
-                                  <div style={{height: 4}} />
-                                  <Text variant="subheader-1">
-                                      Введите
-                                      <Button
-                                          size="s"
-                                          style={{margin: '0 3px'}}
-                                          view="outlined-action"
-                                          onClick={() => filterByButton('+', 'adverts')}
-                                      >
-                                          <Icon data={Plus} size={14} />
-                                      </Button>
-                                      чтобы показать артикулы с РК
-                                  </Text>
-                                  <div style={{height: 4}} />
-                                  <Text variant="subheader-1">
-                                      Введите
-                                      <Button
-                                          size="s"
-                                          style={{margin: '0 3px'}}
-                                          view="outlined-action"
-                                          onClick={() => filterByButton('-', 'adverts')}
-                                      >
-                                          <Icon data={Minus} size={14} />
-                                      </Button>
-                                      чтобы показать артикулы без РК
-                                  </Text>
-                                  <div style={{height: 4}} />
-                                  <Text variant="subheader-1">
-                                      Введите
-                                      <Button
-                                          size="s"
-                                          style={{margin: '0 3px'}}
-                                          view="outlined-action"
-                                          onClick={() => filterByButton('авто', 'adverts')}
-                                      >
-                                          авто
-                                      </Button>
-                                      чтобы показать артикулы с авто РК
-                                  </Text>
-                                  <div style={{height: 4}} />
-                                  <Text variant="subheader-1">
-                                      Введите
-                                      <Button
-                                          size="s"
-                                          style={{margin: '0 3px'}}
-                                          view="outlined-action"
-                                          onClick={() => filterByButton('поиск', 'adverts')}
-                                      >
-                                          поиск
-                                      </Button>
-                                      чтобы показать артикулы с поисковыми РК
-                                  </Text>
-                              </div>}/>
+                                      <div style={{height: 4}} />
+                                      <Text variant="subheader-1">
+                                          Введите
+                                          <Button
+                                              size="s"
+                                              style={{margin: '0 3px'}}
+                                              view="outlined-action"
+                                              onClick={() => filterByButton('+', 'adverts')}
+                                          >
+                                              <Icon data={Plus} size={14} />
+                                          </Button>
+                                          чтобы показать артикулы с РК
+                                      </Text>
+                                      <div style={{height: 4}} />
+                                      <Text variant="subheader-1">
+                                          Введите
+                                          <Button
+                                              size="s"
+                                              style={{margin: '0 3px'}}
+                                              view="outlined-action"
+                                              onClick={() => filterByButton('-', 'adverts')}
+                                          >
+                                              <Icon data={Minus} size={14} />
+                                          </Button>
+                                          чтобы показать артикулы без РК
+                                      </Text>
+                                      <div style={{height: 4}} />
+                                      <Text variant="subheader-1">
+                                          Введите
+                                          <Button
+                                              size="s"
+                                              style={{margin: '0 3px'}}
+                                              view="outlined-action"
+                                              onClick={() => filterByButton('авто', 'adverts')}
+                                          >
+                                              авто
+                                          </Button>
+                                          чтобы показать артикулы с авто РК
+                                      </Text>
+                                      <div style={{height: 4}} />
+                                      <Text variant="subheader-1">
+                                          Введите
+                                          <Button
+                                              size="s"
+                                              style={{margin: '0 3px'}}
+                                              view="outlined-action"
+                                              onClick={() => filterByButton('поиск', 'adverts')}
+                                          >
+                                              поиск
+                                          </Button>
+                                          чтобы показать артикулы с поисковыми РК
+                                      </Text>
+                                  </div>
+                              }
+                          />
                       </div>,
                   ],
                   render: ({value, row, index}: any) => {
@@ -3846,11 +3851,12 @@ export const MassAdvertPage = () => {
                             />
                             <div style={{minWidth: 8}} />
                             <Popover
+                                openDelay={1000}
                                 placement={'bottom'}
                                 content={
                                     <div
                                         style={{
-                                            height: 'calc(30em - 60px)',
+                                            height: 'calc(30em)',
                                             width: '60em',
                                             overflow: 'auto',
                                             display: 'flex',
@@ -3860,7 +3866,7 @@ export const MassAdvertPage = () => {
                                             view="outlined"
                                             theme="warning"
                                             style={{
-                                                position: 'absolute',
+                                                // position: 'absolute',
                                                 height: '30em',
                                                 width: '60em',
                                                 overflow: 'auto',

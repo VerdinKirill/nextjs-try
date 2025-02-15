@@ -1,7 +1,7 @@
 'use client';
 
 import {Tab, TabProvider, Text} from '@gravity-ui/uikit';
-import {Dispatch, ReactNode, SetStateAction} from 'react';
+import {ReactNode} from 'react';
 
 import {AdvertWordsTabModules} from './types';
 import {motion} from 'framer-motion';

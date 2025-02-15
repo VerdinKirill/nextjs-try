@@ -11,7 +11,7 @@ export interface AdvertWordsHeaderProps {
 }
 
 export const AdvertsWordsHeader = () => {
-    const {loading, currentModule, setCurrentModule} = useAdvertsWordsModal();
+    const {currentModule, setCurrentModule} = useAdvertsWordsModal();
 
     return (
         <div>

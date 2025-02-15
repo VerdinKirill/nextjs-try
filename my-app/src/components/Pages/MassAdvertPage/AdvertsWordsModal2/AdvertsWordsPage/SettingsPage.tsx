@@ -1,6 +1,6 @@
 'use client';
 
-import {Text} from '@gravity-ui/uikit';
+// import {Text} from '@gravity-ui/uikit';
 import {motion} from 'framer-motion';
 
 export const SettingsPage = () => {

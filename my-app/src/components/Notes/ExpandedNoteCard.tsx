@@ -15,15 +15,16 @@ interface NoteCardProps {
 
 export const ExpandedNoteCard = ({note, setSelectedCard}: NoteCardProps) => {
     return (
-        <motion.div layoutId={`card-${note.index}`}>
+        // <motion.div layoutId={`card-${note.index}`}>
+        <motion.div layoutId={`card`} style={{boxSizing: 'border-box'}}>
             <Button
-                className="masonry-item"
+                className={'button-card'}
                 view="flat"
                 style={
                     {
                         flexDirection: 'column',
                         whiteSpace: 'pre-wrap',
-                        '--yc-button-padding': '0px',
+                        padding: '0px !important',
                         textAlign: 'justify',
                         height: 'fit-content',
                         display: 'flex',

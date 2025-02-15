@@ -20,23 +20,13 @@
 
 .masonry-item {
 	display: flex;
+	box-sizing: border-box;
 	/* z-index: 10000; */
 	/* position: relative; */
 	/* width: calc(98%/2);
 	height: fit-content; */
 }
-.masonry-item:nth-child(2n){
-	/* order: 1; */
-}
-.masonry-item:nth-child(2n+1){
-	/* order: 2; */
-}
-.masonry-item::before{
 
-}
-.masonry-item::after{
-	/* content: ''; */
-	/* flex-basis: 100%;
-	width: 0;
-	order: 2; */
+.button-card {
+	padding: 0px !important;
 }

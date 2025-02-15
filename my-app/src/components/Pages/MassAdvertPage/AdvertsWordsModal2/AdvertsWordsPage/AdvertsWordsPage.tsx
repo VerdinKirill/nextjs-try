@@ -1,14 +1,14 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import {useAdvertsWordsModal} from '../AdvertsWordsModalContext';
 import {Loader, Text} from '@gravity-ui/uikit';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {ActiveClustersPage} from './ActiveClustersPage';
 import {InactiveClustersPage} from './InactiveClustersPage';
 import {SettingsPage} from './SettingsPage';
 import {AutoPhrasesPage} from './AutoPhrasesPage';
-import {motion} from 'framer-motion';
+// import {motion} from 'framer-motion';
 
 const pagesMap = {
     // massAdvert: dynamic(() => import('@/components/MassAdvertPage')),

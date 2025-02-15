@@ -19,7 +19,6 @@ import {useModules} from '@/contexts/ModuleProvider';
 import {CustomTabs} from '../CustomTabs';
 // import {NotesCreationModal} from '@/components/Notes';
 // import {AdvertsWordsModal} from '../Pages/MassAdvertPage/AdvertsWordsModal';
-import {AdvertsWordsModal2} from '../Pages/MassAdvertPage/AdvertsWordsModal2';
 import {NotesCreationModal} from '../Notes';
 
 const b = block('app');

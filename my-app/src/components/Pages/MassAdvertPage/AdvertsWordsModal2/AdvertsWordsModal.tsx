@@ -1,7 +1,7 @@
 'use client';
 
 import {cx} from '@/lib/utils';
-import {Button, Card, Modal, TabProvider, Text} from '@gravity-ui/uikit';
+import {Button, Card, Modal, Text} from '@gravity-ui/uikit';
 import {useState} from 'react';
 import {AutoWordsProvider} from './AdvertsWordsModalContext';
 import {AdvertsWordsHeader} from './AdvertsWordsHeader';
@@ -17,7 +17,7 @@ export const AdvertsWordsModal2 = (nmId: number) => {
                     setModalOpen(!modalOpen);
                 }}
             >
-                <Text>ХУЙЖдвфлж</Text>
+                <Text>ХУЙЖдвфлж{nmId}</Text>
             </Button>
             <Modal open={modalOpen} onOpenChange={(open) => setModalOpen(open)}>
                 <Card

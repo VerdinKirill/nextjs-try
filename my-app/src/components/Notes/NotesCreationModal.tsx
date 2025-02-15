@@ -3,7 +3,7 @@
 import {Button, Card, Icon, Modal} from '@gravity-ui/uikit';
 import {useEffect, useState} from 'react';
 import callApi from '@/utilities/callApi';
-import {Check, Eraser, Eye, PencilToSquare, Xmark} from '@gravity-ui/icons';
+import {Check, Eye, PencilToSquare, Xmark} from '@gravity-ui/icons';
 import {NotesEditingField} from './NotesEditingField';
 import {ShowNotesModal} from './ShowNotesModal';
 
@@ -95,16 +95,15 @@ export const NotesCreationModal = ({sellerId}: NotesCreationModalProps) => {
             >
                 <Icon data={PencilToSquare} />
             </Button>
-            <Modal
-                open={modalOpen}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyItems: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <div style={{position: 'relative'}}>
+            <Modal open={modalOpen}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyItems: 'center',
+                        alignItems: 'center',
+                    }}
+                >
                     <Card
                         style={{
                             left: '50%',
@@ -151,7 +150,7 @@ export const NotesCreationModal = ({sellerId}: NotesCreationModalProps) => {
                                 >
                                     <Icon data={Check} size={16} />
                                 </Button>
-                                <Button
+                                {/* <Button
                                     style={{
                                         marginLeft: '8px',
                                         borderRadius: '4px 4px 4px 4px',
@@ -165,7 +164,7 @@ export const NotesCreationModal = ({sellerId}: NotesCreationModalProps) => {
                                     }}
                                 >
                                     <Icon data={Eraser} size={16} />
-                                </Button>
+                                </Button> */}
                                 <Button
                                     onClick={() => setOpenViewNotes(!openViewNotes)}
                                     style={{

@@ -1,6 +1,6 @@
-'use client'
+'use client';
 import {Text, TextArea} from '@gravity-ui/uikit';
-import { CSSProperties } from 'react';
+// import {CSSProperties} from 'react';
 
 interface NotesEditingFieldProps {
     date: Date;
@@ -31,13 +31,12 @@ export const NotesEditingField = ({
                 placeholder="Введите название заметки..."
                 onChange={(e) => setTitle(e.target.value)}
                 view="clear"
-                // style={
-                //     {   margin: '0px',
-                //         '--g-text-body-short-font-size': '24px',
-                //         '--g-text-body-short-line-height': '1.5',
-                //         '--g-text-body-font-weight': 600,
-                //     } as CSSProperties
-                // }
+                style={{
+                    margin: '0px',
+                    '--g-text-body-short-font-size': '24px',
+                    '--g-text-body-short-line-height': '1.5',
+                    '--g-text-body-font-weight': 600,
+                }}
             />
             <Text variant="body-1" color="secondary">
                 {new Date(date).toLocaleString('ru-RU', {

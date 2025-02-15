@@ -94,6 +94,7 @@ export const ManageUserModal = ({
                                               ? 'outlined-success'
                                               : 'outlined-action'
                                     }
+                                    style={{alignItems: 'center'}}
                                     pin={'circle-circle'}
                                     onClick={onClick}
                                     onKeyDown={onKeyDown}

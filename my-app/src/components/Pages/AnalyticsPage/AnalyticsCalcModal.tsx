@@ -133,17 +133,22 @@ export const AnalyticsCalcModal = ({
                             onClick={() => {
                                 setSwitchesOpen(!switchesOpen);
                             }}
+                            style={{
+                                justifyContent: 'left',
+                                alignItems: 'center',
+                                '--g-button__text-width': '100%',
+                            }}
                         >
                             <div
                                 style={{
-                                    width: '100%',
+                                    width: 'max',
                                     display: 'flex',
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
                                 }}
                             >
-                                <Text ellipsis>
+                                <Text ellipsis={true} style={{alignContent: 'center'}}>
                                     {buttonString.length ? buttonString.join(', ') : 'Выберите'}
                                 </Text>
                                 <Text color="secondary">

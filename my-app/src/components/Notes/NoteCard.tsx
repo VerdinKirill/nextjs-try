@@ -20,6 +20,7 @@ export const NoteCard = ({note, setSelectedCard}: NoteCardProps) => {
     return (
         <motion.div
             className="masonry-item"
+            style={{boxSizing: 'border-box'}}
             layoutId={`card-${note.index}`}
 
             // whileHover={{
@@ -33,13 +34,13 @@ export const NoteCard = ({note, setSelectedCard}: NoteCardProps) => {
             // }}
         >
             <Button
-                className="masonry-item"
+                // className="masonry-item"
+                className={'button-card'}
                 view="flat"
                 style={
                     {
                         flexDirection: 'column',
                         whiteSpace: 'pre-wrap',
-                        '--yc-button-padding': '0px',
                         textAlign: 'justify',
                         height: 'fit-content',
                         display: 'flex',

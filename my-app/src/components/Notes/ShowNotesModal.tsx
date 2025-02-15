@@ -1,9 +1,11 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {motion} from 'framer-motion';
 import {Note, NoteCard} from './NoteCard';
 import {Card} from '@gravity-ui/uikit';
 import './styles.css';
 import {ExpandedNoteCard} from './ExpandedNoteCard';
+// import Masonry from '@mui/lab/Masonry';
+import Masonry from 'react-layout-masonry';
 
 interface ShowNotesModalProps {
     notes: Note[];
@@ -12,31 +14,6 @@ interface ShowNotesModalProps {
 }
 
 export const ShowNotesModal = ({notes, open}: ShowNotesModalProps) => {
-    const [columns, setColumns] = useState<ReactElement[][]>([[], []]);
-    const refs = useRef<Array<HTMLDivElement | null>>([]);
-    useEffect(() => {
-        const newColumns: ReactElement[][] = [[], []]; // Adjust number of columns if needed
-        const heights = [0, 0]; // Track height of each column
-
-        notes.forEach((item, index) => {
-            item.index = index;
-            const shortestIndex = heights.indexOf(Math.min(...heights));
-            newColumns[shortestIndex].push(
-                <div
-                    key={index}
-                    ref={(el) => {
-                        refs.current[index] = el;
-                    }}
-                >
-                    <NoteCard note={item} setSelectedCard={setSelectedCard} />
-                </div>,
-            );
-            console.log(refs.current[index]?.offsetHeight); // Simulate height (improve logic as needed)
-            heights[shortestIndex] += refs.current[index]?.offsetHeight || 0;
-        });
-
-        setColumns(newColumns);
-    }, [notes]);
     const [selectedCard, setSelectedCard] = useState(null as any);
     return (
         <motion.div
@@ -44,7 +21,7 @@ export const ShowNotesModal = ({notes, open}: ShowNotesModalProps) => {
                 position: 'absolute',
                 padding: '8px',
                 borderRadius: '4px',
-                transform: `translate(30%, -50%)`,
+                transform: `translate(50%, 0%)`,
                 opacity: 0,
                 // bottom: '-50%',
                 // transform: `translate('120%', -50%)`,
@@ -52,15 +29,11 @@ export const ShowNotesModal = ({notes, open}: ShowNotesModalProps) => {
             animate={{
                 width: open === true ? 250 : 0,
                 opacity: open === true ? 1 : 0,
-                transform: open === true ? `translate(120%, -50%)` : `translate(30%, -50%)`,
+                transform: open === true ? `translate(120%, 0%)` : `translate(30%, -0%)`,
                 // left: open ? 0 : 500,
             }}
         >
-            {/* {selectedCard ? (
-                <ExpandedNoteCard note={selectedCard} setSelectedCard={setSelectedCard} />
-            ) : ( */}
             <Card
-                className="masonry-layout"
                 style={
                     {
                         position: 'relative',
@@ -80,26 +53,18 @@ export const ShowNotesModal = ({notes, open}: ShowNotesModalProps) => {
                 {selectedCard ? (
                     <ExpandedNoteCard note={selectedCard} setSelectedCard={setSelectedCard} />
                 ) : (
-                    <div
-                        style={{
-                            display: 'flex',
-                            gap: '8px',
-                        }}
-                    >
-                        {columns.map((column, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '8px',
-                                }}
-                            >
-                                {column}
-                            </div>
-                        ))}
-                    </div>
+                    // <motion.div layoutId="card">
+                        <Masonry columns={2} gap={8}>
+                            {notes.map((value) => {
+                                console.log(value);
+                                return (
+                                    // <div key={index}>
+                                    <NoteCard note={value} setSelectedCard={setSelectedCard} />
+                                    // </div>
+                                );
+                            })}
+                        </Masonry>
+                    // </motion.div>
                 )}
             </Card>
             {/* )} */}

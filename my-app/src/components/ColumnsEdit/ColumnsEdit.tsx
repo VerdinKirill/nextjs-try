@@ -119,7 +119,12 @@ export const ColumnsEdit = ({
                 </div>
             }
         >
-            <Button size="l" view="action" style={{marginBottom: 8}}>
+            <Button
+                size="l"
+                view="action"
+                style={{marginBottom: 8}}
+                onClick={() => setOpenPopover(!openPopover)}
+            >
                 <Icon data={LayoutColumns3} />
                 <Text variant="subheader-1">Столбцы</Text>
             </Button>

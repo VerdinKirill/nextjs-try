@@ -1407,6 +1407,7 @@ export const AdvertsWordsModal = ({
                         justifyContent: 'space-between',
                         margin: 20,
                         alignItems: 'start',
+                        paddingBlock: '8px',
                     }}
                 >
                     <div
