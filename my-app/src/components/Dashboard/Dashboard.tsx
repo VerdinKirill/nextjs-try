@@ -5,7 +5,9 @@ import block from 'bem-cn-lite';
 import {Icon, Button, Tooltip} from '@gravity-ui/uikit';
 // import Link from 'next/link';
 // import '@/styles/App.scss'
-import textLogo from '@/assets/textLogo.png';
+import Image from 'next/image';
+// import textLogo from '../../assets/brlogo.svg';
+import TextLogo from '@/assets/brlogo.svg';
 import {CircleQuestion, LogoTelegram, GraduationCap} from '@gravity-ui/icons';
 
 // import {useUser} from '@/components/RequireAuth/RequireAuth';
@@ -246,11 +248,9 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                 }}
                             >
                                 <div style={{minWidth: 24}} />
-                                <img
-                                    style={{height: 'calc(100% - 24px)'}}
-                                    src={textLogo.src}
-                                    alt="Aurum logo"
-                                />
+                                <TextLogo />
+                                <Image style={{height: 30, width: '100px'}} alt="Aurum logo" src={TextLogo} />
+                                {/* <img style={{height: 30}} src={textLogo} /> */}
                             </div>
                             <SelectCampaign
                                 apiKeyExpDate={apiKeyExpDate}
@@ -314,11 +314,13 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                             }}
                                         >
                                             <div style={{minWidth: 12}} />
-                                            <img
-                                                style={{height: 'calc(100% - 24px)'}}
-                                                src={textLogo.src}
+                                            <Image
+                                                style={{height: 30}}
                                                 alt="Aurum logo"
+                                                src={TextLogo}
                                             />
+                                            {/* <TextLogo /> */}
+
                                             <div style={{minWidth: 32}} />
                                         </div>
                                         <div style={{minWidth: 32}} />
