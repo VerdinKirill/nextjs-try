@@ -17,6 +17,10 @@ import {SelectCampaign} from '@/components/SelectCampaign';
 import {useSearchParams} from 'next/navigation';
 import {useModules} from '@/contexts/ModuleProvider';
 import {CustomTabs} from '../CustomTabs';
+// import {NotesCreationModal} from '@/components/Notes';
+// import {AdvertsWordsModal} from '../Pages/MassAdvertPage/AdvertsWordsModal';
+import {AdvertsWordsModal2} from '../Pages/MassAdvertPage/AdvertsWordsModal2';
+import {NotesCreationModal} from '../Notes';
 
 const b = block('app');
 
@@ -37,7 +41,7 @@ export interface DashboardProps {
 export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     const searchParams = useSearchParams();
     // const {refetchUser} = useUser();
-    const {selectValue, currentCampaign, campaignInfo, campaigns} = useCampaign();
+    const {selectValue, currentCampaign, campaignInfo, campaigns, sellerId} = useCampaign();
     const {currentModule, availableModules = []} = useModules();
 
     const moduleTitles: Record<string, string> = {
@@ -404,7 +408,8 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                                 <></>
                                             )}
                                         </div>
-
+                                        {/* <AdvertsWordsModal2 /> */}
+                                        <NotesCreationModal sellerId={sellerId} />
                                         <UserPopup toggleTheme={toggleTheme} theme={theme} />
                                         <div
                                             style={{

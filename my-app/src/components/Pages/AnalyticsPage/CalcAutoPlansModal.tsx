@@ -7,6 +7,7 @@ import {motion} from 'framer-motion';
 // import {generateModalButtonWithActions} from 'src/pages/MassAdvertPage';
 import callApi, {getUid} from '@/utilities/callApi';
 import {getMonth} from '@/utilities/getRoundValue';
+import {cx} from '@/lib/utils';
 
 interface CalcAutoPlansModalProps {
     disabled: boolean;
@@ -154,9 +155,19 @@ export const CalcAutoPlansModal = ({
                 }}
             >
                 <Card
+                    className={cx(['blurred-card', 'centred-absolute-element'])}
                     view="outlined"
                     theme="warning"
                     style={{
+                        left: 0,
+                        right: 0,
+                        marginInline: 'auto',
+                        // width: 'fit-content',
+                        marginBlock: 'auto',
+                        // marginTop: 'auto',
+                        // marginBottom: 'auto',
+                        // marginBlock: 'auto',
+                        position: 'absolute',
                         height: '30em',
                         width: 'calc(40em + 200px)',
                         overflow: 'auto',
@@ -201,6 +212,7 @@ export const CalcAutoPlansModal = ({
                         />
                         <div style={{minHeight: 8}} />
                         <Button
+                            style={{marginBottom: '8px'}}
                             size="l"
                             pin="circle-circle"
                             disabled={!planModalPlanValueValid}
@@ -211,6 +223,7 @@ export const CalcAutoPlansModal = ({
                             Установить план
                         </Button>
                         <Button
+                            style={{marginBottom: '8px'}}
                             size="l"
                             pin="circle-circle"
                             disabled={!planModalPlanValueValid}

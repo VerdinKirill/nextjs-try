@@ -80,7 +80,6 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
             document.body.appendChild(tempElement);
 
             const itemWidth = tempElement.offsetWidth + 24; // Account for padding/margins
-            console.log(itemWidth, containerWidth);
             document.body.removeChild(tempElement);
 
             if (currentWidth + itemWidth < containerWidth && !flag) {
@@ -159,8 +158,6 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                     value={valueOfTab ? valueOfTab : ''}
                     key={'CommonTab'}
                     onUpdate={(value: string) => {
-                        console.log('valueOfTab', valueOfTab);
-                        console.log(value);
                         handleUpdateTabs(value);
                     }}
                 >

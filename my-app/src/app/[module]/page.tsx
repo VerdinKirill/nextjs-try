@@ -12,7 +12,6 @@ import {useUser} from '@/components/RequireAuth';
 import {NoSubscriptionPage} from '@/components/Pages/NoSubscriptionPage';
 import {LogoLoader} from '@/components/LogoLoader';
 
-
 const modulesMap: any = {
     // massAdvert: dynamic(() => import('@/components/MassAdvertPage')),
     nomenclatures: dynamic(() =>
@@ -27,7 +26,7 @@ const modulesMap: any = {
             ssr: false,
         },
     ),
-    detailedReports: dynamic(
+    reports: dynamic(
         () =>
             import('@/components/Pages/DetailedReportsPage').then((mod) => mod.DetailedReportsPage),
         {

@@ -1,4 +1,9 @@
 // @import "tailwindcss";
+div {
+    box-sizing: unset
+}
+
+@import './cardStyle.module.scss';
 
 // #root {
 //     background: linear-gradient(
@@ -7,6 +12,7 @@
 //         rgba(34, 33, 39, 1) 100%
 //     ) !important;
 // }
+
 
 .tablink:hover {
     color: var(--g-color-text-complementary) !important;
@@ -268,10 +274,19 @@ code {
     }
 }
 
-.g-card {
-    border: '1px solid var(--gc-color-base-generic-hover)';
-    border-radius: 30;
-    backdrop-filter: 'blur(20px)';
-    box-shadow: 'var(--g-color-base-background) 0px 2px 8px';
-}
+// .g-card {
+//     border: 1px solid #eee2 !important; 
+//     border-radius: 30px;
+//     backdrop-filter: blur(20px) !important;
+//     box-shadow: var(--g-color-base-background) 0px 2px 8px !important;
+// }
 
+.centred-absolute-element {
+    position: absolute !important;
+    left: 0px !important;
+    top: 0px !important;
+    right: 0px !important;
+    margin-inline: auto !important;
+    margin-block: auto !important;
+    bottom: 0px !important;
+}

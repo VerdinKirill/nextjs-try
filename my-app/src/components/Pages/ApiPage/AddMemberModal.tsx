@@ -97,6 +97,7 @@ export const AddMemberModal = ({
                         renderControl={({triggerProps: {onClick, onKeyDown}}) => {
                             return (
                                 <Button
+                                    style={{alignItems: 'center'}}
                                     view={
                                         enabled[0] == 'Доступ закрыт'
                                             ? 'outlined'
@@ -230,6 +231,7 @@ export const AddMemberModal = ({
                             boxShadow: '#0002 0px 2px 8px 0px',
                             padding: 30,
                             borderRadius: 30,
+                            boxSizing: 'unset',
                             border: '1px solid #eee2',
                             height: 0,
                             width: 300,
@@ -255,7 +257,7 @@ export const AddMemberModal = ({
                             <motion.div
                                 animate={{
                                     width:
-                                        Object.keys(modules).length || identifier !== '' ? 114 : 0,
+                                        Object.keys(modules).length || identifier !== '' ? 118 : 0,
                                     marginLeft:
                                         Object.keys(modules).length || identifier !== '' ? 8 : 0,
                                 }}
