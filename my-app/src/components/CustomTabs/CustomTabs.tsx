@@ -202,8 +202,6 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                                     }}
                                     renderControl={({triggerProps: {onClick, onKeyDown}, ref}) => (
                                         <div
-                                            // view={'flat'}
-                                            // pin="brick-brick"
                                             style={
                                                 {
                                                     '--gc-button-background-color-hover': 'none',
@@ -215,12 +213,7 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                                                     borderBottom:
                                                         'more' === valueOfTab
                                                             ? '5px solid #ffbe5c'
-                                                            : undefined,
-                                                    // borderBottom: notShowingOptions.some(
-                                                    //     (opt) => opt.value === activeTab,
-                                                    // )
-                                                    //     ? '5px solid #ffbe5c'
-                                                    //     : '5px solid #00000000',
+                                                            : '5px solid #0000',
                                                     scrollbarColor:
                                                         'var(--g-color-scroll-handle) var(--g-color-scroll-track)',
                                                     scrollbarWidth: 'auto',
@@ -256,92 +249,7 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                         </Tab>
                     )}
                 </TabProvider>
-                {/* <Tabs
-                    key={'CommonTab'}
-                    className="tabs"
-                    activeTab={activeTab}
-                    onSelectTab={onSelectTab}
-                    items={items}
-                >
-                    {visibleTabs}
-                </Tabs> */}
-                {/* {notShowingOptions.length !== 0 && (
-                    <Select
-                        // open={true}
-                        options={notShowingOptions}
-                        onUpdate={(value) => {
-                            setSelectValueFromTab(value);
-                            const currentItem: any = items?.filter(
-                                (item) => item.id == value[0],
-                            )[0];
-                            setModule(currentItem);
-                            // router.replace(currentItem.href); // Navigate programmatically
-                            setSelectObjectFromTab(currentItem);
-                            // onSelectTab(currentItem?.id as string);
-                        }}
-                        renderOption={(option) => {
-                            const currentItem: any = items?.filter(
-                                (item) => item.id == option.value,
-                            )[0];
-                            return (
-                                <Text
-                                    variant="body-3"
-                                    color={currentItem.disabled ? 'secondary' : undefined}
-                                >
-                                    {currentItem.title}
-                                </Text>
-                            );
-                        }}
-                        renderControl={({triggerProps: {onClick, onKeyDown}, ref}) => (
-                            <Button
-                                view={'flat'}
-                                pin="brick-brick"
-                                style={
-                                    {
-                                        '--gc-button-background-color-hover': 'none',
-                                        height: 66,
-                                        width: 96,
-                                        marginInline: '8px',
-                                        textOverflow: 'ellipsis',
-                                        background: 'transparent',
-                                        borderBottom: notShowingOptions.some(
-                                            (opt) => opt.value === activeTab,
-                                        )
-                                            ? '5px solid #ffbe5c'
-                                            : '5px solid #00000000',
-                                        scrollbarColor:
-                                            'var(--g-color-scroll-handle) var(--g-color-scroll-track)',
-                                        scrollbarWidth: 'auto',
-                                        flexShrink: 0,
-                                        alignItems: 'center',
-                                    } as CSSProperties
-                                }
-                                // ref={ref as Ref<HTMLButtonElement>}
-                                onClick={onClick}
-                                // onKeyDown={onKeyDown}
-                            >
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        marginTop: '4px',
-                                    }}
-                                >
-                                    <Text variant="body-3" style={{marginRight: '4px'}}>
-                                        {selectObjectFromTab.title ||
-                                            `Еще · ${notShowingOptions.length}`}
-                                    </Text>
-                                    {notShowingOptions.length > 1 && <Icon data={ChevronDown} />}
-                                </div>
-                            </Button>
-                        )}
-                    />
-                    // <div style={{marginLeft: 'auto', flexShrink: 0}}>
-                    // </div>
-                )} */}
             </div>
-
-            {/* Dropdown (Extra Tabs) */}
         </div>
     );
 };

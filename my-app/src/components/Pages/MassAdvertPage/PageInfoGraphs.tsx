@@ -183,6 +183,7 @@ export const PageInfoGraphs = ({sellerId, phrase, placementsValue}: PageInfoGrap
                 onOpenChange={(val) => {
                     setOpen(val);
                 }}
+                enableSafePolygon={true}
                 placement={'right'}
                 content={
                     <div
