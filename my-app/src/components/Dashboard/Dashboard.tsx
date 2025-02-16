@@ -3,7 +3,7 @@ import './Dashboard.scss';
 import {useEffect, useMemo, useState, ReactNode} from 'react';
 import block from 'bem-cn-lite';
 // import {Tabs} from '@gravity-ui/uikit/legacy';
-import {Icon, Button, Tooltip, Text, TabProvider, Tab} from '@gravity-ui/uikit';
+import {Icon, Button, Tooltip} from '@gravity-ui/uikit';
 // import Link from 'next/link';
 // import '@/styles/App.scss'
 // import textLogo from '../../assets/brlogo.svg';
@@ -45,7 +45,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     const searchParams = useSearchParams();
     // const {refetchUser} = useUser();
     const {selectValue, currentCampaign, campaignInfo, campaigns, sellerId} = useCampaign();
-    const {setModule, currentModule, availableModules = []} = useModules();
+    const {currentModule, availableModules = []} = useModules();
 
     const moduleTitles: Record<string, string> = {
         massAdvert: 'Реклама',
@@ -171,36 +171,6 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     //         </Link>
     //     );
     // };
-    const renderFooterItem = (item: any, node: any, index: number) => {
-        if (item === undefined || node === undefined || index === undefined) return <></>;
-        const isCurrent = (currentModule == 'noModules' && item.id == 'api') || item.id == module;
-        return (
-            <div>
-                <Text
-                    variant="caption-2"
-                    className="tablink"
-                    color={isCurrent ? 'brand' : 'primary'}
-                    onClick={() => {
-                        if (item.disabled || !item.id) return;
-                        setModule(item.id);
-                    }}
-                    style={{
-                        height: 70,
-                        paddingBottom: 10,
-                        width: 70,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Icon data={item?.icon} size={24} />
-                    {item.title}
-                </Text>
-            </div>
-        );
-    };
-
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     if (!campaigns.length) {
@@ -223,16 +193,6 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                     }}
                 >
                     <MobileTabs/>
-                    {/* // <Tabs
-                    //     key={'mobileTab'}
-                    //     wrapTo={renderFooterItem}
-                    //     activeTab={currentModule as string}
-                    //     items={optionsPages.filter((item) =>
-                    //         ['Реклама', 'Магазины', 'Поддержка', 'База знаний'].includes(
-                    //             item.title,
-                    //         ),
-                    //     )}
-                    // /> */}
                 </div>
             ) : (
                 <></>

@@ -43,7 +43,7 @@ export const MobileTabs = () => {
             ].filter((page) => page.id === undefined || availableModules.includes(page.id as any)),
         [availableModules],
     );
-    const [valueOfTab, setValueOfTab] = useState<string | null>(null);
+    const [_valueOfTab, setValueOfTab] = useState<string | null>(null);
     useEffect(() => {
         if (currentModule) {
             setValueOfTab(currentModule);
