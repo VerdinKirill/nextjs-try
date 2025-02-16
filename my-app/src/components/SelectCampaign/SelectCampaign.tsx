@@ -1,11 +1,11 @@
 'use client';
 
-import {useCallback, useEffect, useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {Button, Icon, Select, Text} from '@gravity-ui/uikit';
 import {Key, ChevronDown} from '@gravity-ui/icons';
 import {useCampaign} from '@/contexts/CampaignContext';
-import {useUser} from '@/components/RequireAuth/RequireAuth';
 import {useSearchParams} from 'next/navigation';
+import {useUser} from '../RequireAuth';
 
 export const SelectCampaign = ({
     subscriptionExpDate,
@@ -18,7 +18,6 @@ export const SelectCampaign = ({
 }) => {
     const {
         selectValue,
-        setSelectValue,
         switchingCampaignsFlag,
         setSwitchingCampaignsFlag,
         setSellerId,
@@ -26,18 +25,17 @@ export const SelectCampaign = ({
 
     const searchParams = useSearchParams();
 
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString());
-            params.set(name, value);
+    // const createQueryString = useCallback(
+    //     (name: string, value: string) => {
+    //         const params = new URLSearchParams(searchParams.toString());
+    //         params.set(name, value);
 
-            return params.toString();
-        },
-        [searchParams],
-    );
-
-    const {refetchUser, userInfo} = useUser();
-    const {campaigns} = userInfo ?? [];
+    //         return params.toString();
+    //     },
+    //     [searchParams],
+    // );
+    const {refetchUser} = useUser();
+    // const {campaigns} = userInfo ?? [];
 
     const isWeekOrLessUntillExp = useMemo(() => {
         if (!subscriptionExpDate) return false;
@@ -75,7 +73,6 @@ export const SelectCampaign = ({
     //     // route.push(`/${selectOptions?.[0]?.value}`);
     // }, [selectOptions]);
     useEffect(() => {
-        console.log(campaigns);
         if (!selectOptions.length) return;
 
         const urlSellerId = searchParams.get('seller_id');
@@ -84,14 +81,12 @@ export const SelectCampaign = ({
         // Only update if URL param is invalid/missing
         if (!isValidInitial) {
             const initialValue = selectOptions[0];
-            const newParams = new URLSearchParams(searchParams.toString());
-            newParams.set('seller_id', initialValue.value);
+            // const newParams = new URLSearchParams(searchParams.toString());
 
             // Use replace instead of push to prevent history entry
-            window.history.pushState(null, '', `?${newParams.toString()}`);
 
             // Directly update context state
-            setSelectValue([initialValue.content]);
+            // setSelectValue([initialValue.content]);
             setSellerId(initialValue.value);
         }
     }, [selectOptions]); // Keep selectOptions as dep
@@ -104,14 +99,14 @@ export const SelectCampaign = ({
             selectOptions[0];
 
         if (initialValue) {
-            setSelectValue([initialValue.content]);
+            // setSelectValue([initialValue.content]);
             setSellerId(initialValue.value);
-            window.history.pushState(
-                null,
-                '',
-                `?${createQueryString('seller_id', initialValue.value)}`,
-            );
-            //   router.push(`?${createQueryString('seller_id', initialValue.value)}`);
+            // window.history.pushState(
+            //     null,
+            //     '',
+            //     `?${createQueryString('seller_id', initialValue.value)}`,
+            // );
+            // //   router.push(`?${createQueryString('seller_id', initialValue.value)}`);
         }
     }, [selectOptions]);
 
@@ -121,7 +116,8 @@ export const SelectCampaign = ({
 
         if (currentSellerId !== newSellerId) {
             setSwitchingCampaignsFlag(true);
-            window.history.pushState(null, '', `?${createQueryString('seller_id', newSellerId)}`);
+            setSellerId(newSellerId);
+            // window.history.pushState(null, '', `?${createQueryString('seller_id', newSellerId)}`);
             // router.push(`?${createQueryString('seller_id', newSellerId)}`);
         }
     };

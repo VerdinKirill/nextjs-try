@@ -55,7 +55,8 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
 
     useEffect(() => {
         setCampaignLoaded(false);
-        const seller_id = searchParams.get('seller_id');
+        const sellerIdSearchParams = searchParams.get('seller_id');
+        const seller_id = sellerId ? sellerId : sellerIdSearchParams;
         const firstCampaignId = campaigns?.[0]?.seller_id;
 
         if (!campaigns?.length) return;
@@ -66,6 +67,7 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
         if (!seller_id && firstCampaignId) {
             const newParams = new URLSearchParams(currentParams);
             newParams.set('seller_id', firstCampaignId);
+            console.log(newParams);
 
             // Only update if params actually changed
             if (newParams.toString() !== currentParams) {
@@ -92,12 +94,19 @@ export const CampaignProvider: React.FC<{children: React.ReactNode}> = ({childre
             const campaign = findCampaign(seller_id);
             if (campaign) {
                 // Batch state updates
+                console.log(currentParams);
+                const newParams = new URLSearchParams(currentParams);
+                console.log(newParams);
+                newParams.set('seller_id', seller_id);
+                console.log(newParams);
+
                 setSellerId(seller_id);
                 setSelectValue([campaign.name]);
                 setCampaignInfo(campaign);
                 setModules(campaign?.isOwner ? ['all'] : Object.keys(campaign?.userModules || {}));
                 setSwitchingCampaignsFlag(false);
                 setCampaignLoaded(true);
+                window.history.replaceState(null, '', `?${newParams.toString()}`);
             }
         }
     }, [searchParams, campaigns, sellerId, router, findCampaign]); // Add sellerId to deps

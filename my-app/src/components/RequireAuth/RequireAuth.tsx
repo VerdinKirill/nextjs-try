@@ -14,19 +14,12 @@ export const useUser = () => useContext(UserContext);
 export function RequireAuth({children}: {children: React.ReactNode}) {
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-    const [isClient, setIsClient] = useState(false);
     const [userInfo, setUserInfo] = useState<any>(null);
     // useEffect(() => {
     //     console.log("huihuijui")
     // })
 
-    useEffect(() => {
-        setIsClient(true); // Ensures rendering only happens in the browser
-    }, []);
-
     const checkTokenValidity = useCallback(async () => {
-        if (!isClient) return; // Prevent execution on the server
-
         const authToken = localStorage.getItem('authToken');
         console.log(authToken);
         if (!authToken) {
@@ -55,28 +48,28 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
             localStorage.removeItem('authToken');
             setIsAuthenticated(false);
         }
-    }, [isClient, userInfo]);
+    }, []);
 
     useEffect(() => {
-        if (isClient) checkTokenValidity();
-    }, [isClient, checkTokenValidity]);
+        checkTokenValidity();
+    }, [checkTokenValidity]);
 
     const refetchUser = async () => {
-        if (isClient) await checkTokenValidity();
+        await checkTokenValidity();
     };
 
     useEffect(() => {
         const interval = setInterval(refetchUser, 60 * 60 * 1000);
         return () => clearInterval(interval);
-    }, [isClient]);
+    }, []);
 
     useEffect(() => {
-        if (isAuthenticated === false && isClient) {
+        if (isAuthenticated === false) {
             router.push('/login');
         }
-    }, [isAuthenticated, router, isClient]);
+    }, [isAuthenticated, router]);
 
-    if (!isClient || isAuthenticated === null) {
+    if (isAuthenticated === null) {
         return (
             <div className="auth-loader-container">
                 <LogoLoader />

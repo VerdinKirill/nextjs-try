@@ -15,6 +15,7 @@ import {SetSubscriptionExpDateModal} from './SetSubscriptionExpDateModal';
 import ApiClient from '@/utilities/ApiClient';
 import {useError} from '@/contexts/ErrorContext';
 import {defaultRender} from '@/utilities/getRoundValue';
+import { useCampaign } from '@/contexts/CampaignContext';
 
 const EditMemberInfo = ({_id, firstName, lastName, username, photoUrl, sellerId, modules}: any) => {
     return (
@@ -91,6 +92,7 @@ const CampaignInfo = ({
     setAddedMember,
     tariff,
 }: any) => {
+    const {setSellerId} = useCampaign();
     const {userInfo} = useUser();
     const {user} = userInfo;
     // const {setSelectValue} = useCampaign();
@@ -203,7 +205,8 @@ const CampaignInfo = ({
                                 rowGap: 8,
                             }}
                         >
-                            <Text style={{marginRight: 16}} className="g-link g-link_view_primary" variant="header-2">
+                            <Text style={{marginRight: 16}} className="g-link g-link_view_primary" variant="header-2" onClick={() => {console.log(sellerId)
+                                setSellerId(sellerId)}}>
                                 {name}
                             </Text>
                             <ChangeApiModal sellerId={sellerId}>
