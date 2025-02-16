@@ -5,7 +5,6 @@ import block from 'bem-cn-lite';
 import {Icon, Button, Tooltip} from '@gravity-ui/uikit';
 // import Link from 'next/link';
 // import '@/styles/App.scss'
-import Image from 'next/image';
 // import textLogo from '../../assets/brlogo.svg';
 
 import TextLogo from '@/assets/brlogo.svg';

@@ -162,10 +162,13 @@ export default function LoginPage() {
                         style={{overflow: 'hidden', opacity: 0, margin: 0, scale: 0.1}}
                     >
                         <TelegramLoginButton
-                            botName="AurumSkyNetBot"
+                            botName={process.env.NEXT_PUBLIC_BOT_USERNAME ?? 'AurumSkyNetBot'}
                             usePic={false}
                             buttonSize="large"
-                            dataAuthUrl="https://seller.aurum-sky.net/loginHandler" // Redirect for all users
+                            dataAuthUrl={
+                                process.env.NEXT_PUBLIC_HANDLER_URL ??
+                                'https://seller.aurum-sky.net/loginHandler'
+                            } // Redirect for all users
                         />
                     </motion.div>
                 </Card>

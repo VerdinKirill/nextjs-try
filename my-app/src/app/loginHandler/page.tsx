@@ -1,7 +1,7 @@
 // loginHandler.tsx
 'use client';
 import {useEffect} from 'react';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 // import {useNavigate} from 'react-router-dom';
 import {useError} from '@/contexts/ErrorContext';
 import {Card, Spin, Text} from '@gravity-ui/uikit';
@@ -12,7 +12,10 @@ import ApiClient from '@/utilities/ApiClient';
 async function handleTelegramLogin(authData: any) {
     try {
         // Send authData to the server for validation and token generation
-        const response = await ApiClient.post('auth/login', authData);
+        const response = await ApiClient.post(
+            `auth/${process.env.NEXT_PUBLIC_AUTH_ENDPOINT ?? ''}`,
+            authData,
+        );
 
         if (response && response.data.token) {
             localStorage.setItem('authToken', response.data.token); // Store JWT token
@@ -58,6 +61,8 @@ const LoginHandler = () => {
             const isAuthenticated = await handleTelegramLogin(authData);
 
             if (isAuthenticated) {
+                router.push('/');
+                console.log('Pushed to /');
             } else {
                 showError('Authentication failed. Please try again.');
                 router.push('/login'); // Redirect back to login page on failure

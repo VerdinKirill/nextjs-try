@@ -37,7 +37,7 @@ export const CanBeAddedToSales = ({
 }: CanBeAddedToSalesProps) => {
     const themeVal = localStorage.getItem('theme');
     const initialTheme =
-        themeVal !== 'undefined' && themeVal !== 'null' && themeVal ? JSON.parse(themeVal) : 'dark';
+        themeVal !== 'undefined' && themeVal !== 'null' && themeVal ? themeVal : 'dark';
     const {showError} = useError();
     const [open, setOpen] = useState(false);
     const [availableSales, setAvailableSales] = useState([] as any[]);
@@ -69,7 +69,7 @@ export const CanBeAddedToSales = ({
         setTimeout(() => setOpen(false), 10000);
         getAvailableSales();
     }, [open]);
-    const [anchorElement, setAnchorElement] = useState<HTMLButtonElement|null>(null);
+    const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     return (
         <>
             <Popup open={open} anchorElement={anchorElement} hasArrow={false}>
