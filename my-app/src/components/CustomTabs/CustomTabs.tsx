@@ -1,5 +1,6 @@
 'use client';
 import {
+    Button,
     Icon,
     Select,
     SelectOption,
@@ -170,17 +171,6 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                                 <Select
                                     // open={true}
                                     options={notShowingOptions}
-                                    // onUpdate={() => {
-                                    //     // setSelectValueFromTab(value);
-                                    //     // const currentItem: any = items?.filter(
-                                    //     //     (item) => item.id == value[0],
-                                    //     // )[0];
-                                    //     // console.log(selectOption);
-                                    //     // router.replace(currentItem.href); // Navigate programmatically
-                                    //     // setSelectObjectFromTab(currentItem);
-                                    //     // setModule(currentItem);
-                                    //     // onSelectTab(currentItem?.id as string);
-                                    // }}
                                     renderOption={(option) => {
                                         const currentItem: any = items?.filter(
                                             (item) => item.id == option.data,
@@ -188,9 +178,11 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                                         return (
                                             <Text
                                                 onClick={() => {
+                                                    console.log(currentItem.id);
                                                     setModule(currentItem?.id);
                                                     setValueOfTab('more');
                                                 }}
+                                                style={{width: '100%', height: '100%'}}
                                                 variant="body-3"
                                                 color={
                                                     currentItem?.disabled ? 'secondary' : undefined
