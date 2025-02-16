@@ -1,6 +1,6 @@
 'use client';
 
-import {createContext, useContext, useState, useEffect, useCallback} from 'react';
+import {createContext, useContext, useState, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import {LogoLoader} from '@/components/LogoLoader/LogoLoader';
 import ApiClient from '@/utilities/ApiClient';
@@ -19,7 +19,7 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
     //     console.log("huihuijui")
     // })
 
-    const checkTokenValidity = useCallback(async () => {
+    const checkTokenValidity = async () => {
         const authToken = localStorage.getItem('authToken');
         console.log(authToken);
         if (!authToken) {
@@ -34,10 +34,14 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
                 setIsAuthenticated(true);
                 console.log(response?.data?.campaigns);
                 if (JSON.stringify(userInfo) !== JSON.stringify(response.data)) {
+                    console.log('userInfo', JSON.stringify(userInfo));
+
                     setUserInfo({
                         ...response.data,
                         campaigns: response?.data?.campaigns || [], // Ensure campaigns array exists
                     });
+
+                    console.log('userInfo', userInfo);
                 }
             } else {
                 localStorage.removeItem('authToken');
@@ -48,7 +52,7 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
             localStorage.removeItem('authToken');
             setIsAuthenticated(false);
         }
-    }, []);
+    }
 
     useEffect(() => {
         checkTokenValidity();
