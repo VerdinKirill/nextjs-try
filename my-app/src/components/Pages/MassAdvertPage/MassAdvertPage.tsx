@@ -3864,7 +3864,9 @@ export const MassAdvertPage = () => {
                             />
                             <div style={{minWidth: 8}} />
                             <Popover
-                                openDelay={1000}
+                                enableSafePolygon={true}
+                                openDelay={500}
+                                // closeDelay={50000}
                                 placement={'bottom'}
                                 content={
                                     <div

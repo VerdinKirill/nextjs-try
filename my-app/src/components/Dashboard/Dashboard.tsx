@@ -314,7 +314,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                                     '1px 0px 0px 0px var(--g-color-base-generic-hover)',
                                             }}
                                         >
-                                            <div style={{minWidth: 12}} />
+                                            <div style={{minWidth: 'fit-content'}} />
                                             <img
                                                 style={{height: 30}}
                                                 src={TextLogo}

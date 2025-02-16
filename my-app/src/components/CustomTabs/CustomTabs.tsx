@@ -12,6 +12,7 @@ import {
 import {ChevronDown} from '@gravity-ui/icons';
 import {CSSProperties, ReactElement, Ref, useEffect, useMemo, useRef, useState} from 'react';
 import {useModules} from '@/contexts/ModuleProvider';
+import {motion} from 'framer-motion';
 
 // import {useRouter} from 'next/router';
 
@@ -89,14 +90,23 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                                 justifyContent: 'center',
                                 height: 60,
                                 // top: item.id === activeTab ? '-5px' : undefined,
-                                borderBottom:
-                                    item.id === valueOfTab ? '5px solid #ffbe5c' : undefined,
+                                // borderBottom:
+                                //     item.id === valueOfTab ? '5px solid #ffbe5c' : undefined,
                             }}
                         >
                             <Text variant="body-3" color={item.disabled ? 'secondary' : 'primary'}>
                                 {item.title}
                             </Text>
                         </div>
+                        {item.id === valueOfTab ? (
+                            <motion.div
+                                layoutId="current-tab"
+                                style={{borderBottom: '5px solid #ffbe5c'}}
+                            ></motion.div>
+                        ) : (
+                            <motion.div style={{borderBottom: '5px solid #00000000'}}></motion.div>
+                        )}
+                        <motion.div></motion.div>
                     </Tab>,
                 );
                 currentWidth += itemWidth;
