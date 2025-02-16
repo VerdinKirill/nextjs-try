@@ -483,8 +483,10 @@ const DzhemModal: React.FC<DzhemModalProps> = ({open, onClose, sellerId, nmId}) 
                         style={
                             {
                                 width: '100%',
-                                '--data-table-color-base':
-                                    initialTheme === 'dark' ? 'rgba(14, 14, 14, 1)' : '#eeea',
+                                '--g-color-base-background':
+                                    initialTheme === 'dark' ? 'rgba(14, 14, 14, 1)' : '#eeee',
+                                // '--data-table-color-base':
+                                //     initialTheme === 'dark' ? 'rgba(14, 14, 14, 1)' : '#eeea',
                             } as CSSProperties
                         }
                         onAnimationEnd={() =>

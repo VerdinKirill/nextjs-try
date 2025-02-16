@@ -29,15 +29,11 @@ interface CustomTabsProps {
 
 export const CustomTabs = ({items}: CustomTabsProps) => {
     const theme = useTheme();
-    // const router = useRouter();
-    // const {refetchUser} = useUser();
     const tabsRef = useRef<HTMLDivElement | null>(null);
     const [visibleTabs, setVisibleTabs] = useState<ReactElement[]>([]);
     const [hiddenTabs, setHiddenTabs] = useState<TabsItemProps[]>([]);
-    // const [selectValueFromTab, setSelectValueFromTab] = useState([''] as string[]);
     const [selectObjectFromTab, _setSelectObjectFromTab] = useState({} as any);
     const {setModule, currentModule} = useModules();
-    // const [valueOfTab, setValueOfTab] = useState<string>(currentModule as string);
     const [valueOfTab, setValueOfTab] = useState<string | null>(null);
     useEffect(() => {
         if (currentModule) {
