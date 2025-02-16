@@ -1,5 +1,14 @@
 'use client';
-import {Button, ButtonPin, ButtonSize, ButtonView, Icon, TEXT_COLORS} from '@gravity-ui/uikit';
+
+import {
+    ActionTooltip,
+    Button,
+    ButtonPin,
+    ButtonSize,
+    ButtonView,
+    Icon,
+    TEXT_COLORS,
+} from '@gravity-ui/uikit';
 import {Copy, CopyCheck} from '@gravity-ui/icons';
 import {ReactNode, useState} from 'react';
 
@@ -9,9 +18,10 @@ interface CopyButtonInterface {
     view?: ButtonView;
     size?: ButtonSize;
     selected?: boolean;
+    tooltip?: string;
     color?: (typeof TEXT_COLORS)[number];
     iconSize?: number;
-    copyText: string;
+    copyText: Function | string;
 }
 
 export const CopyButton = ({
@@ -20,12 +30,13 @@ export const CopyButton = ({
     view,
     size,
     selected,
+    tooltip,
     iconSize,
     copyText,
 }: CopyButtonInterface) => {
     const [icon, setIcon] = useState({icon: Copy});
 
-    return (
+    const button = (
         <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
             {children}
             <Button
@@ -35,7 +46,9 @@ export const CopyButton = ({
                 size={size}
                 onClick={() => {
                     setIcon({icon: CopyCheck});
-                    navigator.clipboard.writeText(copyText);
+                    navigator.clipboard.writeText(
+                        typeof copyText == 'string' ? copyText : copyText(),
+                    );
                     setTimeout(() => {
                         setIcon({icon: Copy});
                     }, 1000);
@@ -46,4 +59,5 @@ export const CopyButton = ({
             </Button>
         </div>
     );
+    return tooltip ? <ActionTooltip title={tooltip}>{button}</ActionTooltip> : button;
 };
