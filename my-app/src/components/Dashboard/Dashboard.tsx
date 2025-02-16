@@ -2,7 +2,8 @@
 import './Dashboard.scss';
 import {useEffect, useMemo, useState, ReactNode} from 'react';
 import block from 'bem-cn-lite';
-import {Icon, Button, Tooltip} from '@gravity-ui/uikit';
+// import {Tabs} from '@gravity-ui/uikit/legacy';
+import {Icon, Button, Tooltip, Text, TabProvider, Tab} from '@gravity-ui/uikit';
 // import Link from 'next/link';
 // import '@/styles/App.scss'
 // import textLogo from '../../assets/brlogo.svg';
@@ -19,6 +20,7 @@ import {SelectCampaign} from '@/components/SelectCampaign';
 import {useSearchParams} from 'next/navigation';
 import {useModules} from '@/contexts/ModuleProvider';
 import {CustomTabs} from '../CustomTabs';
+import {MobileTabs} from '@/components/CustomTabs';
 // import {NotesCreationModal} from '@/components/Notes';
 // import {AdvertsWordsModal} from '../Pages/MassAdvertPage/AdvertsWordsModal';
 import {NotesCreationModal} from '../Notes';
@@ -43,7 +45,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     const searchParams = useSearchParams();
     // const {refetchUser} = useUser();
     const {selectValue, currentCampaign, campaignInfo, campaigns, sellerId} = useCampaign();
-    const {currentModule, availableModules = []} = useModules();
+    const {setModule, currentModule, availableModules = []} = useModules();
 
     const moduleTitles: Record<string, string> = {
         massAdvert: 'Реклама',
@@ -169,6 +171,35 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
     //         </Link>
     //     );
     // };
+    const renderFooterItem = (item: any, node: any, index: number) => {
+        if (item === undefined || node === undefined || index === undefined) return <></>;
+        const isCurrent = (currentModule == 'noModules' && item.id == 'api') || item.id == module;
+        return (
+            <div>
+                <Text
+                    variant="caption-2"
+                    className="tablink"
+                    color={isCurrent ? 'brand' : 'primary'}
+                    onClick={() => {
+                        if (item.disabled || !item.id) return;
+                        setModule(item.id);
+                    }}
+                    style={{
+                        height: 70,
+                        paddingBottom: 10,
+                        width: 70,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Icon data={item?.icon} size={24} />
+                    {item.title}
+                </Text>
+            </div>
+        );
+    };
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -191,17 +222,17 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                         backdropFilter: 'blur(20px)',
                     }}
                 >
-                    {/* <Tabs
-                        onSelectTab={handleModuleChange}
-                        key={'mobileTab'}
-                        wrapTo={renderFooterItem}
-                        activeTab={currentModule}
-                        items={optionsPages.filter((item) =>
-                            ['Реклама', 'Магазины', 'Поддержка', 'База знаний'].includes(
-                                item.title,
-                            ),
-                        )}
-                    /> */}
+                    <MobileTabs/>
+                    {/* // <Tabs
+                    //     key={'mobileTab'}
+                    //     wrapTo={renderFooterItem}
+                    //     activeTab={currentModule as string}
+                    //     items={optionsPages.filter((item) =>
+                    //         ['Реклама', 'Магазины', 'Поддержка', 'База знаний'].includes(
+                    //             item.title,
+                    //         ),
+                    //     )}
+                    // /> */}
                 </div>
             ) : (
                 <></>
@@ -248,7 +279,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                 }}
                             >
                                 <div style={{minWidth: 24}} />
-                                <TextLogo />
+                                {/* <TextLogo /> */}
                                 <img style={{height: 30}} src={TextLogo} />
                                 {/* <Image style={{height: 30, width: '100px'}} alt="Aurum logo" src={TextLogo} /> */}
                                 {/* <img style={{height: 30}} src={textLogo} /> */}

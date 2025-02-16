@@ -13,20 +13,16 @@ import {ChevronDown} from '@gravity-ui/icons';
 import {CSSProperties, ReactElement, Ref, useEffect, useMemo, useRef, useState} from 'react';
 import {useModules} from '@/contexts/ModuleProvider';
 import {motion} from 'framer-motion';
+import {TabsItemProps, CustomTabsProps} from './types';
 
 // import {useRouter} from 'next/router';
 
-interface TabsItemProps {
-    value?: string;
-    title: string;
-    href: string;
-    id?: string;
-}
-
-interface CustomTabsProps {
-    items: TabsItemProps[] | undefined;
-    activeTab: string | null;
-}
+// export interface TabsItemProps {
+//     value?: string;
+//     title: string;
+//     href: string;
+//     id?: string;
+// }
 
 export const CustomTabs = ({items}: CustomTabsProps) => {
     const theme = useTheme();
