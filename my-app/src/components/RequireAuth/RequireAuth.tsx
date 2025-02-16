@@ -56,7 +56,7 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
 
     useEffect(() => {
         checkTokenValidity();
-    }, [checkTokenValidity]);
+    }, []);
 
     const refetchUser = async () => {
         await checkTokenValidity();

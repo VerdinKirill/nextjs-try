@@ -16,12 +16,8 @@ export const SelectCampaign = ({
     apiKeyExpDate: any;
     selectOptions: any[];
 }) => {
-    const {
-        selectValue,
-        switchingCampaignsFlag,
-        setSwitchingCampaignsFlag,
-        setSellerId,
-    } = useCampaign();
+    const {selectValue, switchingCampaignsFlag, setSwitchingCampaignsFlag, setSellerId} =
+        useCampaign();
 
     const searchParams = useSearchParams();
 
@@ -218,6 +214,7 @@ export const SelectCampaign = ({
                 }}
                 onOpenChange={(open) => {
                     if (open) refetchUser();
+                    console.log('refetchUser from select campaign');
                 }}
                 onUpdate={(nextValue) => {
                     handleUpdate(nextValue);
