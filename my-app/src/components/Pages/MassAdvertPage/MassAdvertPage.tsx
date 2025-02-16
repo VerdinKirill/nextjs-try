@@ -666,7 +666,6 @@ export const MassAdvertPage = () => {
                                 }
                             >
                                 <Button
-                                    content={'div'}
                                     size="xs"
                                     pin={'clear-circle'}
                                     view={inActionNow ? 'outlined-action' : 'outlined'}

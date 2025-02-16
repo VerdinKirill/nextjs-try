@@ -148,41 +148,41 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
 
     return (
         <div>
-        <Popover
-            enableSafePolygon={true}
-            onOpenChange={(val) => {
-                setOpen(val);
-            }}
-            placement={'bottom-start'}
-            // disablePortal={true}
-            // disableOutsideClickClose
-            closeDelay={1000}
-            // content={
-            //     <div>
-            //     <Card style={{width: 400, height: 500}}>
-            //         <Text>Попа</Text>
-            //     </Card>
-            //     </div>
-            // }
-            // style={{width: 200, height: 200}}
-            content={
-                // <Card
-                //     style={{
-                //         // backdropFilter: 'blur(20px)',
-                //         // borderRadius: 30,
-                //         // boxShadow: 'var(--g-color-base-background) 0px 2px 8px',
-                //         // width: 'max-content',
-                //         // height: 'max-content',
-                        
-                //         overflow: 'auto',
-                //         display: 'flex',
-                //     }}
-                // >
+            <Popover
+                enableSafePolygon={true}
+                onOpenChange={(val) => {
+                    setOpen(val);
+                }}
+                placement={'bottom-start'}
+                // disablePortal={true}
+                // disableOutsideClickClose
+                closeDelay={1000}
+                // content={
+                //     <div>
+                //     <Card style={{width: 400, height: 500}}>
+                //         <Text>Попа</Text>
+                //     </Card>
+                //     </div>
+                // }
+                // style={{width: 200, height: 200}}
+                content={
+                    // <Card
+                    //     style={{
+                    //         // backdropFilter: 'blur(20px)',
+                    //         // borderRadius: 30,
+                    //         // boxShadow: 'var(--g-color-base-background) 0px 2px 8px',
+                    //         // width: 'max-content',
+                    //         // height: 'max-content',
+
+                    //         overflow: 'auto',
+                    //         display: 'flex',
+                    //     }}
+                    // >
                     <Card
                         // view="clear"
                         style={{
-                        // width: 'max-content',
-                        // height: 'max-content',
+                            // width: 'max-content',
+                            // height: 'max-content',
                             position: 'absolute',
                             maxHeight: '42em',
                             display: 'flex',
@@ -196,43 +196,17 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                             flexDirection: 'row',
                             top: -10,
                             left: -10,
-
                         }}
                     >
-                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <Card
-                                // theme="warning"
-                                style={{
-                                    height: 'fit-content',
-                                    width: 'fit-content',
-                                    
-                                    // boxShadow: 'var(--g-color-base-background) 0px 2px 8px',
+                        <div style={{display: 'flex', flexDirection: 'column', gap: 12}}>
+                            <SegmentedRadioGroup
+                                size="l"
+                                value={auctionSelectedOption}
+                                options={auctionOptions}
+                                onUpdate={(value) => {
+                                    setAuctionSelectedOption(value);
                                 }}
-                            >
-                                <Card
-                                    style={{
-                                        background: 'none',
-                                        // background: 'var(--g-color-base-background)',
-                                        overflow: 'auto',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        justifyContent: 'space-between',
-                                        backdropFilter: 'blur(16px)',
-                                        WebkitBackdropFilter: 'blur(16px)',
-                                        boxShadow: '#0002 0px 2px 8px 0px',
-                                        padding: 5,
-                                    }}
-                                >
-                                    <SegmentedRadioGroup
-                                        value={auctionSelectedOption}
-                                        options={auctionOptions}
-                                        onUpdate={(value) => {
-                                            setAuctionSelectedOption(value);
-                                        }}
-                                    />
-                                </Card>
-                            </Card>
-                            <div style={{minHeight: 12}} />
+                            />
                             <div style={{display: 'flex', flexDirection: 'row'}}>
                                 <Card
                                     style={{
@@ -249,35 +223,36 @@ export const Auction = ({sellerId, phrase}: AuctionProps) => {
                                             background: 'var(--g-color-base-background)',
                                         }}
                                     > */}
-                                        <DataTable
-                                            settings={{
-                                                displayIndices: false,
-                                                stickyHead: MOVING,
-                                                stickyFooter: MOVING,
-                                                highlightRows: true,
-                                            }}
-                                            footerData={[
-                                                {
-                                                    cpm: `${auctionSelectedOption}, ${
-                                                        auction ? auction.length : 0
-                                                    } шт.`,
-                                                },
-                                            ]}
-                                            theme="yandex-cloud"
-                                            columns={columnDataAuction as Column<any>[]}
-                                            data={auction}
-                                        />
-                                    </Card>
+                                    <DataTable
+                                        settings={{
+                                            displayIndices: false,
+                                            stickyHead: MOVING,
+                                            stickyFooter: MOVING,
+                                            highlightRows: true,
+                                        }}
+                                        footerData={[
+                                            {
+                                                cpm: `${auctionSelectedOption}, ${
+                                                    auction ? auction.length : 0
+                                                } шт.`,
+                                            },
+                                        ]}
+                                        theme="yandex-cloud"
+                                        columns={columnDataAuction as Column<any>[]}
+                                        data={auction}
+                                    />
+                                </Card>
                                 {/* </Card> */}
                             </div>
                         </div>
                     </Card>
-                // </Card>
-            }
-        ><div>
-            <Text>{phrase}</Text>
-            </div>
-        </Popover>
+                    // </Card>
+                }
+            >
+                <div>
+                    <Text>{phrase}</Text>
+                </div>
+            </Popover>
         </div>
     );
 };

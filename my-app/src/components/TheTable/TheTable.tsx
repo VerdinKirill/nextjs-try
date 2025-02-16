@@ -363,7 +363,7 @@ export const generateFilterTextInput = (args: any) => {
                         });
                     }}
                     // placeholder={'Фильтр'}
-                    startContent={
+                    endContent={
                         <DropdownMenu
                             renderSwitcher={(props) => (
                                 <Button

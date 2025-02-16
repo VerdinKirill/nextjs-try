@@ -78,6 +78,10 @@ const DzhemModal: React.FC<DzhemModalProps> = ({open, onClose, sellerId, nmId}) 
             // dzhemDataFilter({frequencyCurrent: {val: '', mode: 'include'}}, dzhem);
 
             console.log('responseDzhem', nmId, response.data.dzhemPhrases);
+            setTimeout(() => {
+                console.log('trying to resize');
+                dzhemDataFilter(dzhemDataFilters, response.data.dzhemData);
+            }, 500);
         } catch (error) {
             console.error(error);
         } finally {
@@ -480,6 +484,7 @@ const DzhemModal: React.FC<DzhemModalProps> = ({open, onClose, sellerId, nmId}) 
                     </motion.div>
                 ) : dzhem.length != 0 ? (
                     <motion.div
+                        animate={{opacity: 1}}
                         style={
                             {
                                 width: '100%',
@@ -488,9 +493,6 @@ const DzhemModal: React.FC<DzhemModalProps> = ({open, onClose, sellerId, nmId}) 
                                 // '--data-table-color-base':
                                 //     initialTheme === 'dark' ? 'rgba(14, 14, 14, 1)' : '#eeea',
                             } as CSSProperties
-                        }
-                        onAnimationEnd={() =>
-                            dzhemDataFilter({frequencyCurrent: {val: '', mode: 'include'}}, dzhem)
                         }
                     >
                         <TheTable
