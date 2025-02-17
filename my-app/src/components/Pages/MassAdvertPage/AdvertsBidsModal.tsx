@@ -28,7 +28,7 @@ import {Calendar} from '@gravity-ui/date-components';
 import {dateTimeParse} from '@gravity-ui/date-utils';
 import {getLocaleDateString} from '@/utilities/getRoundValue';
 import {useError} from '@/contexts/ErrorContext';
-import { HelpMark } from '@/components/Popups/HelpMark';
+import {HelpMark} from '@/components/Popups/HelpMark';
 
 export const AdvertsBidsModal = ({
     disabled,
@@ -281,7 +281,7 @@ export const AdvertsBidsModal = ({
                 />
             ),
             title: (
-                <div>
+                <div style={{display: 'flex'}}>
                     <Text variant="subheader-1" style={{marginRight: 8}}>
                         Удерживать ДРР к заказам
                     </Text>
@@ -604,6 +604,7 @@ export const AdvertsBidsModal = ({
                 <Card
                     view="clear"
                     style={{
+                        width: '400px',
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
@@ -686,7 +687,7 @@ export const AdvertsBidsModal = ({
                                             (['drr', 'cpo'].includes(autoBidderOption[0])
                                                 ? true
                                                 : useAutoMaxCpm)
-                                                ? 54
+                                                ? 'fit-content'
                                                 : 0,
                                     }}
                                 >
@@ -728,7 +729,7 @@ export const AdvertsBidsModal = ({
                                         style={{height: 0, overflow: 'hidden', width: '100%'}}
                                         animate={{
                                             marginTop: !useAutoMaxCpm ? 8 : 0,
-                                            height: !useAutoMaxCpm ? 54 : 0,
+                                            height: !useAutoMaxCpm ? 'fit-content' : 0,
                                         }}
                                     >
                                         <TextTitleWrapper
@@ -778,9 +779,7 @@ export const AdvertsBidsModal = ({
                                         >
                                             Учитывать место в выдаче
                                         </Checkbox>
-                                        <HelpMark
-                                            content="При достижении данной позиции алгоритм будет учитывать место в выдаче при изменении ставки."
-                                        />
+                                        <HelpMark content="При достижении данной позиции алгоритм будет учитывать место в выдаче при изменении ставки." />
                                     </div>
                                     <motion.div
                                         style={{maxHeight: 0, overflow: 'hidden', width: '100%'}}
