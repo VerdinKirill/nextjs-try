@@ -92,6 +92,8 @@ import {parseFirst10Pages} from './ParseFirst10Pages';
 import {useModules} from '@/contexts/ModuleProvider';
 import {HelpMark} from '@/components/Popups/HelpMark';
 import {CopyButton} from '@/components/Buttons/CopyButton';
+import {Note} from './NotesForArt/types';
+import {NotesForArt} from './NotesForArt';
 
 const getUserDoc = (docum = undefined, mode = false, selectValue = '') => {
     const [doc, setDocument] = useState<any>();
@@ -220,6 +222,29 @@ export const MassAdvertPage = () => {
     const [artsStatsByDayModeSwitchValue, setArtsStatsByDayModeSwitchValue] = useState<any[]>([
         'Статистика по дням',
     ]);
+    const getNotes = async () => {
+        try {
+            const params = {seller_id: sellerId};
+            const res = await ApiClient.post('massAdvert/notes/getNotes', params);
+            console.log(res?.data);
+            if (!res || !res.data) {
+                throw new Error('Request without result');
+            }
+            setAllNotes(res.data);
+        } catch (error) {
+            console.error('Error while getting all notes', error);
+        }
+    };
+
+    const [allNotes, setAllNotes] = useState<{[key: string]: Note[]} | undefined>();
+    const [reloadNotes, setReloadNotes] = useState<boolean>(true);
+    useEffect(() => {
+        if (reloadNotes) {
+            console.log('privet kak del')
+            getNotes();
+            setReloadNotes(false);
+        }
+    }, [sellerId, reloadNotes]);
 
     const [showDzhemModalOpen, setShowDzhemModalOpen] = useState(false);
 
@@ -1010,6 +1035,13 @@ export const MassAdvertPage = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <NotesForArt
+                                notes={allNotes?.[nmId as string] || []}
+                                nmId={nmId}
+                                reloadNotes={setReloadNotes}
+                            />
                         </div>
                     </div>
                 );
