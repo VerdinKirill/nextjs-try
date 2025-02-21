@@ -256,7 +256,7 @@ export const MassAdvertPage = () => {
     const [reloadNotes, setReloadNotes] = useState<boolean>(true);
     useEffect(() => {
         if (reloadNotes) {
-            console.log('privet kak del')
+            console.log('privet kak del');
             getNotes();
             setReloadNotes(false);
         }
@@ -757,6 +757,7 @@ export const MassAdvertPage = () => {
                     <div
                         // title={value}
                         style={{
+                            position: 'relative',
                             maxWidth: '20vw',
                             display: 'flex',
                             flexDirection: 'row',
@@ -769,7 +770,7 @@ export const MassAdvertPage = () => {
                                 justifyContent: 'space-between',
                                 display: 'flex',
                                 flexDirection: 'row',
-                                marginRight: 8,
+                                marginRight: 40,
                                 alignItems: 'center',
                             }}
                         >
@@ -1052,7 +1053,7 @@ export const MassAdvertPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div style={{position: 'absolute', top: 0, right: 0, zIndex: 1000}}>
                             <NotesForArt
                                 notes={allNotes?.[nmId as string] || []}
                                 nmId={nmId}

@@ -67,12 +67,6 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
         }));
     }, [availableModules, searchParams]);
 
-    // const handleModuleChange = (moduleId: string) => {
-    //     console.log(optionsPages);
-    //     console.log(searchParams.toString());
-    //     setModule(moduleId);
-    // };
-
     useEffect(() => {
         console.log(JSON.stringify(currentCampaign), 'currentCampaign');
         const titleMap: Record<string, string> = {
@@ -192,7 +186,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                         backdropFilter: 'blur(20px)',
                     }}
                 >
-                    <MobileTabs/>
+                    <MobileTabs />
                 </div>
             ) : (
                 <></>

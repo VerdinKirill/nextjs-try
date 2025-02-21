@@ -197,8 +197,7 @@ export const CustomTabs = ({items}: CustomTabsProps) => {
                                                 {
                                                     '--gc-button-background-color-hover': 'none',
                                                     height: 60,
-                                                    width: 96,
-                                                    marginInline: '8px',
+                                                    width: 80,
                                                     textOverflow: 'ellipsis',
                                                     background: 'transparent',
                                                     borderBottom:

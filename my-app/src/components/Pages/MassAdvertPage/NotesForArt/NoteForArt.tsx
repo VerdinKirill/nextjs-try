@@ -1,6 +1,6 @@
 'use client';
 
-import {Button, Card, Loader, Popover, Text} from '@gravity-ui/uikit';
+import {Button, Card, Loader, Popover, Text, TextArea} from '@gravity-ui/uikit';
 import {Note, colors} from './types';
 import {CSSProperties, useEffect, useState} from 'react';
 
@@ -56,19 +56,17 @@ export const NoteForArt = ({note, reloadNotes}: NoteForArtProps) => {
                 open={isPopoverOpen}
                 enableSafePolygon={true}
                 placement={'right'}
-                // onOpenChange={(open) => {
-                //     if (open) {
-                //         getNoteInfo();
-                //     }
-                // }}
                 content={
                     <Card
                         className={cx(['blurred-card', 'centred-absolute-element'])}
                         style={
                             {
+                                display: 'block',
+                                width: 'fit-content',
+                                height: 'fit-content',
+                                minWidth: 200,
+                                maxWidth: 1000,
                                 padding: 8,
-                                width: '200px',
-                                height: 96,
                                 '--g-card-border-color': colors[note.color],
                             } as CSSProperties
                         }
@@ -76,17 +74,20 @@ export const NoteForArt = ({note, reloadNotes}: NoteForArtProps) => {
                         {isLoading ? (
                             <Loader />
                         ) : (
-                            <div>
-                                <div>
-                                    <Text>
-                                        {new Date(note?.time || new Date()).toLocaleDateString(
-                                            'ru-RU',
-                                        )}
-                                    </Text>
-                                </div>
-                                <div>
-                                    <Text>{text}</Text>
-                                </div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: 8,
+                                    width: '100%',
+                                }}
+                            >
+                                <Text color="secondary">
+                                    {`Заметка от ${new Date(
+                                        note?.time || new Date(),
+                                    ).toLocaleDateString('ru-RU')}`}
+                                </Text>
+                                <TextArea maxRows={10} minRows={5} readOnly value={text} />
                             </div>
                         )}
                     </Card>
