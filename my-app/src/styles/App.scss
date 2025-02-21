@@ -3,8 +3,6 @@ div {
     box-sizing: unset
 }
 
-@import './cardStyle.module.scss';
-
 // #root {
 //     background: linear-gradient(
 //         180deg,
@@ -289,4 +287,22 @@ code {
     margin-inline: auto !important;
     margin-block: auto !important;
     bottom: 0px !important;
+}
+
+.blurred-card {
+    border: 1px solid #eee2 !important; 
+    border-radius: 8px;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter:  blur(20px) !important;
+    // box-shadow: var(--g-color-base-background) 0px 2px 8px !important;
+}
+.select-color {
+    /* Create the circle */
+    width: 100%;
+    height: 4px;
+    margin-top: 4px;
+    border-radius: 8px;
+    /* Halve the circle */
+    // border-left-color: transparent !important;
+    /* Rotate the circle */
 }
