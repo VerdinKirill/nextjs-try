@@ -163,6 +163,22 @@ export const MassAdvertPage = () => {
         fetchAdvertBudgetRules();
     }, [sellerId]);
 
+    useEffect(() => {
+        if (!selectValue[0]) return;
+
+        callApi('getAvailableAutoSaleNmIds', {
+            seller_id: sellerId,
+        })
+            .then((res) => {
+                if (!res) throw 'no response';
+                const nmIds = res['data'] ?? {};
+                setAvailableAutoSalesNmIds(nmIds ?? []);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }, [sellerId]);
+
     const cardStyle: any = {
         minWidth: '10em',
         height: '10em',
@@ -205,7 +221,7 @@ export const MassAdvertPage = () => {
 
     const [filters, setFilters] = useState<any>({undef: false});
 
-    const [availableAutoSalesNmIds] = useState([] as any[]);
+    const [availableAutoSalesNmIds, setAvailableAutoSalesNmIds] = useState([] as any[]);
     const [autoSalesProfits, setAutoSalesProfits] = useState<any>({});
     const [filterAutoSales, setFilterAutoSales] = useState(false);
 
