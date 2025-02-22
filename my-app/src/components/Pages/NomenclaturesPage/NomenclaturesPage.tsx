@@ -21,10 +21,10 @@ import {SetArtStatusModal} from './SetArtStatusModal';
 import {useModules} from '@/contexts/ModuleProvider';
 
 export const NomenclaturesPage = () => {
-    const {modulesMap} = useModules();
+    const {availablemodulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['nomenclatures'];
-    }, [modulesMap]);
+        return availablemodulesMap['nomenclatures'];
+    }, [availablemodulesMap]);
     const {
         selectValue,
         setSelectValue,

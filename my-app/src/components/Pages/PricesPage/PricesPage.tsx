@@ -35,10 +35,10 @@ import callApi, {getUid} from '@/utilities/callApi';
 import {useModules} from '@/contexts/ModuleProvider';
 
 export const PricesPage = () => {
-    const {modulesMap} = useModules();
+    const {availablemodulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['prices'];
-    }, [modulesMap]);
+        return availablemodulesMap['prices'];
+    }, [availablemodulesMap]);
     const {selectValue, setSwitchingCampaignsFlag, sellerId} = useCampaign();
     const {showError} = useError();
     const today = new Date(

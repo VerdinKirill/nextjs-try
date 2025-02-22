@@ -39,10 +39,10 @@ import {useModules} from '@/contexts/ModuleProvider';
 
 export const DeliveryPage = () => {
     const {selectValue, setSwitchingCampaignsFlag, sellerId, campaigns} = useCampaign();
-    const {modulesMap} = useModules();
+    const {availablemodulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['delivery'];
-    }, [modulesMap]);
+        return availablemodulesMap['delivery'];
+    }, [availablemodulesMap]);
     const today = new Date(
         new Date()
             .toLocaleDateString('ru-RU')

@@ -52,7 +52,7 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
             localStorage.removeItem('authToken');
             setIsAuthenticated(false);
         }
-    }
+    };
 
     useEffect(() => {
         checkTokenValidity();
@@ -75,7 +75,16 @@ export function RequireAuth({children}: {children: React.ReactNode}) {
 
     if (isAuthenticated === null) {
         return (
-            <div className="auth-loader-container">
+            <div
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
                 <LogoLoader />
             </div>
         );

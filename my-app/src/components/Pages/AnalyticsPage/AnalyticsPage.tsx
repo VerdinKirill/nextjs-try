@@ -74,10 +74,10 @@ const getUserDoc = (dateRange: any, docum = undefined, mode = false, selectValue
 
 export const AnalyticsPage = () => {
     const {selectValue, setSwitchingCampaignsFlag, sellerId} = useCampaign();
-    const {modulesMap} = useModules();
+    const {availablemodulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['buyers'];
-    }, [modulesMap]);
+        return availablemodulesMap['buyers'];
+    }, [availablemodulesMap]);
 
     const [planModalOpen, setPlanModalOpen] = useState(false);
     const [planModalOpenFromEntity, setPlanModalOpenFromEntity] = useState('');

@@ -8,9 +8,8 @@ interface AppProps {
 
 interface AppProps {
     children: React.ReactNode;
-    theme: string;
 }
 
-export const App: React.FC<AppProps> = ({children, theme}) => {
-    return <Wrapper theme={theme}>{children}</Wrapper>;
+export const App: React.FC<AppProps> = ({children}) => {
+    return <Wrapper>{children}</Wrapper>;
 };

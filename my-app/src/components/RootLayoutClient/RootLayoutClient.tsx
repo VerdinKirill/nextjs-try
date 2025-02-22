@@ -6,6 +6,8 @@ import {App} from '@/components/App/App';
 import {RequireAuth} from '@/components/RequireAuth/RequireAuth';
 import {Dashboard} from '@/components/Dashboard';
 import {usePathname} from 'next/navigation';
+import {ThemeProvider} from '@gravity-ui/uikit';
+import {ErrorProvider} from '@/contexts/ErrorContext';
 
 const DARK = 'dark';
 const DEFAULT_THEME = DARK;
@@ -41,16 +43,20 @@ export function RootLayoutClient({children}: {children: React.ReactNode}) {
     }, [theme]);
     const isAuthPage = pathname === '/login' || pathname === '/loginHandler';
     return (
-        <RequireAuth>
-            <App theme={theme}>
-                {isAuthPage ? (
-                    children
-                ) : (
-                    <Dashboard theme={theme} toggleTheme={toggleTheme}>
-                        {children}
-                    </Dashboard>
-                )}
-            </App>
-        </RequireAuth>
+        <ThemeProvider theme={theme}>
+            <ErrorProvider>
+                <RequireAuth>
+                    <App>
+                        {isAuthPage ? (
+                            children
+                        ) : (
+                            <Dashboard theme={theme} toggleTheme={toggleTheme}>
+                                {children}
+                            </Dashboard>
+                        )}
+                    </App>
+                </RequireAuth>
+            </ErrorProvider>
+        </ThemeProvider>
     );
 }

@@ -138,10 +138,10 @@ const getUserDoc = (docum = undefined, mode = false, selectValue = '') => {
 export const MassAdvertPage = () => {
     const [selectedNmId, setSelectedNmId] = useState(0);
     const {showError} = useError();
-    const {modulesMap} = useModules();
+    const {availablemodulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['massAdvert'];
-    }, [modulesMap]);
+        return availablemodulesMap['massAdvert'];
+    }, [availablemodulesMap]);
     const {selectValue, setSwitchingCampaignsFlag, sellerId} = useCampaign();
     const isMobile = useMediaQuery('(max-width: 768px)');
 

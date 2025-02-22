@@ -10,7 +10,7 @@ type ModuleContextType = {
     availableModules: string[];
     setModule: (module: string) => void;
     modulesLoaded: boolean;
-    modulesMap: any;
+    availablemodulesMap: any;
 };
 
 const ModuleContext = createContext<ModuleContextType>({
@@ -18,23 +18,35 @@ const ModuleContext = createContext<ModuleContextType>({
     availableModules: [],
     setModule: () => {},
     modulesLoaded: false,
-    modulesMap: {},
+    availablemodulesMap: {},
 });
 
 export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const {modules = [], campaignInfo = {}, campaignLoaded} = useCampaign(); // Add default value
+    const {modules = [], campaignInfo = {}, campaignLoaded, selectValue} = useCampaign(); // Add default value
     // const {modulesMap = {}} = campaignInfo?.modules || {};
     const modulesMap = useMemo(() => {
         return campaignInfo?.modules || {};
     }, [campaignInfo]);
 
     const [availableModules, setAvailableModules] = useState<string[]>([]);
-    const [availableModulesMap, setAvailableModulesMap] = useState({});
+    const [availableModulesMap, setAvailableModulesMap] = useState<any>({});
     const [currentModule, setCurrentModule] = useState<string | null>(null);
     const [modulesLoaded, setModulesLoaded] = useState(false);
+
+    const moduleTitles: Record<string, string> = {
+        massAdvert: 'Реклама',
+        analytics: 'Аналитика',
+        prices: 'Цены',
+        delivery: 'Поставки',
+        nomenclatures: 'Товары',
+        buyers: 'Покупатели',
+        reports: 'Отчеты',
+        seo: 'SEO',
+        api: 'Магазины',
+    };
 
     useEffect(() => {
         if (!modules || !campaignLoaded) return;
@@ -107,6 +119,7 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
         console.log('basePath', basePath);
         if (!currentModule) return;
         router.replace(`${basePath}/${currentModule}?${searchParams.toString()}`);
+        document.title = `${moduleTitles[currentModule]} | ${selectValue[0]}`;
     }, [currentModule, searchParams]);
 
     // const handleSetModule = useCallback(() => {}, [router, pathname, searchParams]);
@@ -118,7 +131,7 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
                 availableModules: availableModules || [], // Ensure array
                 setModule: setCurrentModule,
                 modulesLoaded: modulesLoaded,
-                modulesMap: availableModulesMap,
+                availablemodulesMap: availableModulesMap,
             }}
         >
             {children}

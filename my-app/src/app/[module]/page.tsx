@@ -86,9 +86,9 @@ export default function ModulePage() {
 
     if (!modulesLoaded || !module) {
         return (
-            <div>
-                <LogoLoader />
-            </div>
+            // <div>
+            <LogoLoader />
+            // </div>
         );
     }
 

@@ -10,10 +10,10 @@ import { SegmentedRadioGroup } from '@gravity-ui/uikit';
 
 export const BuyersPage = () => {
     const {selectValue, setSwitchingCampaignsFlag, sellerId} = useCampaign();
-    const {modulesMap} = useModules();
+    const {availablemodulesMap} = useModules();
     const permission: string = useMemo(() => {
-        return modulesMap['buyers'];
-    }, [modulesMap]);
+        return availablemodulesMap['buyers'];
+    }, [availablemodulesMap]);
 
     const sectionOptions = [
         {content: 'Необработанные отзывы', value: 'feedbacksUnanswered'},
