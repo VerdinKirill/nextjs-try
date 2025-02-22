@@ -26,22 +26,6 @@ export const NotesCreationModal = ({sellerId}: NotesCreationModalProps) => {
                 throw new Error('Error while getting notes');
             }
             console.log(data.notes);
-            // console.log(notes);
-            data.notes.push({
-                title: 'akjldsaldj',
-                text: 'alkdjl;sajl;djsa;djsaalkjdlasjd\ns;kad;sk\n',
-                date: new Date(),
-            });
-            data.notes.push({
-                title: 'akjldsaldj',
-                text: 'alkdjl;sajl;djsa;djsaalkjdlasjd\ns;kad;sk\n\nsadopiaoidpoaskd\nsaodposaipdosad\n\n\n\nsahdlhsldjhasdhjs\n\n',
-                date: new Date(),
-            });
-            data.notes.push({
-                title: 'akjldsaldj',
-                text: 'alkdjl;sajl;djsa;djsaalkjdlasjd\ns;kad;sk\n',
-                date: new Date(),
-            });
             setNotes(data.notes);
         } catch (error) {
             console.error(error);
@@ -55,13 +39,6 @@ export const NotesCreationModal = ({sellerId}: NotesCreationModalProps) => {
             };
             const result = await callApi('write-notes', params);
             console.log(result);
-            // if (!result?.data) {
-            //     throw new Error('Error while getting notes');
-            // }
-            // const data = result?.data;
-            // if (!data?.notes) {
-            //     throw new Error('Error while getting notes');
-            // }
             console.log(params);
             // console.log(notes);
         } catch (error) {

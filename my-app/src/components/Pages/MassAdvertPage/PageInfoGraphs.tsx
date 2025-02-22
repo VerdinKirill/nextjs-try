@@ -65,6 +65,8 @@ export const PageInfoGraphs = ({sellerId, phrase, placementsValue}: PageInfoGrap
             if (!reviewRatingsData.includes(reviewRating)) reviewRatingsData.push(reviewRating);
             if (!feedbacksData.includes(feedbacks)) feedbacksData.push(feedbacks);
         }
+
+        if (!pricesData.includes(price)) pricesData.push(price);
         pricesData.sort((a, b) => a - b);
         for (let i = 0; i < pricesData.length; i++) {
             if (pricesData[i] == price) {
@@ -74,6 +76,8 @@ export const PageInfoGraphs = ({sellerId, phrase, placementsValue}: PageInfoGrap
                 pricesDataCur.push(null);
             }
         }
+
+        if (!reviewRatingsData.includes(reviewRating)) reviewRatingsData.push(reviewRating);
         reviewRatingsData.sort((a, b) => a - b);
         for (let i = 0; i < reviewRatingsData.length; i++) {
             if (reviewRatingsData[i] == reviewRating) {
@@ -83,6 +87,8 @@ export const PageInfoGraphs = ({sellerId, phrase, placementsValue}: PageInfoGrap
                 reviewRatingsDataCur.push(null);
             }
         }
+
+        if (!feedbacksData.includes(feedbacks)) feedbacksData.push(feedbacks);
         feedbacksData.sort((a, b) => a - b);
         for (let i = 0; i < feedbacksData.length; i++) {
             if (feedbacksData[i] == feedbacks) {

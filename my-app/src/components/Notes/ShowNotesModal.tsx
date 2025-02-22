@@ -54,20 +54,19 @@ export const ShowNotesModal = ({notes, open}: ShowNotesModalProps) => {
                     <ExpandedNoteCard note={selectedCard} setSelectedCard={setSelectedCard} />
                 ) : (
                     // <motion.div layoutId="card">
-                        <Masonry columns={2} gap={8}>
-                            {notes.map((value) => {
-                                console.log(value);
-                                return (
-                                    // <div key={index}>
-                                    <NoteCard note={value} setSelectedCard={setSelectedCard} />
-                                    // </div>
-                                );
-                            })}
-                        </Masonry>
+                    <Masonry columns={2} gap={8}>
+                        {notes.map((value) => {
+                            console.log(value);
+                            return (
+                                // <div key={index}>
+                                <NoteCard note={value} setSelectedCard={setSelectedCard} />
+                                // </div>
+                            );
+                        })}
+                    </Masonry>
                     // </motion.div>
                 )}
             </Card>
-            {/* )} */}
         </motion.div>
     );
 };

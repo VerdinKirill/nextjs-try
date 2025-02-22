@@ -4,6 +4,7 @@
 import {createContext, useContext, useState, useEffect, useMemo} from 'react';
 import {useRouter, usePathname, useSearchParams} from 'next/navigation';
 import {useCampaign} from '@/contexts/CampaignContext';
+import {useUser} from '@/components/RequireAuth';
 
 type ModuleContextType = {
     currentModule: string | null;
@@ -26,6 +27,8 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const {modules = [], campaignInfo = {}, campaignLoaded, selectValue} = useCampaign(); // Add default value
+    const {userInfo} = useUser();
+    const {user} = userInfo ?? {};
     // const {modulesMap = {}} = campaignInfo?.modules || {};
     const modulesMap = useMemo(() => {
         return campaignInfo?.modules || {};
@@ -52,10 +55,8 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
         if (!modules || !campaignLoaded) return;
         // Ensure modules is always an array
         const safeModules = Array.isArray(modules) ? modules : [];
-        console.log(safeModules, modules, 'modules');
-        console.log(safeModules, 'MODULES FROM USE CAMPAIGN');
 
-        const baseModules = safeModules.includes('all')
+        let baseModules = safeModules.includes('all')
             ? [
                   'massAdvert',
                   'analytics',
@@ -67,6 +68,9 @@ export const ModuleProvider = ({children}: {children: React.ReactNode}) => {
                   'seo',
               ]
             : safeModules;
+        if (![1122958293, 566810027, 933839157].includes(user?.['_id'])) {
+            baseModules = baseModules.filter((item) => item != 'reports');
+        }
         console.log(baseModules);
         setAvailableModules([...baseModules, 'api']);
         const baseModulesMap = safeModules.includes('all')

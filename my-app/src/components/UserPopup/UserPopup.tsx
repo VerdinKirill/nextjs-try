@@ -116,12 +116,9 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
                                 alignItems: 'center',
                                 width: 'calc(100% - 40px)',
                                 marginBottom: 20,
+                                gap: 16,
                             }}
                         >
-                            <Button view="outlined" width="max" size="l">
-                                <Text variant="subheader-2"> Тут будет управление</Text>
-                            </Button>
-                            <div style={{minHeight: 16}} />
                             <Card
                                 style={{
                                     display: 'flex',
@@ -134,7 +131,6 @@ export const UserPopup = ({theme, toggleTheme}: UserPopupProps) => {
                             >
                                 <RNPSwitch />
                             </Card>
-                            <div style={{minHeight: 16}} />
                             <SegmentedRadioGroup
                                 size="l"
                                 name="themeRadioButton"

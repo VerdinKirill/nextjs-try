@@ -83,17 +83,7 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
 
         document.title = currentModule ? `${titleMap[currentModule]} | AURUM` : 'AURUM | Магазины';
     }, [currentModule]);
-    // useEffect(() => {
-    //     localStorage.setItem('theme', JSON.stringify(theme));
-    //     setThemeAurum(theme);
-    // }, [theme]);
 
-    // const [refetchAutoSales, setRefetchAutoSales] = useState(false);
-    // const [dzhemRefetch, setDzhemRefetch] = useState(false);
-    // Add null check before accessing campaigns
-    // const {campaigns = []} = userInfo ?? {}; // Default to empty array
-
-    // Update selectOptions memo
     const selectOptions = useMemo(() => {
         if (!campaigns) return [];
         return campaigns.map((campaign: any) => ({
@@ -101,14 +91,6 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
             content: campaign.name,
         }));
     }, [campaigns]);
-
-    // const {availableTags, availableTagsPending} = useCampaign();
-    //
-    // const [tagsAddedForCurrentNote, setTagsAddedForCurrentNote] = useState([] as any[]);
-    // const [notesModalOpen, setNotesModalOpen] = useState(false);
-    // const [currentNote, setCurrentNote] = useState('');
-    // const [page, setPage] = useState('analytics');
-    // const [page, setPage] = useState('delivery');
 
     const [subscriptionExpDate, setSubscriptionExpDate] = useState(undefined as any);
     const [apiKeyExpDate, setApiKeyExpDate] = useState(undefined as any);
@@ -128,7 +110,6 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
         }
     }, [campaigns, selectValue]); // Only update when these values change
 
-    // const renderFooterItem = (item: any, node: any, index: any) => {
     //     if (item === undefined || node === undefined || index === undefined) return <></>;
     //     const isCurrent =
     //         (currentModule == 'noModules' && item.id == 'api') || item.id == currentModule;
@@ -395,7 +376,6 @@ export const Dashboard = ({toggleTheme, theme, children}: DashboardProps) => {
                                                 <></>
                                             )}
                                         </div>
-                                        {/* <AdvertsWordsModal2 /> */}
                                         <NotesCreationModal sellerId={sellerId} />
                                         <UserPopup toggleTheme={toggleTheme} theme={theme} />
                                         <div
